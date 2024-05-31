@@ -1,0 +1,153 @@
+{
+    "site": {
+        "home": "Trang chủ",
+        "about": "Giới thiệu",
+        "contact": "Lien hệ",
+        "login": "Dang nhap",
+        "logout": "Dang xuat",
+        "register": "Dang ky",
+        "profile": "Thong tin ca nhan",
+        "changePassword": "Thay doi mat khau",
+        "password": "Mat khau"
+    },
+    "admin": {
+        "login": {
+            "title": "Đăng nhập vào tài khoản bán hàng",
+            "forgot": "Quên mật khẩu?",
+            "description": "Đăng nhập với email hoặc tài khoản",
+            "email": "Email",
+            "username": "Tài khoản",
+            "password": "Mật khẩu",
+            "submit": "Đăng nhập",
+            "register": "Đăng ký bán hàng?",
+            "placehoder": "Nhập email hoặc tài khoản",
+            "placehoder2": "Nhập mật khẩu",
+            "lang": "Chọn ngôn ngữ"
+        },
+        "listProduct": {
+            "title": "Danh sách sản phẩm",
+            "table": {
+                "name": "Tên sản phẩm",
+                "stock": "Số lượng",
+                "price": "Giá",
+                "price_sale": "Giá bán",
+                "sold": "Đã bán",
+                "type": "Loại sản phẩm",
+                "action": "Thao tác",
+                "single": "Đơn giản",
+                "noData": "Không có dữ liệu"
+            }
+        },
+        "newProduct": {
+            "title": "THÊM MỚI SẢN PHẨM",
+            "name": "Tên sản phẩm",
+            "detail": "Chi tiết",
+            "price": "Giá sàn",
+            "general": "Tổng quan",
+            "description": "Mô tả",
+            "category": "Danh mục",
+            "brand": "Thương hiệu",
+            "quantity": "Số lượng",
+            "image": "Hình ảnh",
+            "price_sale": "Giá bán",
+            "weight": "Khối lượng",
+            "submit": "Thêm sản phẩm",
+            "status": "Trạng thái",
+            "active": "Hiển thị",
+            "noActive": "Không hiển thị",
+            "typeProduct": "Loại sản phẩm",
+            "singleProduct": "Sản phẩm đơn",
+            "multiProduct": "Sản phẩm có biến thể",
+            "specifications": "Thông số kĩ thuật",
+            "specName": "Tên",
+            "specValue": "Giá trị",
+            "specRemove": "Xóa trường",
+            "specAdd": "Thêm trường",
+            "media": "Hình ảnh",
+            "inventory": "Kho",
+            "yes": "Có",
+            "no": "Không"
+        },
+        "editProduct": {
+            "title": "SỬA SẢN PHẨM",
+            "name": "Tên sản phẩm",
+            "detail": "Chi tiết",
+            "price": "Giá sàn",
+            "general": "Tổng quan",
+            "description": "Mô tả",
+            "category": "Danh mục",
+            "brand": "Thương hiệu",
+            "quantity": "Số lượng",
+            "image": "Hình ảnh",
+            "price_sale": "Giá bán",
+            "weight": "Khối lượng",
+            "submit": "Lưu và hiển thị",
+            "submit2": "Lưu nháp",
+            "back": "Quay lại",
+            "status": "Trạng thái",
+            "active": "Hiển thị",
+            "noActive": "Không hiển thị",
+            "typeProduct": "Loại sản phẩm",
+            "singleProduct": "Sản phẩm đơn",
+            "multiProduct": "Sản phẩm có biến thể",
+            "specifications": "Thông số kĩ thuật",
+            "specName": "Tên",
+            "specValue": "Giá trị",
+            "specRemove": "Xóa trường",
+            "specAdd": "Thêm trường",
+            "media": "Hình ảnh",
+            "inventory": "Kho",
+            "yes": "Có",
+            "no": "Không"
+        },
+        "listInventory": {
+            "title": "Lịch sử nhập hàng",
+            "table": {
+                "id": "Mã nhập hàng",
+                "quantity": "Số lượng nhập thêm",
+                "amount": "Tổng số tiền nhập",
+                "note": "Ghi chú",
+                "created_at": "Ngày nhập"
+            }
+        },
+        "listDiscount": {
+            "title": "Tất cả khuyến mại",
+            "table": {
+                "name": "Tên khuyến mãi",
+                "code": "Mã khuyến mãi",
+                "type": "Loại khuyến mãi",
+                "value": "Giá trị",
+                "status": "Trạng thái",
+                "uses_count": "Đã sử dụng"
+            }
+        },
+        "listCategory": {
+            "title": "Danh mục của bạn",
+            "table": {
+                "name": "Tên danh mục",
+                "description": "Mô tả",
+                "created_at": "Cập nhật gần nhất",
+                "status": "Trạng thái",
+                "product_count": "Số sản phẩm"
+            }
+        },
+        "productPromotion": {
+            "title": "Khuyến mãi cho sản phẩm",
+            "table": {
+                "name": "Tên sản phẩm",
+                "price": "Giá cố định",
+                "price_sale": "Giá khuyến mại",
+                "last_price": "Giá bán",
+                "status": "Trạng thái"
+            }
+        },
+        "variant": {
+            "table": {
+                "name": "Tên sản phẩm",
+                "code": "Mã",
+                "price": "Giá",
+                "stock": "Số lượng"
+            }
+        }
+    }
+}

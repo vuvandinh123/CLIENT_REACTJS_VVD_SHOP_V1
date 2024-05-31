@@ -1,0 +1,58 @@
+{
+    "site": {
+        "home": "Home",
+        "about": "About",
+        "contact": "Contact",
+        "login": "Login",
+        "logout": "Logout",
+        "register": "Register",
+        "profile": "Profile",
+        "changePassword": "Change Password",
+        "password": "Password"
+    },
+    "admin": {
+        "login": {
+            "title": "LOGIN TO YOUR ACCOUNT SHOP",
+            "forgot": "Forgot Password?",
+            "description": "Login With Email or Username",
+            "email": "Email",
+            "username": "Username",
+            "password": "Password",
+            "submit": "Login",
+            "register": "You don't have an account?",
+            "placehoder": "Enter email or username",
+            "placehoder2": "Enter password",
+            "lang": "Choose Language"
+        },
+        "newProduct": {
+            "title": "ADD NEW PRODUCT",
+            "name": "Product Name",
+            "detail": "Detail",
+            "price": "Price",
+            "general": "Overview",
+            "description": "Description",
+            "category": "Category",
+            "brand": "Brand",
+            "quantity": "Quantity",
+            "image": "Image",
+            "price_sale": "Sale Price",
+            "weight": "Weight",
+            "submit": "Add Product",
+            "status": "Status",
+            "active": "Active",
+            "noActive": "Inactive",
+            "typeProduct": "Product Type",
+            "singleProduct": "Single Product",
+            "multiProduct": "Product with Variations",
+            "specifications": "Specifications",
+            "specName": "Name",
+            "specValue": "Value",
+            "specRemove": "Remove Field",
+            "specAdd": "Add Field",
+            "media": "Media",
+            "inventory": "Inventory",
+            "yes": "Yes",
+            "no": "No"
+        }
+    }
+}
