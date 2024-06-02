@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useRef } from "react";
-import { useApiCall } from "../../../../../hooks";
-import { getInventoryLogById } from "../../../../service/InventoryLogs";
-import { formatPrice, formathDate } from "../../../../../utils";
 import { Link } from "react-router-dom";
+import { getInventoryLogById } from "../../../service/InventoryLogs";
+import { useApiCall } from "../../../../hooks";
+import { formatPrice, formathDate } from "../../../../utils";
 const ModalShow = ({ id, isOpen, setIsOpen }) => {
   const componentRef = useRef();
   const { data } = useApiCall(
@@ -80,7 +80,7 @@ const ModalShow = ({ id, isOpen, setIsOpen }) => {
                           </li>
                         </ul>
                       </div>
-                      <div className="relative max-h-[230px] overflow-auto  border-b border-gray-200 ">
+                      <div className="relative  border-b border-gray-200 ">
                         <table className="w-full text-left font-medium  md:table-fixed">
                           <tbody className="divide-y divide-gray-200">
                             {data?.product?.map((item, index) => (

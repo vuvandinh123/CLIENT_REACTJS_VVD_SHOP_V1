@@ -18,9 +18,12 @@ const LayoutListShop = ({
   handleMultiple,
   //   view
   linkCreate,
+  customStatus,
   title,
   children,
-  viewFilter,
+  addFilter,
+  // bool
+  isBtnCreated,
   //   state
   dataStatus,
   checkedStates,
@@ -29,7 +32,7 @@ const LayoutListShop = ({
   pagination,
   setPagination,
   filter,
-
+  isCheckBox,
   setFilter,
   refresh,
   setRefresh,
@@ -45,6 +48,8 @@ const LayoutListShop = ({
       {/* status product count and navigation */}
       <NavStatus
         filter={filter}
+        customStatus={customStatus}
+        isBtnCreated={isBtnCreated}
         refresh={refresh}
         linkCreate={linkCreate}
         setFilter={setFilter}
@@ -54,13 +59,15 @@ const LayoutListShop = ({
       <Filter
         filter={filter}
         handleMultiple={handleMultiple}
+        isCheckBox={isCheckBox}
         checkedStates={checkedStates}
-        viewFilter={viewFilter}
+        addFilter={addFilter}
         setFilter={setFilter}
       />
       {/* Table */}
       <Table
         data={data}
+        isCheckBox={isCheckBox}
         filter={filter}
         handleCheckAll={handleCheckAll}
         isCheckAll={isCheckAll}

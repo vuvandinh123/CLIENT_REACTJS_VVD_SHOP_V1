@@ -136,6 +136,10 @@ export const navSidebar = [
         link: "/admin/inventory",
       },
       {
+        title: "Lịch sử xuất hàng",
+        link: "/admin/out-inventory",
+      },
+      {
         title: "Nhập thêm hàng",
         link: "/admin/inventory/create",
       },

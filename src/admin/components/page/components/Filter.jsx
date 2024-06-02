@@ -6,8 +6,14 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const Filter = (props) => {
-  const { filter, setFilter, checkedStates, handleMultiple, viewFilter } =
-    props;
+  const {
+    filter,
+    setFilter,
+    checkedStates,
+    handleMultiple,
+    addFilter,
+    isCheckBox = true,
+  } = props;
   const { t } = useTranslation();
   const [startDate, setStartDate] = useState(new Date());
   const searchRef = useRef(null);
@@ -34,41 +40,44 @@ const Filter = (props) => {
   return (
     <div className="px-2 p-4">
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <h3 className="font-bold text-md">Chức năng:</h3>
-          <button
-            onClick={() => {
-              if (checkedStates?.length == 0) {
-                toast.error("Vui lòng chọn một sản phẩm");
-                return;
-              }
-              handleMultiple(
-                filter?.active === "0" ? "delete" : "status",
-                filter?.active === "0" ? "2" : "0"
-              );
-            }}
-            className="hover:underline text-red-500 hover:text-red-700"
-          >
-            {filter?.active === "0" ? "Xóa " : "Thêm vô thùng rác "}({" "}
-            {checkedStates?.length} )
-          </button>
-          {filter?.active === "0" && (
+        {isCheckBox ? (
+          <div className="flex items-center gap-3">
+            <h3 className="font-bold text-md">Chức năng:</h3>
             <button
               onClick={() => {
                 if (checkedStates?.length == 0) {
                   toast.error("Vui lòng chọn một sản phẩm");
                   return;
                 }
-                handleMultiple("status", 2);
+                handleMultiple(
+                  filter?.active === "0" ? "delete" : "status",
+                  filter?.active === "0" ? "2" : "0"
+                );
               }}
-              className="hover:underline hover:text-green-700"
+              className="hover:underline text-red-500 hover:text-red-700"
             >
-              Hiển thị ( {checkedStates?.length} )
+              {filter?.active === "0" ? "Xóa " : "Thêm vô thùng rác "}({" "}
+              {checkedStates?.length} )
             </button>
-          )}
-        </div>
+            {filter?.active === "0" && (
+              <button
+                onClick={() => {
+                  if (checkedStates?.length == 0) {
+                    toast.error("Vui lòng chọn một sản phẩm");
+                    return;
+                  }
+                  handleMultiple("status", 2);
+                }}
+                className="hover:underline hover:text-green-700"
+              >
+                Hiển thị ( {checkedStates?.length} )
+              </button>
+            )}
+          </div>
+        ) : <div></div>}
+
         <div className="flex items-center gap-3">
-          {viewFilter ? viewFilter : null}
+          {addFilter ? addFilter : null}
           <div>
             <select
               className="px-2 outline-blue-500 py-2 rounded-md bg-white border"

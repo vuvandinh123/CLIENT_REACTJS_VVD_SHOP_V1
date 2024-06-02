@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { Form, Formik } from "formik";
 import React from "react";
 import TextFiled from "../../../components/fields/TextFiled";
 import { Link } from "react-router-dom";
@@ -36,8 +35,8 @@ const SignUpForm = ({ setTab, data, setData }) => {
     setTab("address");
   };
   const checkEmail =async (value) => {
-    console.log(value);
     try {
+      if(!value) return
       await checkEmailExits(value);
       setMessage("")
     } catch (error) {

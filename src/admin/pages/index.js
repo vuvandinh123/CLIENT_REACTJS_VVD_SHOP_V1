@@ -20,6 +20,7 @@ export { default as EditCategory } from './categories/editCategory';
 export { default as StockInventory } from './inventory/stockInventory';
 export { default as ListInventory } from './inventory/listInventory';
 export { default as NewInventory } from './inventory/newInventory';
+export { default as ListOutInevnentory } from './inventory/listOutInventory';
 // auth
 export { default as Login } from './login';
 export { default as Register } from './signUp';

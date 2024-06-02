@@ -21,6 +21,7 @@ export function arraysMatch(arr1, arr2) {
     return true;
 }
 export function formatPrice(value) {
+    if(!value) return 0
     const formattedNumber = value.toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD' // Định dạng thành tiền USD
@@ -28,6 +29,7 @@ export function formatPrice(value) {
     return formattedNumber
 }
 export function formatPriceVND(value) {
+    if(!value) return 0
     const formattedNumber = value.toLocaleString('vi-VN', {
         style: 'currency',
         currency: 'VND'

@@ -32,7 +32,9 @@ export const ADMIN_PRODUCTS_SALE = '/admin/sale-products';
 export const ADMIN_PRODUCTS_SALE_CREATE = '/admin/sale-products/create';
 export const ADMIN_PRODUCTS_SALE_EDIT = '/admin/sale-products/:id/edit';
 export const ADMIN_PRODUCTS_SHOW = '/admin/products/:slug';
+// inventory
 export const ADMIN_PRODUCTS_INVENTORY = '/admin/inventory';
+export const ADMIN_PRODUCTS_OUT_INVENTORY = '/admin/out-inventory';
 export const ADMIN_PRODUCTS_INVENTORY_CREATE = '/admin/inventory/create';
 export const ADMIN_PRODUCTS_INVENTORY_STOCK = '/admin/inventory/stocks';
 export const ADMIN_PROFILE_SHOP = '/admin/settings';

@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-import { Field } from "formik";
-import React from "react";
 import TextFiled from "../../../components/fields/TextFiled";
 import NumberFiled from "../../../components/fields/NumberFiled";
 import NotImage from "../../../../assets/imageNotFound.png";

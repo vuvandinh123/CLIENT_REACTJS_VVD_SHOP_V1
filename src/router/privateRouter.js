@@ -105,6 +105,11 @@ export const privateRouter = [
         layout: LayoutAdmin,
         component: PAGE.ProfileShop
     },
+    {
+        path: ROUTES.ADMIN_PRODUCTS_OUT_INVENTORY,
+        layout: LayoutAdmin,
+        component: PAGE.ListOutInevnentory
+    },
     // {
     //     path: ROUTES.ADMIN_CATEGORIES,
     //     exact: true,

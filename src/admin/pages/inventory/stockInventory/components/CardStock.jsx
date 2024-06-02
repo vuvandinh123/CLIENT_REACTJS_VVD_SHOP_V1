@@ -5,6 +5,7 @@ const CardStock = ({
   value,
   isChange = true,
   icon,
+  filter,
   change,
   changeValue,
 }) => {
@@ -40,25 +41,10 @@ const CardStock = ({
       {isChange && (
         <div
           className={`my-3 gap-1 flex items-center ${
-            change === "increment" ? "text-green-500" : "text-red-500"
+            change === "decrement" ? "text-red-500" : " text-green-500"
           }`}
         >
-          {change === "increment" ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-              />
-            </svg>
-          ) : (
+          {change === "decrement" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4"
@@ -73,12 +59,35 @@ const CardStock = ({
                 d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
               />
             </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+              />
+            </svg>
           )}
 
           <p className="flex gap-2 text-xs">
-            <span className="font-medium"> {changeValue}% </span>
+            <span className="font-medium"> {Math.abs(changeValue)}% </span>
 
-            <span className="text-gray-500">So với tuần trước </span>
+            <span className="text-gray-500">
+              So với{" "}
+              {filter === "week"
+                ? "tuần"
+                : filter === "month"
+                ? "tháng"
+                : "năm"}{" "}
+              trước{" "}
+            </span>
           </p>
         </div>
       )}

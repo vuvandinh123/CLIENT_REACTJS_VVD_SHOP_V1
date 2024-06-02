@@ -43,23 +43,22 @@ export const getAllInventoryLog = async (params) => {
 }
 export const getTotalAmountInventoryLog = async (params) => {
     verifyToken(axiosInstanceShop)
-    try {
-        const response = await axiosInstanceShop.get(`/inventory-logs/amount`, {
-            params,
-        })
-        return response.data
-    } catch (error) {
-        console.log(error)
-    }
+    const response = await axiosInstanceShop.get(`/inventory-logs/amount`, {
+        params,
+    })
+    return response.data
 }
 export const getInventoryLogById = async (id, params) => {
     verifyToken(axiosInstanceShop)
-    try {
-        const response = await axiosInstanceShop.get(`/inventory-logs/${id}`, {
-            params,
-        })
-        return response.data
-    } catch (error) {
-        console.log(error)
-    }
+    const response = await axiosInstanceShop.get(`/inventory-logs/${id}`, {
+        params,
+    })
+    return response.data
+}
+export const getInventoryStats = async (params) => {
+    verifyToken(axiosInstanceShop)
+    const response = await axiosInstanceShop.get(`/inventory-logs/stats`, {
+        params,
+    })
+    return response.data
 }

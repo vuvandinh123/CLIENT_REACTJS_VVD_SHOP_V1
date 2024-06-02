@@ -11,6 +11,7 @@ const Table = (props) => {
     handleCheckAll,
     isCheckAll,
     HeaderTable,
+    isCheckBox = true,
   } = props;
   const { t } = useTranslation();
   return (
@@ -19,9 +20,12 @@ const Table = (props) => {
       <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
         <thead className="bg-gray-50">
           <tr>
-            <th>
-              <Checkbox checked={isCheckAll} onChange={handleCheckAll} />
-            </th>
+            {isCheckBox && (
+              <th>
+                <Checkbox checked={isCheckAll} onChange={handleCheckAll} />
+              </th>
+            )}
+
             {HeaderTable.map((item, index) => (
               <th
                 scope="col"
