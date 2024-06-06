@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Form } from "formik";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FORGOT_PASSWORD } from "../../../constants/routes";
-import { FaEyeSlash, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 const FormLogin = ({ handleRememberme }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +41,7 @@ const FormLogin = ({ handleRememberme }) => {
       </div>
       <div className="mt-5 content-center">
         <label className="ml-1 mb-2 block text-sm font-bold text-gray-700 tracking-wide">
-          Password
+          Mật khẩu
         </label>
         <div className="relative">
           <Field
@@ -56,7 +56,11 @@ const FormLogin = ({ handleRememberme }) => {
             }}
             className="absolute block top-[10px] text-gray-500 cursor-pointer right-3"
           >
-            {!showPassword ? <FaRegEyeSlash size={23}></FaRegEyeSlash> :<FaRegEye size={23} />}
+            {!showPassword ? (
+              <FaRegEyeSlash size={23}></FaRegEyeSlash>
+            ) : (
+              <FaRegEye size={23} />
+            )}
             {/* <FaEyeSlash size={23}></FaEyeSlash> */}
           </span>
         </div>
@@ -78,7 +82,7 @@ const FormLogin = ({ handleRememberme }) => {
             htmlFor="remember_me"
             className="ml-2 block text-sm text-gray-900"
           >
-            Remember me
+            Lưu thông tin đăng nhập
           </label>
         </div>
         <div className="text-sm">

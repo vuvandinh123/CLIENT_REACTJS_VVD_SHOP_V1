@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ChangePrice from "../common/ChangePrice";
-import { byToCart, setIsOpenCart } from "../../redux/slice/cartSlice";
+import {  setIsOpenCart } from "../../redux/slice/cartSlice";
 import { AppURL } from "../../api/AppURL";
 import { toast } from "react-toastify";
 
@@ -25,7 +25,7 @@ const Product2 = ({ data }) => {
       image: data?.images[0]?.image_url,
       slug: data.slug,
     };
-    dispatch(byToCart(newCart));
+    // dispatch(byToCart(newCart));
     if (window.screen.width > 768) {
       dispatch(setIsOpenCart(true));
     } else {

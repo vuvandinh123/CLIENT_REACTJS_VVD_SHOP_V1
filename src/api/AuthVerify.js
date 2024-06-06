@@ -1,6 +1,7 @@
 import axios from "axios";
 import Auth from "../service/Auth";
 import { getCookieAuth, setCookieAuth } from "../utils";
+import toast from "react-hot-toast";
 const verifyToken = async (axiosInstance) => {
     // request verify
     axiosInstance.interceptors.request.use(
@@ -41,11 +42,11 @@ const verifyToken = async (axiosInstance) => {
                     window.location.href = '/auth/login';
                 }
             } else if (error.response.status === 500 && !originalRequest._retry) {
-                alert(`Lỗi cú pháp ${500} rồi sửa đi con !`)
-            } else if(error.response.status === 404 && !originalRequest._retry) {
-                alert(`Lỗi 404 URL Không tồn tại !>>`)
-            }else {
-                alert(`Không ổn rồi lỗi ${error.response.status} `)
+                toast.error("Lỗi 500 rồi sửa đi con!!")
+            } else if (error.response.status === 404 && !originalRequest._retry) {
+                toast.error("Lỗi 404 rồi sửa đi con!!")
+            } else {
+                toast.error(`Không ổn rồi lỗi ${error.response.status} `)
             }
             return Promise.reject(error);
         }

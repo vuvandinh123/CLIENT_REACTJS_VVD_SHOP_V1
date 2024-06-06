@@ -10,7 +10,7 @@ const FeaturedProducts = ({ data, loading }) => {
     <div>
       <div className=" bg-white rounded-md p-4 flex justify-between flex-wrap gap-y-4 items-center">
         <div className="flex items-center">
-          <h5 className="uppercase font-bold text-[16px]">Feature Products</h5>
+          <h5 className="uppercase font-bold text-[16px]">Sản phẩm bán chạy</h5>
         </div>
         <div>
           <div className="text-sm leading-4 flex items-center justify-between">
@@ -18,26 +18,24 @@ const FeaturedProducts = ({ data, loading }) => {
               href=""
               className="me-3 hover:text-[#2b38d1] group flex text-[12px] lg:text-[14px]  text-[#5a5a5a]"
             >
-              View all{" "}
+              Xem tất cả{" "}
               <MdKeyboardDoubleArrowRight className="text-[18px]  ms-1 group-hover:translate-x-2 transition-all duration-300" />
             </a>
           </div>
         </div>
       </div>
-      <div className=" max-w-[100%] relative group/arrow mt-5">
-        {!loading && (
-          <SlickCround settings={settings}>
-            {!loading
-              ? data &&
-                data.length > 0 &&
-                data?.map((item, index) => {
-                  return <Product data={item} key={index} deals={false} />;
-                })
-              : Array(5)
-                  .fill(null)
-                  .map((item, index) => <PlacehoderCard key={index} />)}
-          </SlickCround>
-        )}
+      <div className="w-full max-w-[100%]  relative group/arrow mt-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-2">
+          {!loading
+            ? data &&
+              data.length > 0 &&
+              data?.map((item, index) => {
+                return <Product data={item} key={index} deals={false} />;
+              })
+            : Array(5)
+                .fill(null)
+                .map((item, index) => <PlacehoderCard key={index} />)}
+        </div>
       </div>
     </div>
   );

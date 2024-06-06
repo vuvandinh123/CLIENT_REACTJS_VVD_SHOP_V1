@@ -71,16 +71,17 @@ const Login = () => {
               className="h-96 absolute right-5 mr-5"
             />
             <div className="w-full  max-w-md z-10">
-              <div className="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">
-                Reference site about Lorem Ipsum..
+              <div className="sm:text-4xl xl:text-5xl font-bold  leading-tight mb-6">
+                VVD SHOP
               </div>
               <div className="sm:text-sm xl:text-md text-gray-200 font-normal">
-                {" "}
-                What is Lorem Ipsum Lorem Ipsum is simply dummy text of the
-                printing and typesetting industry Lorem Ipsum has been the
-                {" industry's"} standard dummy text ever since the 1500s when an
-                unknown printer took a galley of type and scrambled it to make a
-                type specimen book it has?
+                <p>
+                  {" "}
+                  VVD SHOP là một website mua sắm trực tuyến với nhiều ưu đãi và
+                  khuyễn mại hot hãy đăng nhập để có trải nhiệm tốt nhất và đồng
+                  hành cùng chúng tôi.{" "}
+                  <p className="mt-3">Chúc các bạn có một ngày mua sắm vui vẻ !!!</p>
+                </p>
               </div>
             </div>
             {/*-remove custom style*/}
@@ -101,17 +102,17 @@ const Login = () => {
             <div className="max-w-md w-full space-y-8">
               <div className="text-center">
                 <h2 className="mt-6 text-3xl font-bold text-gray-900">
-                  Welcom Back!
+                  VVD SHOP Xin Chào
                 </h2>
                 <p className="mt-2 text-sm text-gray-500">
-                  Please sign in to your account
+                  Vui lòng đăng nhập 
                 </p>
               </div>
               <LoginSocial />
               <div className="flex items-center justify-center space-x-2">
                 <span className="h-px w-16 bg-gray-200" />
                 <span className="text-gray-300 font-normal">
-                  or continue with
+                  Hoặc đăng nhập với
                 </span>
                 <span className="h-px w-16 bg-gray-200" />
               </div>

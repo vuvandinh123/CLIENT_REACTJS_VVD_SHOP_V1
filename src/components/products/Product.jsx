@@ -2,36 +2,44 @@ import { FiLayers } from "react-icons/fi";
 import { AiOutlineCheck, AiOutlineEye } from "react-icons/ai";
 import { ImageLoader, Title } from "../common";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ChangePrice from "../common/ChangePrice";
 import { BsCartPlus } from "react-icons/bs";
-import { toast } from "react-toastify";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { byToCart, setIsOpenCart } from "../../redux/slice/cartSlice";
+import { setIsOpenCart } from "../../redux/slice/cartSlice";
 import Fav from "./Fav";
 import { setIsOpenSelectOptions } from "../../redux/slice/selectCartSlice";
+import { addToCart } from "../../service/Cart";
+import { useState } from "react";
+import { getCookieAuth } from "../../utils";
+import toast from "react-hot-toast";
 const Product = ({ deals, data }) => {
   const dispatch = useDispatch();
-  const handleClickToCart = () => {
+  const navigate = useNavigate();
+  const [isDisabled, setIsDisabled] = useState(false);
+  const handleClickToCart = async () => {
+    const { userId } = getCookieAuth();
+    if (!userId) {
+      toast.error("Vui lòng đăng nhập để tiếp tục");
+      navigate("/auth/login");
+      return;
+    }
+    setIsDisabled(true);
     if (data.type === "single") {
-      const newCart = {
-        name: data.name,
-        price: data.price,
-        id: data.id,
-        image: data?.imageUrls[0],
-        shop_id: data.shop_id,
-        slug: data.slug,
-      };
-      dispatch(byToCart(newCart));
+      const newCart = { productId: data.id };
+      await addToCart(newCart);
+
+      // dispatch(byToCart(newCart));
       if (window.screen.width > 768) {
         dispatch(setIsOpenCart(true));
       } else {
         toast.success("Thêm vào giỏ hàng thành công");
       }
     } else {
-      dispatch(setIsOpenSelectOptions({isOpen:true,id:data.id}))
+      dispatch(setIsOpenSelectOptions({ isOpen: true, id: data.id }));
     }
+    setIsDisabled(false);
   };
 
   return (
@@ -42,14 +50,14 @@ const Product = ({ deals, data }) => {
             <div className="cursor-pointer relative min-h-[177px] flex items-center justify-center">
               {data?.thumbnail ? (
                 <>
-                  <Link to={`/products/${data?.slug}`}>
+                  <Link to={`/products/${data?.slug}-${data?.id}`}>
                     <ImageLoader
                       src={data.thumbnail}
                       className={
                         "lg:group-hover:hidden   lg:group-hover:scale-105 transition-all duration-300"
                       }
                     />
-                    {data.imageUrls[0] && (
+                    {data && data?.imageUrls && data?.imageUrls[0] && (
                       <img
                         className="!hidden    lg:group-hover:!block lg:group-hover:scale-105 transition-all duration-500"
                         src={data?.imageUrls[0]}
@@ -64,11 +72,11 @@ const Product = ({ deals, data }) => {
             </div>
             <div
               className={`${
-                data?.discount?.length > 0 ? "bg-[#f92e2e]" : "bg-[#35ff1a]"
+                data?.discount ? "bg-[#f92e2e]" : "bg-[#35ff1a]"
               } absolute top-5 z-0 font-bold text-[12px] left-0 px-2 py-1 text-white `}
             >
-              {data?.discount?.length > 0 && data.discount ? (
-                <span>-{data.discount[0].discount_percent}%</span>
+              {data?.discount ? (
+                <span>-{data.discount?.toFixed(0)}%</span>
               ) : (
                 "new"
               )}
@@ -95,7 +103,10 @@ const Product = ({ deals, data }) => {
           <div className="px-[10px] relative left-0 lg:group-hover:-mt-12 lg:group-hover:pb-16 pb-5 transition-all duration-500 mt-0 z-20 py-3 bg-white">
             <h3 className="text-[15px] text-ellipsis h-10 w-full line-clamp-2 leading-[1.2em] max-h-[2.4em]  overflow-hidden ">
               {data?.name ? (
-                <Link to={`/products/${data?.slug}`} className="font-medium ">
+                <Link
+                  to={`/products/${data?.slug}-${data?.id}`}
+                  className="font-medium "
+                >
                   {data?.name}
                 </Link>
               ) : (
@@ -103,13 +114,13 @@ const Product = ({ deals, data }) => {
               )}
             </h3>
             <div className="flex items-center mt-2 gap-2">
-              {!data?.start ? (
+              {data?.rating ? (
                 <>
                   <div className="flex items-center gapx-3 text-yellow-400">
                     {Array(5)
                       .fill(0)
                       .map((item, index) => {
-                        if (index < 3) {
+                        if (index < data?.rating - 1) {
                           return (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -142,58 +153,78 @@ const Product = ({ deals, data }) => {
                 <Skeleton width="120px" height="10px" />
               )}
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mt-2">
               {data?.price ? (
                 <>
                   <ChangePrice
-                    price={data?.price}
-                    className="text-[#3741ff] font-bold text-base mt-1"
+                    className={`${
+                      data.fix_price ? "text-red-500" : "text-[#2b38d1]"
+                    } text-[1rem] font-bold`}
+                    price={data.price}
                   />
-                  <span className="text-gray-300 font-semibold text-xs mt-1 line-through">
-                    $300.00
-                  </span>
+                  {data?.fix_price && (
+                    <ChangePrice
+                      className="text-gray-400 line-through text-sm font-semibold "
+                      price={data.fix_price}
+                    />
+                  )}
                 </>
               ) : (
                 <Skeleton width="100px" height="20px" />
               )}
             </div>
             <div className={`${deals ? "block" : "hidden"}`}>
+              {/* <div>
+                <CountdowProductItem end_date={data?.end_date}></CountdowProductItem>
+              </div> */}
               <div
                 className={`h-2 mt-3 rounded-xl relative flex bg-[#00000016] `}
               >
                 <span
-                  style={{ width: data?.quantity + "%" }}
+                  style={{
+                    width: data?.quantity
+                      ? `${(data?.sold / data?.quantity) * 100}%`
+                      : "0%",
+                  }}
                   className="bg-red-500 absolute top-0 left-0 bottom-0 w-10 rounded-xl"
                 ></span>
               </div>
               <p className="text-gray-500 mt-3">
-                Sold:{" "}
+                Đã bán:{" "}
                 <span className="text-black font-bold">
-                  {data?.quantity}/100{" "}
+                  {data?.sold}/{data?.quantity}{" "}
                 </span>{" "}
-                products
+                sản phẩm
               </p>
             </div>
             <div className={`${deals ? "hidden" : "block"} mt-6 h-2`}>
               <div className="flex items-center text-[#1c8e24] text-[12px] ">
                 {" "}
-                <AiOutlineCheck className="me-2" /> In stock{" "}
+                <AiOutlineCheck className="me-2" /> Còn{" "}
                 <span className="text-black ms-2">
                   {" "}
-                  {data?.quantity} Products
+                  {data?.quantity} Sản phẩm
                 </span>
               </div>
             </div>
             <button
               onClick={handleClickToCart}
-              className="bg-[#2b38d1] capitalize absolute mt-5 text-white py-2  left-2 right-2 lg:py-2 lg:px-8 rounded-full transition-all"
+              type="button"
+              disabled={isDisabled}
+              className="bg-[#2b38d1] capitalize absolute mt-5 text-white py-2  left-2 right-2 lg:py-2 lg:px-8 rounded-full transition-all flex items-center justify-center gap-2"
             >
-              {data.type === "single" ? "Add To Cart" : "Select options"}
+              {}
+              {isDisabled ? (
+                <div className="w-5 h-5 border-4 border-white rounded-full animate-spin border-t-transparent"></div>
+              ) : data.type === "single" ? (
+                "Add To Cart"
+              ) : (
+                "Select options"
+              )}
             </button>
           </div>
         </div>
       </SkeletonTheme>
-      
     </>
   );
 };

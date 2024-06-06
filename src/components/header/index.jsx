@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { HiOutlineTag } from "react-icons/hi";
 import Cart from "../baskets/Cart";
 import { useOffcanvas } from "../../hooks";
-import Favourite from "../common/Favourite";
 import { useDispatch, useSelector } from "react-redux";
 import Topbar from "./topbar";
 import Search from "./search/Search";
@@ -14,25 +13,22 @@ import { Link } from "react-router-dom";
 import ChangePrice from "../common/ChangePrice";
 import { setIsOpenCart } from "../../redux/slice/cartSlice";
 import { setIsOpenFav } from "../../redux/slice/favouriteSlice";
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
+import Favourite from "../baskets/Favourite";
 const Header = () => {
   const barsRef = useRef(null);
   const menuRef = useRef(null);
   const dispatch = useDispatch();
-  const { favAr, isOpen: isOpenFav } = useSelector((state) => state.favourite);
+  const { total, qty, isOpen: isOpenCart } = useSelector((state) => state.cart);
+  const { qty: qtyFav, isOpen: isOpenFav } = useSelector(
+    (state) => state.favourite
+  );
   const { isOpen: isOpenMenu, setIsOpen: setIsOpenMenu } = useOffcanvas(
     false,
     menuRef,
     barsRef
   );
-  const { cartAr, isOpen: isOpenCart } = useSelector((state) => state.cart);
-  let totalCart = 0;
-  let qtyCart = 0;
-  cartAr.forEach((item) => {
-    totalCart += item.total;
-    qtyCart += item.qty;
-  });
-  // const [isOpenCart, setIsOpenCart] = useState(false);
+  console.log(qtyFav, "qtyfav");
   const handleClickShowMenu = () => {
     setIsOpenMenu(!isOpenMenu);
   };
@@ -73,9 +69,9 @@ const Header = () => {
             >
               <a href="#" className="relative z-0 top-[6px]  ">
                 <img src={imageHeart} alt="" />
-                {favAr.length > 0 && (
+                {qtyFav > 0 && (
                   <span className="block -top-2 -right-3 w-5 leading-5 text-center text-white text-[10px] absolute h-5 rounded-full font-bold bg-red-600">
-                    {favAr.length}
+                    {qtyFav}
                   </span>
                 )}
               </a>
@@ -84,9 +80,9 @@ const Header = () => {
               <a href="#" className="flex items-center ">
                 <div className="relative shrink-0 z-0 ">
                   <img src={imageCart} alt="" />
-                  {qtyCart > 0 && (
+                  {qty > 0 && (
                     <span className="block -top-2 -right-3 w-5 leading-5 text-center text-white text-[10px] absolute h-5 rounded-full font-bold bg-red-600">
-                      {qtyCart}
+                      {qty}
                     </span>
                   )}
                 </div>
@@ -95,7 +91,7 @@ const Header = () => {
                     Your Cart <HiOutlineTag className="inline" />
                   </p>
                   <ChangePrice
-                    price={totalCart}
+                    price={total}
                     className="text-[#212529] font-bold text-[14px]"
                   />
                 </div>
@@ -111,10 +107,7 @@ const Header = () => {
         />
         <hr />
         <Cart isOpen={isOpenCart} setIsOpen={handleClickShowCart} />
-        <Favourite
-          isOpen={isOpenFav}
-          setIsOpen={handleClickShowFav}
-        />
+        <Favourite isOpen={isOpenFav} setIsOpen={handleClickShowFav} />
       </header>
     </>
   );

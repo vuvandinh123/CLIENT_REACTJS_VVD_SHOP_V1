@@ -5,6 +5,12 @@ export const POST_CHECK_EMAIL_EXITS = "/check-email-exits"
 /**
  * AUTH USER
  */
+
+// cart
+export const GET_CART = "carts"
+// favourite
+export const GET_FAVOURITE = "/favourites"
+// -------------
 export const POST_LOGIN = "auth/login"
 export const POST_LOGIN_SOCIAL = "auth/login-social"
 export const POST_SIGNUP = "auth/signup"
@@ -66,7 +72,6 @@ export const POST_VERIFY_EMAIL_REGISTER_SHOP = "shops/verify-email-shop"
 export const GET_PRODUCTS = 'products';
 export const GET_PRODUCTS_BY_ID = 'products'; // products/id
 export const GET_PRODUCTS_TOP_SELLING = "products/daily-discover";
-export const GET_PRODUCTS_FEATURED = "products/featured";
 export const GET_PRODUCTS_HOT_DEALS = "products/hot_deals";
 export const POST_PRODUCT_SEARCH = "products/search/"
 /**
@@ -79,6 +84,7 @@ export const PATCH_TOGGLE_FOLLOW_SHOP = 'shops/follow';
  * GET discount
  */
 export const GET_DISCOUNT_PRODUCT_BY_ID = 'discounts/product';
+export const GET_DISCOUNT_TYPE_ALL = 'discounts/type-all';
 export const POST_ADD_DISCOUNT = "discounts/add";
 
 

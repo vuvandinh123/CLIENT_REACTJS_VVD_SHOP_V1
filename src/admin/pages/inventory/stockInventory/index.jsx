@@ -93,7 +93,7 @@ const StockInventory = () => {
         ></CardStock>
         <CardStock
           title={"Sản phẩm đang chờ xuất kho"}
-          value={"123"}
+          value={"42"}
           change="increment"
           isChange={false}
           changeValue={"32"}

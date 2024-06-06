@@ -1,22 +1,17 @@
 import PropTypes from "prop-types";
-import Offcanvas from "./Offcanvas";
-import { useDispatch, useSelector } from "react-redux";
-import ChangePrice from "./ChangePrice";
-import ImageLoader from "./ImageLoader";
 import { Link } from "react-router-dom";
 import useFav from "../../hooks/useFav";
-import { AppURL } from "../../api/AppURL";
+import { ChangePrice, ImageLoader, Offcanvas } from "../common";
 
 const Favourite = ({ isOpen, setIsOpen }) => {
-  const { deleteFavourite, favAr } = useFav();
-  let favReverse = [...favAr].reverse();
+  const { data, handleClickRemoveFavourite } = useFav();
   const handleClickViewFav = () => {
     setIsOpen(false);
   };
   return (
     <div>
-      <Offcanvas isOpen={isOpen} label={"Favorite"} setIsOpen={setIsOpen}>
-        {favReverse.length === 0 && (
+      <Offcanvas isOpen={isOpen} label={"Yêu thích"} setIsOpen={setIsOpen}>
+        {data?.length === 0 && (
           <div className="flex justify-center mt-10 h-full">
             <div>
               <svg
@@ -54,25 +49,25 @@ const Favourite = ({ isOpen, setIsOpen }) => {
             </div>
           </div>
         )}
-        {favReverse.length > 0 && (
+        {data?.length > 0 && (
           <>
             <div className="max-h-[80%] overflow-scroll">
-              {favReverse.map((item, index) => (
+              {data?.map((item, index) => (
                 <div
                   key={index}
                   className="flex justify-between border-b items-center p-3"
                 >
                   <div className="flex gap-3">
                     <div className="w-[90px] flex-shrink-0">
-                      <Link to={`/products/${item.id}`}>
-                        <ImageLoader src={AppURL.ImageUrl + item.images[0].image_url} />
+                      <Link to={`/products/${item.slug}-${item.id}`}>
+                        <ImageLoader src={item.thumbnail} />
                       </Link>
                     </div>
                     <div className="mt-2">
                       <h3>
                         <Link
-                          className="hover:text-[#2b38d1]"
-                          to={`/products/${item.id}`}
+                          className="text_ecl-2 hover:text-blue-500 transition-all"
+                          to={`/products/${item.slug}-${item.id}`}
                         >
                           {item.name}
                         </Link>
@@ -83,7 +78,10 @@ const Favourite = ({ isOpen, setIsOpen }) => {
                     </div>
                   </div>
 
-                  <div onClick={() => deleteFavourite(item.id)} className="">
+                  <div
+                    onClick={() => handleClickRemoveFavourite(item.id)}
+                    className=""
+                  >
                     <i className="fa-regular cursor-pointer hover:text-red-500 p-3 fa-trash-can"></i>
                   </div>
                 </div>

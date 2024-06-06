@@ -16,7 +16,9 @@ const Shop = ({ shop }) => {
         console.log(error, "hiii");
       }
     };
-    fetchAPi();
+    if(shop.id){
+      fetchAPi();
+    }
   }, [shop.id]);
   const handleClickFollow = async () => {
     try {

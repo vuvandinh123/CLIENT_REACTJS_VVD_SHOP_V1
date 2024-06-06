@@ -32,10 +32,22 @@ const TopSellingProducts = ({ data, loading }) => {
   };
   return (
     <div>
+      <div className="flex">
+        <img
+          className="w-1/2"
+          src="https://demo-uminex.myshopify.com/cdn/shop/files/banner_1_3.jpg?v=1672388551&width=2000"
+          alt=""
+        />
+        <img
+        className="w-1/2"
+          src="https://demo-uminex.myshopify.com/cdn/shop/files/banner_1_2.jpg?v=1672388539&width=2000"
+          alt=""
+        />
+      </div>
       <div className=" bg-white rounded-md p-4 flex justify-between flex-wrap gap-y-4 items-center">
         <div className="flex items-center">
-          <p className="text-base font-bold text-[#000]">
-            TOP SELLING PRODUCTS
+          <p className="text-base uppercase font-bold text-[#000]">
+            Danh mục nổi bật
           </p>
         </div>
         <div>

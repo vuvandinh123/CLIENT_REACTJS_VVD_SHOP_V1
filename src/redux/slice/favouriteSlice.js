@@ -6,12 +6,19 @@ const favoriteSlice = createSlice({
     initialState: {
         favAr: [],
         isOpen: false,
+        qty: 0
     },
     reducers: {
         setFavList: (state, payload) => {
             return {
                 ...state,
                 favAr: [...payload.payload]
+            }
+        },
+        setQtyFav: (state, action) => {
+            return {
+                ...state,
+                qty: action.payload
             }
         },
         setIsOpenFav: (state, payload) => {
@@ -54,5 +61,5 @@ const favoriteSlice = createSlice({
     }
 });
 
-export const { byToFav, DeleteFav, setFavList, setIsOpenFav } = favoriteSlice.actions;
+export const { byToFav,setQtyFav, DeleteFav, setFavList, setIsOpenFav } = favoriteSlice.actions;
 export default favoriteSlice.reducer;

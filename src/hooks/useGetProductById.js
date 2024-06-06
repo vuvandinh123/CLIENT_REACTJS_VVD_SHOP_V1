@@ -16,7 +16,7 @@ export default function useGetProductById(id) {
             }
             const respones = await getProductById(id);
             const shop = await getShopById(respones.data.shop_id);
-            window.document.title = "Shopdinh - " + respones.data.name;
+            window.document.title = "VVD SHOP - " + respones.data.name;
             setShop(shop.data)
             setData(respones.data)
             setSrc(respones.data.imageUrls[0]);

@@ -5,19 +5,27 @@ import FeaturedProducts from "./components/FeaturedProducts";
 import TopSellingProducts from "./components/TopSellingProducts";
 import News from "./components/News";
 import Contents from "./components/Contents";
-import { useScrollTop } from "../../hooks";
+import { useApiCall, useScrollTop } from "../../hooks";
 import useFetchApi from "../../hooks/useFetchApi";
-import {
-  GET_PRODUCTS_TOP_SELLING,
-} from "../../constants/constants";
+import { GET_PRODUCTS_TOP_SELLING } from "../../constants/constants";
 import useTitle from "../../hooks/useTitle";
+import { getDailyProduct, getHotSaleProduct } from "../../service/Product";
 
 const HomePage = () => {
   useScrollTop();
-  useTitle("home || vuvan dinh")
-  const hotDeal = useFetchApi({ URL: GET_PRODUCTS_TOP_SELLING });
+  useTitle("home || vuvan dinh");
+
+  const hotDeal = useApiCall(async () => {
+    const res = await getHotSaleProduct();
+    return res.data;
+  }, []);
+
+  // const hotDeal = useFetchApi({ URL: GET_PRODUCTS_TOP_SELLING });
   const topSelling = useFetchApi({ URL: GET_PRODUCTS_TOP_SELLING });
-  const featured = [];
+  const featured = useApiCall(async () => {
+    const res = await getDailyProduct();
+    return res.data;
+  }, []);
   const recomended = [];
   const post = [];
   return (
@@ -30,11 +38,8 @@ const HomePage = () => {
           </div>
           <Contents />
         </div>
-        <Hotdeals data={hotDeal?.data?.data} loading={hotDeal?.loading} />
-        <FeaturedProducts
-          data={featured?.data?.data?.data}
-          loading={featured?.loading}
-        />
+        <Hotdeals data={hotDeal?.data} loading={hotDeal?.loading} />
+        <FeaturedProducts data={featured?.data} loading={featured?.loading} />
         <div className="lg:my-20 my-10 relative">
           <div className="relative ">
             <img

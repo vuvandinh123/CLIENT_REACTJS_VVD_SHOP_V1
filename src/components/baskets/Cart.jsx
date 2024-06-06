@@ -1,116 +1,43 @@
-import plus from "../../../public/plus.svg";
-import minus from "../../../public/minus.svg";
 import shiping from "../../../public/shiping.svg";
-import { ImageLoader, Offcanvas } from "../common";
+import { Offcanvas } from "../common";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useCart } from "../../hooks";
 import cartempty from "../../../public/svg/cartempty.svg";
-import ChangePrice from "../common/ChangePrice";
+import CartItem from "./CartItem";
 const Cart = ({ isOpen, setIsOpen }) => {
-  const { cartAr } = useSelector((state) => state.cart);
+  const {
+    handleClickDeleteCartItem,
+    hanldeClickPlus,
+    hanldeClickMinus,
+    totalPrice,
+    data,
+  } = useCart(isOpen);
+
   const couponRef = useRef(null);
   const iconCouponRef = useRef(null);
   const [isOpenCoupon, setIsOpenCoupon] = useState(false);
-  const {
-    handleQuantityClickMinus,
-    handleQuantityClickPlus,
-    deleteCart,
-    totalPrice,
-  } = useCart();
-  let cartNew = [...cartAr];
-  cartNew.reverse();
+
   return (
     <>
       <div>
         <Offcanvas isOpen={isOpen} setIsOpen={setIsOpen} label="Cart">
-          <div className={cartAr.length > 0 ? "" : "hidden"}>
+          <div className={data.length > 0 ? "" : "hidden"}>
             <div className="overflow-y-scroll max-h-[260px]">
-              {cartNew.length > 0 &&
-                cartNew.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex justify-between gap-3  items-start p-5 border-b"
-                    >
-                      <div className="flex gap-2">
-                        <div className="w-28 shrink-0 p-2 relative min-h-[100px]">
-                          <ImageLoader
-                            className=""
-                            src={item.image}
-                            alt={item.name}
-                          />
-                        </div>
-                        <div className="">
-                          <h3 className="font-medium">
-                            <Link
-                              className="text_ecl-2"
-                              to={"/products/" + item.slug}
-                            >
-                              {item.name}
-                            </Link>{" "}
-                          </h3>
-                          {item.variant?.code ? (
-                            <span className="text-gray-400">
-                              SKU: {item.variant?.code}
-                            </span>
-                          ) : null}
-
-                          <div className="flex items-center gap-2">
-                            <ChangePrice
-                              className="text-[#2b38d1] text-[1rem] font-bold my-2"
-                              price={item.price}
-                            />
-                          </div>
-
-                          <div className="">
-                            <div className="flex items-center w-44">
-                              <button
-                                onClick={() =>
-                                  handleQuantityClickMinus(
-                                    item.id,
-                                    item.qty,
-                                    item.variant?.code
-                                  )
-                                }
-                                className="px-2 group py-1 border "
-                              >
-                                <img src={minus} alt="" />
-                              </button>
-                              <input
-                                value={item.qty}
-                                className="outline-none  py-1 w-14 bg-[#F1F5F6] border text-center"
-                                type="text"
-                              />
-                              <button
-                                onClick={() =>
-                                  handleQuantityClickPlus(
-                                    item.id,
-                                    item.qty,
-                                    item.variant?.code
-                                  )
-                                }
-                                className=" px-2 py-1 border group"
-                              >
-                                <img src={plus} alt="" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <span
-                          onClick={() => deleteCart(item.id)}
-                          className="cursor-pointer hover:text-red-600"
-                        >
-                          <i className="fa-regular fa-trash-can"></i>
-                        </span>
-                      </div>
-                    </div>
-                  );
+              {data?.length > 0 &&
+                data?.map((item) => {
+                  return item?.products.map((item2, index2) => {
+                    return (
+                      <CartItem
+                        key={index2}
+                        handleClickDeleteCartItem={handleClickDeleteCartItem}
+                        hanldeClickPlus={hanldeClickPlus}
+                        hanldeClickMinus={hanldeClickMinus}
+                        data={item2}
+                      ></CartItem>
+                    );
+                  });
                 })}
             </div>
             <div className="py-5 mt-3 px-5  border-b">
@@ -129,11 +56,11 @@ const Cart = ({ isOpen, setIsOpen }) => {
                 </span>
               </div>
               <p className="mt-5">
-                {5000 - totalPrice <= 0 ? (
+                {/* {5000 - totalPrice <= 0 ? (
                   <>Congratulations! You've got </>
                 ) : (
                   <>Spend ${(5000 - totalPrice).toFixed(2)} more and get</>
-                )}
+                )} */}
                 <span className="text-red-600"> Free Shipping!</span>{" "}
               </p>
             </div>
@@ -241,7 +168,7 @@ const Cart = ({ isOpen, setIsOpen }) => {
                     <span className="text-[#2b38d1]">(- $99.30)</span>
                   </p>
                   <p className="text-red-600 text-[18px] font-bold">
-                    ${totalPrice.toFixed(2)}
+                    {/* ${totalPrice.toFixed(2)} */}
                   </p>
                 </div>
               </div>

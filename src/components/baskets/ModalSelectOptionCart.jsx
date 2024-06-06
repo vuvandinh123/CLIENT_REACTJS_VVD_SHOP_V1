@@ -8,16 +8,16 @@ import Skeleton from "react-loading-skeleton";
 import { formatPrice } from "../../utils";
 import { setIsOpenSelectOptions } from "../../redux/slice/selectCartSlice";
 import toast from "react-hot-toast";
-import { byToCart, setIsOpenCart } from "../../redux/slice/cartSlice";
+import { setIsOpenCart } from "../../redux/slice/cartSlice";
 import useSelectOptionProduct from "../../hooks/useSelectOptionProduct";
 import QuantityOptionProduct from "../common/QuantityOptionProduct";
+import { addToCart } from "../../service/Cart";
 const ModalSelectOptionCart = () => {
   const { cartId, isOpen } = useSelector((state) => state.selectCart);
   const [isSubmit, setIsSubmit] = useState(false);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const { data, src, setSrc, setData, loading } = useGetProductById(cartId);
-  console.log(data, "data");
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -28,27 +28,26 @@ const ModalSelectOptionCart = () => {
     data,
     setData,
   });
-  const handleClickToCart = () => {
+  const fnToCart = async (data) => {
+    const res = await addToCart(data);
+    if (res.status === 200) {
+      dispatch(setIsOpenSelectOptions({ isOpen: false }));
+    }
+  };
+  const handleClickToCart = async () => {
     if (!options.variant.code) {
       toast.error("Please select variant !");
       return;
     }
     setIsSubmit(true);
     const newCart = {
-      name: data.name,
-      price: data.price,
-      id: data.id,
-      variant: options.variant,
-      image: data?.imageUrls[0],
-      qty: quantity,
-      slug: data.slug,
-      shop_id: data.shop_id,
+      productId: data.id,
+      code: options.variant.code,
+      quantity: quantity,
     };
-    console.log(newCart, "newCart");
     setTimeout(() => {
-      dispatch(byToCart(newCart));
       setIsSubmit(false);
-      dispatch(setIsOpenSelectOptions({ isOpen: false }));
+      fnToCart(newCart);
       if (window.screen.width > 768) {
         dispatch(setIsOpenCart(true));
       } else {
@@ -69,7 +68,7 @@ const ModalSelectOptionCart = () => {
         onClick={() => dispatch(setIsOpenSelectOptions({ isOpen: false }))}
         className="fixed inset-0 bg-black bg-opacity-75 transition-opacity z-30"
       ></div>
-      <div className="fixed flex flex-col justify-between w-[700px] h-[500px] p-5 bg-white z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg">
+      <div className="fixed flex flex-col justify-between w-[700px] min-h-[550px] p-5 bg-white z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg">
         <div>
           <div className="flex justify-between items-center border-b pb-5">
             <h3 className="uppercase font-bold text-lg">Options for you</h3>
@@ -177,7 +176,14 @@ const ModalSelectOptionCart = () => {
             disabled={isSubmit}
             className="w-full bg-blue-500 hover:bg-blue-600 flex gap-2 item-center justify-center px-3 py-3 relative rounded-lg text-white uppercase font-bold text-md"
           >
-            {isSubmit ? <span className="flex gap-2">Adding... <div className="w-5 h-5 border-4 border-gray-200 rounded-full animate-spin border-t-transparent"></div> </span> : "Add to cart"}
+            {isSubmit ? (
+              <span className="flex gap-2">
+                Adding...{" "}
+                <div className="w-5 h-5 border-4 border-gray-200 rounded-full animate-spin border-t-transparent"></div>{" "}
+              </span>
+            ) : (
+              "Add to cart"
+            )}
           </button>
         )}
       </div>

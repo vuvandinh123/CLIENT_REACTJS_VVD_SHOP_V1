@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 
 const PlacehoderCard = () => {
   return (
-    <div className="">
+    <div className="w-full">
       <div className="mx-1 flex h-full flex-col justify-between  group rounded-md overflow-hidden relative  bg-white p-[20px]">
         <div className="">
           <div className="cursor-wait relative min-h-[170px]">

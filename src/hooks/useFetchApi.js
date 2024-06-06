@@ -12,7 +12,6 @@ const useFetchApi = ({ URL, params = {}, config = {} }) => {
     const fetch = async () => {
         try {
             setLoading(true);
-
             setError(null);
             const response = [];
             if (disMount) {

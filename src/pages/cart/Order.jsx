@@ -5,22 +5,32 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ChangePrice } from "../../components/common";
 
-const Order = ({ totalPrice, amount, handleClickCheckout }) => {
+const Order = ({
+  totalPrice,
+  amount,
+  handleClickCheckout,
+  productDiscount,
+}) => {
   const discount = 5000;
   const discountAmount = 3;
   const [coupon, setCoupon] = useState("");
   const [mes, setMes] = useState("");
   const [dataCoupon, setDataCoupon] = useState(null);
-  const [shipping, setShipping] = useState([]);
+  const [shipping, setShipping] = useState([
+    {
+      id: 1,
+      name: "Giao hàng nhanh",
+      price: 123,
+    },
+    {
+      id: 2,
+      name: "Giao hàng tiêu chuẩn",
+      price: 98,
+    },
+  ]);
   const [priceShipping, setPriceShipping] = useState(null);
-  const [total, setTotal] = useState(totalPrice);
-  useEffect(() => {
-    let s = priceShipping ? totalPrice + Number(priceShipping) : totalPrice;
-    if (dataCoupon) {
-      s = s - (s * dataCoupon.discount) / 100;
-    }
-    setTotal(s);
-  }, [priceShipping, dataCoupon, totalPrice]);
+  const [total, setTotal] = useState(0);
+
   useEffect(() => {
     const fetch = async () => {
       // const respone = await shippingApi.getAll();
@@ -70,15 +80,25 @@ const Order = ({ totalPrice, amount, handleClickCheckout }) => {
           {discount - totalPrice <= 0 ? (
             <>{`Congratulations! You've got`} </>
           ) : (
-            <>Spend ${(discount - totalPrice).toFixed(2)} more and get</>
+            <>Tiêu ${(discount - totalPrice).toFixed(2)} để nhận được </>
           )}
           <span className="text-red-600"> Free Shipping!</span>{" "}
         </p>
-        <h4 className="uppercase font-bold mt-5  pb-2">Cart totals</h4>
+        <h4 className="uppercase font-bold mt-5  pb-2">Tổng giỏ hàng</h4>
         <div>
           <div className="flex justify-between border-y py-4">
-            <p className="text-base ">Subtotal</p>
+            <p className="text-base ">Đơn giá</p>
             <ChangePrice className="font-bold  text-base" price={totalPrice} />
+          </div>
+          <div className="flex justify-between py-4">
+            <p className="text-base ">Giảm giá</p>
+            <ChangePrice
+              className="font-bold  text-base"
+              price={Object.values(productDiscount).reduce(
+                (acc, item) => acc + item.value,
+                0
+              )}
+            />
           </div>
         </div>
 
@@ -134,7 +154,7 @@ const Order = ({ totalPrice, amount, handleClickCheckout }) => {
                       name="shipping"
                       id={item.name}
                     />
-                    <span>{item.type}</span>
+                    <span>{item.name}</span>
                   </div>
                   <span>${item.price}</span>
                 </label>

@@ -21,7 +21,7 @@ export function arraysMatch(arr1, arr2) {
     return true;
 }
 export function formatPrice(value) {
-    if(!value) return 0
+    if (!value) return 0
     const formattedNumber = value.toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD' // Định dạng thành tiền USD
@@ -29,7 +29,7 @@ export function formatPrice(value) {
     return formattedNumber
 }
 export function formatPriceVND(value) {
-    if(!value) return 0
+    if (!value && value !== 0) return 0
     const formattedNumber = value.toLocaleString('vi-VN', {
         style: 'currency',
         currency: 'VND'
@@ -172,4 +172,15 @@ export function generateDiscountCode(length = 10) {
     }
 
     return code;
+}
+
+export function hasCommonElements(arr1, arr2) {
+    const set1 = new Set(arr1);
+
+    for (const element of arr2) {
+        if (set1.has(Number(element))) {
+            return true;
+        }
+    }
+    return false;
 }

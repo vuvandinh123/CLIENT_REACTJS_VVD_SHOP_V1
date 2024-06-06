@@ -12,7 +12,6 @@ import { AiOutlineShareAlt } from "react-icons/ai";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { byToCart } from "../../../redux/slice/cartSlice";
 import CountDown from "./CountDown";
 import Variants from "./Variants";
 import { useEffect, useState } from "react";
@@ -72,7 +71,7 @@ const BoxContent = ({ data, setData, discount }) => {
       image: data?.imageUrls[0],
       slug: data.slug,
     };
-    dispatch(byToCart(newCart));
+    // dispatch(byToCart(newCart));
     navigate("/cart");
   };
   return (
@@ -100,7 +99,7 @@ const BoxContent = ({ data, setData, discount }) => {
           <span>{data.rating}</span>
           <span>/</span>
           <span className="text-[11px] md:text-[13px]">
-            {data?.reviewCount} Reviews
+            {data?.reviewCount} Đánh giá
           </span>
         </div>
         <h3 className="text-red-500 flex gap-3 text-3xl mt-5 font-semibold">
@@ -117,7 +116,7 @@ const BoxContent = ({ data, setData, discount }) => {
         </h3>
 
         <div className="flex relative mt-5 gap-2">
-          <h4 className=" font-bold text-gray-600 shrink-0">Shop voucher:</h4>
+          <h4 className=" font-bold text-gray-600 shrink-0">Mã giảm giá:</h4>
           <div className=" py-2 scroll-height-3 flex flex-wrap items-center gap-3 max-w-max">
             {discount &&
               discount.map((item, index) => (
@@ -129,15 +128,15 @@ const BoxContent = ({ data, setData, discount }) => {
         </div>
 
         {/* count down */}
-        {data.is_sale && data.end_time ? (
-          <CountDown end_time={data.end_time}></CountDown>
+        {data.end_date ? (
+          <CountDown end_time={data.end_date}></CountDown>
         ) : null}
         {/* variant */}
 
         {/* variant */}
         {data.type != "single" ? (
           <div className="flex gap-14">
-            <h5 className="mt-5 shrink-0 font-bold text-gray-600">Variant:</h5>
+            <h5 className="mt-5 shrink-0 font-bold text-gray-600">Biến thể:</h5>
             {data.variant?.productVariants?.length > 0 ? (
               <Variants
                 value={variantSelect}
@@ -150,7 +149,7 @@ const BoxContent = ({ data, setData, discount }) => {
           </div>
         ) : null}
         <div className="flex gap-14 my-5">
-          <h5 className="shrink-0 font-bold text-gray-600">Quantity:</h5>
+          <h5 className="shrink-0 font-bold text-gray-600">Số lượng:</h5>
           <div className="-ms-2 flex items-center gap-5">
             <div className="flex items-center border">
               <button className="px-5 py-2">
@@ -166,7 +165,7 @@ const BoxContent = ({ data, setData, discount }) => {
               </button>
             </div>
             <div>
-              <p className="text-gray-400">{data.quantity} pieces available</p>
+              <p className="text-blue-500">{data.quantity} sản phẩm có sẵn</p>
             </div>
           </div>
         </div>

@@ -1,56 +1,82 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DeleteCart, qtyCart, setCartList } from "../redux/slice/cartSlice";
+import { changeQuantityCartItem, getCart, removeCartItem } from "../service/Cart";
+import toast from "react-hot-toast";
+import { getCookieAuth } from "../utils";
+import { useDispatch } from "react-redux";
+import { setToTalCart } from "../redux/slice/cartSlice";
 
-export default function useCart() {
-    const { cartAr } = useSelector((state) => state.cart);
-    const [totalPrice, setToatalPrice] = useState(0);
-    const [amount, setAmount] = useState(0);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        if (cartAr.length > 0) {
-            localStorage.setItem("cart", JSON.stringify(cartAr));
-            let newTotal = 0;
-            let newAmount = 0;
-            cartAr.forEach((item) => {
-                newTotal += item.total;
-                newAmount += item.qty;
-            });
-            setToatalPrice(newTotal);
-            setAmount(newAmount);
+export default function useCart(isOpen = false) {
+    const [refresh, setRefresh] = useState(false);
+    const [loading, setLoading] = useState(false)
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [data, setData] = useState([]);
+    const dispatch = useDispatch()
+    // function caculate total price
+    const caculateTotalPrice = (data) => {
+        const amount = data.reduce((acc, item) => {
+            const total = item.products.reduce((acc2, item2) => acc2 + Number(item2.amount), 0)
+            return acc + total
+        }, 0)
+        const qty = data.reduce((acc, item) => {
+            return acc + item.products.length
+        }, 0)
+        return {
+            amount,
+            qty
         }
-
-    }, [cartAr]);
-    useEffect(() => {
-        if (localStorage.getItem("cart")) {
-            const cartList = localStorage.getItem("cart");
-            dispatch(setCartList(JSON.parse(cartList)));
-        }
-
-    }, [dispatch]);
-
-    const deleteCart = (id) => {
-        if (cartAr.length === 1) {
-            localStorage.removeItem("cart");
-        }
-        dispatch(DeleteCart(id));
-    };
-    const handleQuantityClickPlus = (id, qtyValue, code) => {
-        dispatch(qtyCart({ id, qty: qtyValue + 1, code }));
-    };
-    const handleQuantityClickMinus = (id, qtyValue, code) => {
-        dispatch(qtyCart({ id, qty: qtyValue - 1, code }));
-    };
-    const deleteCartAll = () => {
-        dispatch(setCartList([]));
-        localStorage.removeItem("cart");
     }
+    const fetchData = async () => {
+        setLoading(true)
+        const res = await getCart();
+        const total = caculateTotalPrice(res.data)
+        setTotalPrice()
+        dispatch(setToTalCart(total))
+        setData(res.data);
+        setLoading(false)
+    }
+    useEffect(() => {
+        const { userId } = getCookieAuth();
+        if (userId) {
+            fetchData();
+        }
+    }, [refresh, isOpen])
+    const handleClickDeleteCartItem = async (id) => {
+        const res = await removeCartItem(id);
+        if (res) {
+            setRefresh(!refresh);
+            toast.success("Xóa sản phẩm thành công");
+        }
+    };
+    const hanldeClickPlus = async (id, quantity) => {
+        const res = await changeQuantityCartItem({
+            cart_item_id: id,
+            quantity: Number(quantity) + 1,
+        });
+        if (res) {
+            setRefresh(!refresh);
+        }
+    };
+    const hanldeClickMinus = async (id, quantity) => {
+        if (quantity > 1) {
+            const res = await changeQuantityCartItem({
+                cart_item_id: id,
+                quantity: quantity - 1,
+            });
+            if (res) {
+                setRefresh(!refresh);
+            }
+        }
+    };
     return {
-        deleteCart,
-        deleteCartAll,
-        handleQuantityClickPlus,
-        handleQuantityClickMinus,
+        refresh,
+        setRefresh,
+        handleClickDeleteCartItem,
+        hanldeClickPlus,
+        hanldeClickMinus,
         totalPrice,
-        amount
+        data,
+        setData,
+        loading
     }
 }

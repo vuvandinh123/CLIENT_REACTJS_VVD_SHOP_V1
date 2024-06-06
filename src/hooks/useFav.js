@@ -1,34 +1,53 @@
-import { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteFav, setFavList } from "../redux/slice/favouriteSlice";
+import { addToFavourite, getFavourite, removeFavouriteItem } from "../service/Favourite";
+import { setQtyFav } from "../redux/slice/favouriteSlice";
 
 export default function useFav() {
-    const { favAr } = useSelector((state) => state.favourite);
-    const dispatch = useDispatch();
+    const { isOpen } = useSelector((state) => state.favourite);
+    const dispatch = useDispatch()
+    const [data, setData] = useState([])
+    const [refresh, setRefresh] = useState(false)
+    const [filter, setFilter] = useState({
+        limit: 10,
+        page: 1
+    })
     useEffect(() => {
-        if (favAr.length > 0) {
-            localStorage.setItem("fav", JSON.stringify(favAr));
+        const fetchData = async () => {
+            const res = await getFavourite(filter);
+            setData(res.data);
+            dispatch(setQtyFav(res.data.length))
         }
-
-    }, [favAr]);
-    useEffect(() => {
-        if (localStorage.getItem("fav")) {
-            const favList = localStorage.getItem("fav");
-            dispatch(setFavList(JSON.parse(favList)));
+        if (isOpen || !refresh) {
+            fetchData();
         }
+    }, [filter.limit, filter.page, refresh, isOpen])
 
-    }, [dispatch]);
-
-    const deleteFavourite = (id) => {
-        if(favAr.length === 1) {
-            localStorage.removeItem("fav");
+    const handleClickAddToFavourite = async (productId) => {
+        const res = await addToFavourite(productId);
+        if (res) {
+            setRefresh(!refresh);
         }
-        dispatch(DeleteFav(id));
-    };
-    
+    }
+    const isFav = (productId) => {
+        const is = data.find(item => item.id === productId)
+        return is;
+    }
+    const handleClickRemoveFavourite = async (id) => {
+        const res = await removeFavouriteItem(id);
+        if (res) {
+            setRefresh(!refresh)
+        }
+    }
 
     return {
-        deleteFavourite,
-        favAr,
+        data,
+        setFilter,
+        filter,
+        refresh,
+        handleClickAddToFavourite,
+        isFav,
+        handleClickRemoveFavourite,
     }
 }
