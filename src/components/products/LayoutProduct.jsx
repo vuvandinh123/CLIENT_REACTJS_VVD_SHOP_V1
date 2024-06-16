@@ -1,17 +1,15 @@
+/* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Product2 from "./Product2";
 import Product from "./Product";
 import PlacehoderCard from "../common/PlacehoderCard";
 import Loader from "../common/Loader";
-import { useNavigate } from "react-router-dom";
-
-const LayoutProduct = ({ data, loading }) => {
+import nodata from "../../assets/nodata.png";
+import { setUrlSearchParam } from "../../utils";
+const LayoutProduct = ({ data, loading, filter, setFilter }) => {
   var co = JSON.parse(localStorage.getItem("col")) || 0;
   const [col, setCol] = useState(co);
-  const searchQuery = new URLSearchParams(location.search);
-  const sortBy = searchQuery.get("sortBy");
-  const navigation = useNavigate();
 
   useEffect(() => {
     if (col != 0) {
@@ -26,8 +24,8 @@ const LayoutProduct = ({ data, loading }) => {
     };
   }, [col]);
   const handleChangeSort = (e) => {
-    searchQuery.set("sortBy", e.target.value);
-    navigation(`?${searchQuery.toString()}`);
+    setFilter({ ...filter, sortBy: e.target.value });
+    setUrlSearchParam("sortBy", e.target.value);
   };
   return (
     <>
@@ -36,7 +34,7 @@ const LayoutProduct = ({ data, loading }) => {
         <div className="flex justify-between items-center">
           <div>
             <span className="font-bold">{data.length}</span>{" "}
-            <span className="text-gray-500">Products</span>
+            <span className="text-gray-500">Sản phẩm</span>
           </div>
           <div>
             <ul className="flex items-center gap-5">
@@ -116,6 +114,7 @@ const LayoutProduct = ({ data, loading }) => {
                   <path d="M26 16C27.1046 16 28 15.1046 28 14C28 12.8954 27.1046 12 26 12C24.8954 12 24 12.8954 24 14C24 15.1046 24.8954 16 26 16Z"></path>
                 </svg>
               </li>
+
               <li
                 className="hidden lg:block cursor-pointer"
                 onClick={() => setCol(1)}
@@ -138,55 +137,49 @@ const LayoutProduct = ({ data, loading }) => {
             </ul>
           </div>
           <div>
-            <span className="text-gray-500 me-3">Sort by:</span>
+            <span className="text-gray-500 me-3">Sắp xếp theo:</span>
             <select
               name=""
               id=""
               onChange={handleChangeSort}
-              className="outline-none p-2 border rounded-md"
+              className="outline-none p-2 border bg-gray-50 rounded-md"
             >
-              <option selected={sortBy === "Featured"} value="Featured">
-                Featured
-              </option>
-              <option selected={sortBy === "BestSelling"} value="BestSelling">
-                Best selling
+              <option selected={filter?.sortBy === "Featured"} value="Featured">
+                Đặc sắc
               </option>
               <option
-                selected={sortBy === "AlphabeticallyA-Z"}
-                value="AlphabeticallyA-Z"
+                selected={filter?.sortBy === "BestSelling"}
+                value="BestSelling"
               >
+                Bán chạy
+              </option>
+              <option selected={filter?.sortBy === "nameAsc"} value="nameAsc">
                 {" "}
-                Alphabetically, A-Z
+                Theo tên từ A-Z
+              </option>
+              <option selected={filter?.sortBy === "nameDesc"} value="nameDesc">
+                Theo tên từ Z-A
+              </option>
+              <option selected={filter?.sortBy === "priceAsc"} value="priceAsc">
+                Giá, thấp đến cao
               </option>
               <option
-                selected={sortBy === "AlphabeticallyZ-A"}
-                value="AlphabeticallyZ-A"
+                selected={filter?.sortBy === "priceDesc"}
+                value="priceDesc"
               >
-                Alphabetically, Z-A
+                Giá, cao đến thấp
               </option>
               <option
-                selected={sortBy === "Price-low-to-high"}
-                value="Price-low-to-high"
+                selected={filter?.sortBy === "createdAtAsc"}
+                value="createdAtAsc"
               >
-                Price, low to high
+                Mới nhất
               </option>
               <option
-                selected={sortBy === "Price-high-to-low"}
-                value="Price-low-to-low"
-              >
-                Price, high to low
-              </option>
-              <option
-                selected={sortBy === "Date-old-to-new"}
-                value="Date-old-to-new"
-              >
-                Date, old to new
-              </option>
-              <option
-                selected={sortBy === "Date-new-to-old"}
+                selected={filter?.sortBy === "Date-new-to-old"}
                 value="Date-new-to-old"
               >
-                Date, new to old
+                Cũ nhất
               </option>
             </select>
           </div>
@@ -216,9 +209,12 @@ const LayoutProduct = ({ data, loading }) => {
               .map((item, index) => <PlacehoderCard key={index} />)}
       </div>
       {!loading && data.length === 0 && (
-        <p className="text-center my-10 text-xl text-gray-400">
-          PRODUCTS NOT FOUND
-        </p>
+        <div className="flex bg-white pt-10 justify-center items-center flex-col">
+          <img className="w-[200px]" src={nodata} alt="" />
+          <p className="text-center my-10 text-sm text-gray-400">
+            KHÔNG TÌM THẤY SẢN PHẨM NÀO
+          </p>
+        </div>
       )}
     </>
   );

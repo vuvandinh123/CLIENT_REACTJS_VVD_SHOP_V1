@@ -110,6 +110,11 @@ export const privateRouter = [
         layout: LayoutAdmin,
         component: PAGE.ListOutInevnentory
     },
+    {
+        path: ROUTES.ADMIN_ORDERS,
+        layout: LayoutAdmin,
+        component: PAGE.ListOrders
+    },
     // {
     //     path: ROUTES.ADMIN_CATEGORIES,
     //     exact: true,

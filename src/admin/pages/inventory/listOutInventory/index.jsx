@@ -6,7 +6,7 @@ import TableSkeletor from "./TableSkeletor";
 import LayoutListShop from "../../../components/page";
 
 // utils
-import { formatPrice, formathDate } from "../../../../utils";
+import { formatPrice, formatPriceVND, formathDate } from "../../../../utils";
 import { MdOutlineEventNote } from "react-icons/md";
 
 import {
@@ -147,7 +147,7 @@ const ListOutInventory = () => {
               </div>
             </th>
             <td className="px-6 py-4">x{item.quantity}</td>
-            <td className="px-6 py-4">{formatPrice(item.total || 0)}</td>
+            <td className="px-6 py-4">{formatPriceVND(item.total || 0)}</td>
             <td className="px-6 py-4">{item.note}</td>
             <td className="px-6 py-4">{formathDate(item.created_at)}</td>
             <td className="px-6 py-4">

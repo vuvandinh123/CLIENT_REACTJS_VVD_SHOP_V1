@@ -94,7 +94,21 @@ const publicRoute = [
         layout: NoLayout,
         component: PAGE.ChangePassword
     },
-
+    {
+        path: ROUTES.USER,
+        exact: true,
+        component: PAGE.UserPage
+    },
+    {
+        path: ROUTES.USER_PURCHASE,
+        exact: true,
+        component: PAGE.UserOrderDetailPage
+    },
+    {
+        path: ROUTES.SHOP,
+        exact: true,
+        component: PAGE.ShopPage
+    },
 
 ]
 

@@ -22,11 +22,11 @@ const ChangePassword = () => {
   const handleSubmitChangePassword = async (e) => {
     e.preventDefault();
     if (data.newPassword === "" || data.confirmPassword === "") {
-      toast.error("Please enter password");
+      toast.error("Vui lòng nhập mật khẩu");
       return;
     }
     if (data.newPassword !== data.confirmPassword) {
-      toast.error("Password does not match");
+      toast.error("Mật khẩu không khớp");
       return;
     }
     const res = await Auth.VerifyForgetPassword({
@@ -35,24 +35,23 @@ const ChangePassword = () => {
       newPassword: data.newPassword,
     });
     if (res.data === true) {
-      toast.success("Change password success");
+      toast.success("Mật khẩu đã được cập nhật");
       setInterval(() => {
-        window.close();
+        window.location.href = route.LOGIN;
       }, 1000);
     }
   };
   const handleClickDiscard = () => {
-    toast.error("Cancal change password");
     setInterval(() => {
-      window.location.href = route.LOGIN
+      window.location.href = route.LOGIN;
     }, 1000);
   };
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-        <h1 className="text-2xl font-semibold text-center">Change Password</h1>
+        <h1 className="text-2xl font-semibold text-center">Quên mật khẩu</h1>
         <p className="text-sm text-gray-600 mt-2 mb-6">
-          Update password for enhanced account security.
+          Cập nhật mật khẩu để tăng cường bảo mật tài khoản.
         </p>
         <form
           onSubmit={handleSubmitChangePassword}
@@ -64,7 +63,7 @@ const ChangePassword = () => {
               htmlFor="newPassword"
               className="text-sm font-medium text-gray-700 block mb-2"
             >
-              New Password *
+              Mật khẩu mới *
             </label>
             <input
               type="password"
@@ -82,7 +81,7 @@ const ChangePassword = () => {
               htmlFor="confirmPassword"
               className="text-sm font-medium   text-gray-700 block mb-2"
             >
-              Confirm New Password *
+              Xác nhận mật khẩu *
             </label>
             <input
               type="password"
@@ -101,7 +100,7 @@ const ChangePassword = () => {
               }
               className="text-xs  text-blue-600 hover:underline mt-2"
             >
-              Clear
+              Xóa
             </button>
           </div>
           <div className="flex justify-between">
@@ -110,13 +109,13 @@ const ChangePassword = () => {
               onClick={handleClickDiscard}
               className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:border-blue-300"
             >
-              Discard
+              Thoát
             </button>
             <button
               type="submit"
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
             >
-              Apply Changes
+              ÁP DỤNG
             </button>
           </div>
         </form>

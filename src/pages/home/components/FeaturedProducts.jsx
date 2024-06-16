@@ -1,11 +1,14 @@
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { PlacehoderCard } from "../../../components/common";
-import SlickCround from "../../../components/common/SlickCround";
-import { settingSlick } from "../../../helpers";
 import PropTypes from "prop-types";
 import Product from "../../../components/products/Product";
-const FeaturedProducts = ({ data, loading }) => {
-  const settings = settingSlick(5);
+import { useApiCall } from "../../../hooks";
+import { getDailyProduct } from "../../../service/Product";
+const FeaturedProducts = () => {
+  const { data, loading } = useApiCall(async () => {
+    const res = await getDailyProduct();
+    return res.data;
+  }, []);
   return (
     <div>
       <div className=" bg-white rounded-md p-4 flex justify-between flex-wrap gap-y-4 items-center">

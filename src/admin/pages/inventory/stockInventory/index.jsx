@@ -51,7 +51,7 @@ const StockInventory = () => {
           changeValue={Math.round(data?.totalIncome?.change || 0)}
         ></CardStock>
         <CardStock
-          title={"Xuất hàng"}
+          title={"Doanh thu"}
           value={formatPriceVND(data?.totalExpense?.value || 0)}
           filter={filter}
           change={

@@ -22,7 +22,7 @@ const Table = (props) => {
                 className="px-6 uppercase font-bold py-4  text-gray-900"
                 key={index}
               >
-                {t(`admin.inventory.table.${item}`)}
+                {t(`admin.variant.table.${item}`)}
               </th>
             ))}
             <th scope="col" className="px-6 py-4 font-medium text-gray-900" />

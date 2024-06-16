@@ -1,19 +1,26 @@
 import PropTypes from "prop-types";
-import { AiOutlineSetting } from "react-icons/ai";
-import { CiLogout } from "react-icons/ci";
+import { CiLogout, CiShop } from "react-icons/ci";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { Link } from "react-router-dom";
 import { useDropdown } from "../../../hooks";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
+import { HiOutlineHome } from "react-icons/hi";
 import Auth from "../../../service/Auth";
 import toast from "react-hot-toast";
 import { removeCookieAuth } from "../../../utils";
+import { checkRole } from "../../../helpers/utils";
 const LoginUser = ({ user }) => {
   const dropRef = useRef(null);
   const iconRef = useRef(null);
+  const [isShop, setIsShop] = useState(false);
   const { dropdow, setDropdow } = useDropdown(false, dropRef, iconRef);
+  useEffect(() => {
+    if (checkRole("SHOP")) {
+      setIsShop(true);
+    }
+  }, []);
   const handleClickLogout = async () => {
     const logout = await Auth.Logout();
     if (logout.data) {
@@ -32,7 +39,11 @@ const LoginUser = ({ user }) => {
         className="cursor-pointer flex items-center gap-2 mr-10"
       >
         {user?.image ? (
-          <img className="w-10 h-10 rounded-full border" src={user?.image} alt="" />
+          <img
+            className="w-10 h-10 rounded-full border"
+            src={user?.image}
+            alt=""
+          />
         ) : (
           <img
             className="w-10 h-10"
@@ -42,7 +53,9 @@ const LoginUser = ({ user }) => {
         )}
 
         <div>
-          <p className="text-[#3c3d3e] tracking-widest text-[10px]">Hello</p>
+          <p className="text-[#3c3d3e] tracking-widest whitespace-nowrap text-[10px]">
+            Xin chào
+          </p>
           <p className="text-[#212529] font-bold text-[14px] capitalize">
             {user?.firstName}
           </p>
@@ -57,7 +70,11 @@ const LoginUser = ({ user }) => {
         <div className="bg-white  shadow-lg p-5">
           <div className="flex justify-center relative">
             {user?.image ? (
-              <img className="w-10 h-10 rounded-full border" src={user?.image} alt="" />
+              <img
+                className="w-10 h-10 rounded-full border"
+                src={user?.image}
+                alt=""
+              />
             ) : (
               <div className="relative">
                 <img
@@ -81,7 +98,7 @@ const LoginUser = ({ user }) => {
               )}
             </p>
             {user.email_verified === 0 && (
-              <p className="text-[10px] text-red-300">Not verified</p>
+              <p className="text-[10px] text-red-300">Chưa xác thực</p>
             )}
             <p className="pb-2 text-[12px] w-full overflow-hidden text-gray-400 mt-1">
               {user?.email}
@@ -90,33 +107,41 @@ const LoginUser = ({ user }) => {
           <hr />
           <div className="mt-3">
             <Link
+              to={"/user"}
+              className="flex hover:text-black text-gray-600  items-center gap-2 py-1 text-base"
+            >
+              <HiOutlineHome />
+              Thông tin cá nhân
+            </Link>
+            {isShop && (
+              <Link
+                to={"/admin"}
+                className="flex hover:text-black text-gray-600  items-center gap-2 py-1 text-base"
+              >
+                <CiShop />
+                Quản lý cửa hàng
+              </Link>
+            )}
+            <Link
               to={"/cart"}
               className="flex hover:text-black text-gray-600  items-center gap-2 py-1 text-base"
             >
               <TfiShoppingCartFull />
-              Cart
+              Giỏ hàng
             </Link>
             <Link
-              to={"/order-details"}
+              to={"/user/purchase"}
               className="flex hover:text-black text-gray-600  items-center gap-2 py-1 text-base"
             >
               <IoBagCheckOutline />
-              Purchased Order
+              Đơn mua
             </Link>
-            <Link
-              to={""}
-              className="flex hover:text-black text-gray-600  items-center gap-2 py-1 text-base"
-            >
-              <AiOutlineSetting />
-              Setting
-            </Link>
-
             <button
               onClick={handleClickLogout}
               className="flex hover:text-red-700 text-red-500  items-center gap-2 py-1 text-base"
             >
               <CiLogout />
-              Logout
+              Đăng xuất
             </button>
           </div>
         </div>

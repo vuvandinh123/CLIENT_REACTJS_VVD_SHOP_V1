@@ -2,8 +2,8 @@
 /* eslint-disable react/prop-types */
 
 import { useEffect, useState } from "react";
-import { getExchangeRatesUSDtoVND } from "../../../api/price";
-import { formatNumber, formatPriceVND, removeCommas } from "../../../utils";
+import { getExchangeRatesUSDtoVND, getExchangeRatesVNDtoUSD } from "../../../api/price";
+import { formatNumber, formatPrice, formatPriceVND, removeCommas } from "../../../utils";
 import { useField } from "formik";
 
 const PriceFiled = ({ label, location, ...props }) => {
@@ -11,7 +11,7 @@ const PriceFiled = ({ label, location, ...props }) => {
   const [vnd, setVnd] = useState(0);
   const [vndView, setVndView] = useState(0);
   const handleConvertPrice = async () => {
-    const res = getExchangeRatesUSDtoVND(vnd || 0);
+    const res = getExchangeRatesVNDtoUSD(vnd || 0);
     setVndView(res);
   };
   useEffect(() => {
@@ -22,9 +22,8 @@ const PriceFiled = ({ label, location, ...props }) => {
   const { setValue } = helpers;
   // thay đổi field
   const handleChangePrice = (e) => {
-    setVnd(removeCommas(e.target.value));
-    const value = formatNumber(e.target.value);
-    setValue(value);
+    setVnd(e.target.value);
+    setValue(e.target.value);
   };
   return (
     <div>
@@ -47,7 +46,7 @@ const PriceFiled = ({ label, location, ...props }) => {
         {vnd.length > 0 && (
           <div className="absolute top-1/2 translate-y-[-50%] text-gray-300 z-0 right-20">
             {" "}
-            = {formatPriceVND(vndView || 0)}
+            = {formatPrice(vndView || 0)}
           </div>
         )}
 

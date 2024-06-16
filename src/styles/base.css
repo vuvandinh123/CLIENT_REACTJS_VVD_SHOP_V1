@@ -1,6 +1,20 @@
 body{
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.scroll-h-3::-webkit-scrollbar {
+    height: 8px;
+}
+.scroll-h-3::-webkit-scrollbar-thumb {
+    background-color: #eee;
+    border-radius: 4px;
+}
+.scroll-h-3::-webkit-scrollbar-thumb:hover {
+    background-color: #ccc;
+}
+.scroll-h-3::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 4px;
+}
 .text-ecl {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -37,7 +51,7 @@ body{
     left: 0;
     bottom: 0;
     right: 0;
-    background: #0000005c;
+    background: #adadad5c;
     z-index: 0;
     border-radius: 10px;
     overflow: hidden;

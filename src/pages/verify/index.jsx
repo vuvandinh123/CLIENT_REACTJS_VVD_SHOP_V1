@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Loader, VerificationCodeInput } from "../../components/common";
 import Auth from "../../service/Auth";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
 import { getSessionStorage, setSessionStorage } from "../../helpers/utils";
 const VerifyEmail = () => {
@@ -67,6 +67,10 @@ const VerifyEmail = () => {
     }
   }, [codeDateTime]);
   const handleClickSubmit = async () => {
+    if(!codeValues.join("")){
+      toast.error("Mã xác nhận không được để trống")
+      return;
+    }
     const res = await Auth.ConfirmEmail({ code: codeValues.join("") });
     if (res.data === true) {
       navigate("/");
@@ -82,11 +86,11 @@ const VerifyEmail = () => {
       {isSending && <Loader />}
       <div className="min-h-screen flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-          <h1 className="text-xl font-semibold mb-4">Verify email address</h1>
+          <h1 className="text-xl font-semibold mb-4">Xác nhận địa chỉ email</h1>
           <p className="text-gray-600 mb-6">
-            We have sent a confirmation code to your email{" "}
-            <span className="text-blue-500">{user?.email}</span> please enter
-            the code in the box below to continue
+            Chúng tôi đã gửi mã xác nhận tới email của bạn{" "}
+            <span className="text-blue-500">{user?.email}</span> vui lòng nhập
+            mã vào ô bên dưới để tiếp tục
           </p>
           <div className="mb-4 flex justify-center">
             <div className="flex items-center gap-2">
@@ -103,7 +107,7 @@ const VerifyEmail = () => {
             Save
           </button>
           <div className="mt-3 text-[12px] lg:text-md">
-            You did not receive the code sent to your email:{" "}
+            Bạn không nhận được mã gửi tới email của mình :{" "}
             {!count ? (
               <span
                 onClick={() => {
@@ -113,13 +117,13 @@ const VerifyEmail = () => {
                 }}
                 className="text-blue-500 hover:underline cursor-pointer ms-2"
               >
-                Resend
+                Gửi lại
               </span>
             ) : (
               <span className="text-blue-500">{count}</span>
             )}
           </div>
-          <div className="mt-5">
+          {/* <div className="mt-5">
             <span
               onClick={() => {
                 sessionStorage.removeItem("codeVerifyTime");
@@ -128,9 +132,9 @@ const VerifyEmail = () => {
               className="text-gray-400 block cursor-pointer text-center"
             >
               {" "}
-              NO THANK !
+              Không cảm ơn
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

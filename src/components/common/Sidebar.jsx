@@ -1,4 +1,8 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { useApiCall } from "../../hooks";
+import { getAllCategory } from "../../service/Category";
+import { buildMenuTree } from "../../helpers/utils";
 
 const menusSiderBar = [
   {
@@ -204,8 +208,8 @@ function Submenu({ subItem }) {
                         </a>
                       </h3>
                       <ul>
-                        {item.submenus &&
-                          item.submenus.map((item2) => {
+                        {item.children &&
+                          item.children.map((item2) => {
                             return (
                               <li key={item2.id} className="w-40 ">
                                 <a
@@ -243,13 +247,21 @@ Submenu.propTypes = {
   subItem: PropTypes.array,
 };
 const Sidebar = () => {
+  const [menu, setMenu] = useState([]);
+  useApiCall(async () => {
+    const res = await getAllCategory();
+    const menu = buildMenuTree(res.data);
+    const subMenu = menu.slice(0, 11);
+    setMenu(subMenu);
+    return null;
+  })
   return (
     <div
       className={`transition-all  z-30 relative duration-500 !scale-100 opacity-100`}
     >
       <div className=" bg-white p-8 bottom-auto left-0 right-0 rounded-md shadow-md">
         <ul className="leading-8">
-          {menusSiderBar.map((item) => {
+          {menu.map((item) => {
             return (
               <div key={item.id} className="relative group">
                 <div className="flex w-full justify-between border-b-[1px] hover:text-[#2b38d1] items-center">
@@ -258,11 +270,11 @@ const Sidebar = () => {
                       {item.name}
                     </a>
                   </li>
-                  {item.submenus && (
+                  {item.children && (
                     <i className="fa-solid fa-chevron-right text-[9px]"></i>
                   )}
                 </div>
-                {item.submenus && <Submenu subItem={item.submenus} />}
+                {item.children && <Submenu subItem={item.children} />}
                 {/* <div className='absolute z-50 group-hover:translate-x-0 group-hover:opacity-100 duration-300 group-hover:visible transition-all  left-[106%] translate-x-5 opacity-0 invisible top-0 bg-white shadow-md'>
                                         <div className='w-[700px] p-5'>
                                             <div className="grid grid-cols-3">

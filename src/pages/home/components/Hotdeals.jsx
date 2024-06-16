@@ -8,7 +8,6 @@ import Product from "../../../components/products/Product";
 
 const Hotdeals = ({ data, loading }) => {
   const settings = settingSlick(6);
-  console.log(loading);
   return (
     <div className="my-20">
       <div className=" bg-white rounded-md p-4 flex justify-between flex-wrap gap-y-4 items-center">

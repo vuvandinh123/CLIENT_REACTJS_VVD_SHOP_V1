@@ -2,13 +2,20 @@ import { useRef, useState } from "react";
 import Slider from "react-slick";
 import { ImageLoader } from "../../../components/common";
 import { categories } from "../../../api/data";
+import { useApiCall } from "../../../hooks";
+import { getAllCategoryShow } from "../../../service/Category";
+import { Link } from "react-router-dom";
+import { Skeleton } from "keep-react";
 
 const Contents = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   var settings2 = {
-    infinite: false,
+    infinite: true,
     slidesToShow: 5,
+    autoplay: true,
     slidesToScroll: 1,
+    autoplaySpeed: 2000,
+
     responsive: [
       {
         breakpoint: 1280,
@@ -69,7 +76,10 @@ const Contents = () => {
       name2: "Security Cameras",
     },
   ];
-
+  const { data, loading } = useApiCall(async () => {
+    const res = await getAllCategoryShow();
+    return res.data;
+  }, []);
   var settings = {
     dots: true,
     fade: true,
@@ -145,7 +155,7 @@ const Contents = () => {
                       </span>
                     </h6>
                     <button className="bg-[#2b38d1] hidden lg:block text-white py-1 px-2 lg:py-2 lg:px-8 rounded-full hover:bg-slate-200 hover:text-black transition-all">
-                      Show Now
+                      Xem Thêm
                     </button>
                   </div>
                 </a>
@@ -154,39 +164,60 @@ const Contents = () => {
           })}
         </Slider>
         <div className=" max-w-[100%]">
-          <Slider {...settings2}>
-            {categories.map((item) => {
-              return (
-                <div key={item.id} className="">
-                  <div
-                    className={`p-3 bg-white min-h-[160px] flex flex-col justify-between ${
-                      categories.length == item.id && "!me-0"
-                    } me-3   rounded-md`}
-                  >
-                    <div className="mb-2 min-h-[100px] flex justify-center relative">
-                      <ImageLoader
-                        src={item.image}
-                        alt={item.name}
-                        className={"w-[102px]"}
-                      />
+          {!loading && data.length > 0 && (
+            <Slider {...settings2}>
+              {data.map((item) => {
+                return (
+                  <div key={item.id} className="">
+                    <div
+                      title={item.name}
+                      className={`p-3 bg-white min-h-[160px] flex flex-col justify-between  me-3   rounded-md`}
+                    >
+                      <div className="mb-2 min-h-[100px]  flex justify-center relative">
+                        <Link to={`/categories/${item.slug}-${item.id}`}>
+                          <ImageLoader
+                            src={item.thumbnail}
+                            alt={item.name}
+                            className={
+                              "w-[102px] h-[100px] rounded-sm overflow-hidden"
+                            }
+                          />
+                        </Link>
+                      </div>
+                      <h4 className="text-center text-ellipsis whitespace-nowrap overflow-hidden font-semibold  text-[#212529]">
+                        <Link to={`/categories/${item.slug}-${item.id}`}>
+                          {item.name}
+                        </Link>
+                      </h4>
                     </div>
-                    <h4 className="text-center font-semibold  text-[#212529]">
-                      {item.name}
-                    </h4>
                   </div>
-                </div>
-              );
-            })}
-          </Slider>
+                );
+              })}
+            </Slider>
+          )}
+          {loading && (
+            <Skeleton className=" space-y-2.5 flex gap-x-5">
+              {Array(5)
+                .fill(0)
+                .map((item, index) => {
+                  return (
+                    <Skeleton.Line
+                      key={index}
+                      className="w-full h-[160px] rounded-md"
+                    />
+                  );
+                })}
+            </Skeleton>
+          )}
         </div>
       </div>
       <div className=" w-[100%]  flex flex-col justify-between">
         <div className=" min-h-[160px] bg-white mb-3 lg:mb-0 relative rounded-md group overflow-hidden">
-          <a href="" className="block">
+          <Link to={"/categories/tai-nghe-chinh-hang-4"} className="block">
             <div className="absolute z-20 top-10 left-6 leading-10">
-              <h5 className="text-lg font-semibold">Over-Ear</h5>
-              <h5 className="text-lg font-semibold">Headphones</h5>
-              <p>20 Days Return Products</p>
+              <h5 className="text-lg font-semibold ">Phụ kiện</h5>
+              <h5 className="text-lg font-semibold">Tai nghe chính hãng</h5>
+              <p>Sản phẩm đổi trả trong 20 ngày</p>
             </div>
             <div className="overflow-hidden">
               <ImageLoader
@@ -196,14 +227,14 @@ const Contents = () => {
                 }
               />
             </div>
-          </a>
+          </Link>
         </div>
         <div className=" mb-3  min-h-[160px] bg-white lg:mb-0 relative group rounded-md overflow-hidden">
-          <a href="" className="block">
+          <Link to={"/categories/tai-nghe-chinh-hang-3"} className="block">
             <div className="absolute z-20 top-10 left-6 leading-10">
-              <h5 className="text-lg font-semibold">Over-Ear</h5>
-              <h5 className="text-lg font-semibold">Headphones</h5>
-              <p>20 Days Return Products</p>
+              <h5 className="text-lg font-semibold">Apple </h5>
+              <h5 className="text-lg font-semibold">Airport chính hãng</h5>
+              <p>Sản phẩm đổi trả trong 20 ngày</p>
             </div>
             <div className="overflow-hidden ">
               <ImageLoader
@@ -213,14 +244,14 @@ const Contents = () => {
                 }
               />
             </div>
-          </a>
+          </Link>
         </div>
         <div className=" mb-3 lg:mb-0  min-h-[160px] bg-white relative group rounded-md overflow-hidden">
-          <a href="" className="block">
+          <Link to={"/categories/tai-nghe-chinh-hang-6"} className="block">
             <div className="absolute z-20 top-10 left-6 leading-10">
-              <h5 className="text-lg font-semibold">Over-Ear</h5>
-              <h5 className="text-lg font-semibold">Headphones</h5>
-              <p>20 Days Return Products</p>
+              <h5 className="text-lg font-semibold">Phụ kiện</h5>
+              <h5 className="text-lg font-semibold">Tay cầm chơi game</h5>
+              <p>Sản phẩm đổi trả trong 20 ngày</p>
             </div>
             <div className="overflow-hidden ">
               <ImageLoader
@@ -230,7 +261,7 @@ const Contents = () => {
                 }
               />
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </>

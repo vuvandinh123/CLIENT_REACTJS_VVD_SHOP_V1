@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import { useApiCall } from "../../../../../hooks";
 import { getInventoryLogById } from "../../../../service/InventoryLogs";
-import { formatPrice, formathDate } from "../../../../../utils";
+import { formatPrice, formatPriceVND, formathDate } from "../../../../../utils";
 import { Link } from "react-router-dom";
 const ModalShow = ({ id, isOpen, setIsOpen }) => {
   const componentRef = useRef();
@@ -22,8 +22,8 @@ const ModalShow = ({ id, isOpen, setIsOpen }) => {
   return (
     <div>
       <div>
-        <div className=" fixed left-0 right-0 top-0 z-40  h-[calc(100%-1rem)] max-h-auto w-full max-h-full  flex justify-center items-center overflow-y-auto bg-black bg-opacity-30 overflow-x-hidden antialiased md:inset-0">
-          <div className="relative max-h-auto max-w-xl">
+        <div className=" fixed left-0 right-0  z-40 overflow-auto   max-h-auto w-full max-h-full  flex justify-center items-center overflow-y-auto bg-black bg-opacity-30 overflow-x-hidden antialiased md:inset-0">
+          <div className="relative max-h-auto max-w-xl mt-10">
             {/* Modal content */}
             <div
               ref={componentRef}
@@ -114,7 +114,9 @@ const ModalShow = ({ id, isOpen, setIsOpen }) => {
                                   x{item.quantity}
                                 </td>
                                 <td className="p-4 text-right text-base font-bold ">
-                                  {formatPrice(item.amount || 0)}
+                                  {formatPriceVND(
+                                    Number(item.import_price) ?? 1
+                                  )}
                                 </td>
                               </tr>
                             ))}
@@ -139,20 +141,14 @@ const ModalShow = ({ id, isOpen, setIsOpen }) => {
                                 Số tiền phải trả
                               </dt>
                               <dd className="text-base font-medium ">
-                                {formatPrice(data?.total || 0)}
+                                {formatPriceVND(data?.total || 0)}
                               </dd>
-                            </dl>
-                            <dl className="flex items-center justify-between gap-4">
-                              <dt className="text-gray-500 dark:text-gray-400">
-                                Dự tính tiền lời mỗi sản phẩm
-                              </dt>
-                              <dd className="text-base font-medium ">$99</dd>
                             </dl>
                           </div>
                           <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-5 ">
                             <dt className="text-lg font-bold ">Tổng cộng</dt>
                             <dd className="text-lg font-bold ">
-                              {formatPrice(data?.total || 0)}
+                              {formatPriceVND(data?.total || 0)}
                             </dd>
                           </dl>
                         </div>
@@ -161,12 +157,6 @@ const ModalShow = ({ id, isOpen, setIsOpen }) => {
                   </div>
                   <div className="flex justify-end">
                     <div className="flex gap-2">
-                      <button
-                        type="button"
-                        className=" rounded-md bg-green-500 px-4 py-2 text-sm font-medium text-slate-50 hover:bg-green-600"
-                      >
-                        In hóa đơn
-                      </button>
                       <button
                         type="button"
                         onClick={handleClose}

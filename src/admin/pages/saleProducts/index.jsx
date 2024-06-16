@@ -13,7 +13,7 @@ import { getCountStatusDiscountCode } from "../../service/Discount";
 // hook
 import { useApiCall, useMultipleSelect } from "../../../hooks";
 // utils
-import { formatPrice } from "../../../utils";
+import { formatPrice, formatPriceVND } from "../../../utils";
 import { LuClipboardEdit } from "react-icons/lu";
 import { MdOutlineDelete } from "react-icons/md";
 import {
@@ -214,15 +214,15 @@ const ListDiscount = () => {
                     </Link>
                   </div>
                 </th>
-                <td className="px-6 py-4 ">{formatPrice(item.price || 0)}</td>
+                <td className="px-6 py-4 ">{formatPriceVND(item.price || 0)}</td>
                 <td className="px-6 py-4">
                   -
                   {item.type_price === "fixed_amount"
-                    ? formatPrice(item.price_sale || 0)
+                    ? formatPriceVND(item.price_sale || 0)
                     : item.price_sale}{" "}
                   {item.type_price !== "fixed_amount" ? "%" : ""}
                 </td>
-                <td className="px-6 py-4">{formatPrice(lastPrice || 0)}</td>
+                <td className="px-6 py-4">{formatPriceVND(lastPrice < 0 ? 0 : lastPrice || 0)}</td>
                 <td className="px-6 py-4">
                   {item.status == "active" ? (
                     <span className="px-2 bg-green-300 rounded-md py-1 text-green-800">

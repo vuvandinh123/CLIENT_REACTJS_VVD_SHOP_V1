@@ -21,9 +21,7 @@ const LoginSocial = () => {
       email_verified: 1,
       type_login: provider,
     };
-    console.log(newData, "newData");
     const fetchLoginWithFacebook = await Auth.LoginSocial(newData);
-    console.log(fetchLoginWithFacebook, "fetchLoginWithFacebook");
     if(fetchLoginWithFacebook && fetchLoginWithFacebook.status === 200){ 
       setLocalStorage("remember_me", true);
       setToken({ data: fetchLoginWithFacebook.data, remember: true });

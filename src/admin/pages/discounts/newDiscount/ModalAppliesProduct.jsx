@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useFormikContext } from "formik";
 import { debounce } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
 import { getAllProduct } from "../../../service/Product";
 import { useApiCall } from "../../../../hooks";
+import { formatPriceVND } from "../../../../utils";
 
 const ModalAppliesProduct = ({
   isOpen,
@@ -29,7 +29,7 @@ const ModalAppliesProduct = ({
       listProductCheck.filter((item1) => item1.id !== item.id)
     );
   };
-  const { data } = useApiCall(async () => {
+  useApiCall(async () => {
     const response = await getAllProduct({
       limit: 5,
       page: 1,
@@ -37,7 +37,7 @@ const ModalAppliesProduct = ({
     });
     setListProducts(response.data);
     return response.data;
-  });
+  }, [search]);
 
   return (
     <div>
@@ -51,8 +51,8 @@ const ModalAppliesProduct = ({
           ></div>
           <div className="fixed left-1/2 top-1/2 z-50  flex items-center justify-center">
             <div className="absolute z-50 min-h-[500px] w-[600px] overflow-hidden rounded-lg bg-white ">
-              <div className="flex items-center justify-between bg-gray-500 bg-opacity-30 px-5 py-3 ">
-                <h3 className="text-center font-bold ">Add products</h3>
+              <div className="flex items-center justify-between bg-gray-300 bg-opacity-30 px-5 py-3 ">
+                <h3 className="text-center font-bold ">Thêm sản phẩm</h3>
                 <button onClick={() => setIsOpen(false)}>
                   <CgClose size={30} />
                 </button>
@@ -77,7 +77,7 @@ const ModalAppliesProduct = ({
                       key={index}
                       className="grid cursor-pointer hover:bg-gray-100 rounded-md grid-cols-12 items-center justify-center border-b p-3 dark:border-navy-700"
                     >
-                      <div className="col-span-1">
+                      <div className="col-span-2 flex gap-5">
                         <input
                           name="applies_to"
                           type="checkbox"
@@ -96,21 +96,21 @@ const ModalAppliesProduct = ({
                           checked={listCheck.includes(item.id)}
                           value={item.id}
                         />
-                      </div>
-                      <div className="col-span-2">
                         <img
                           src={item.thumbnail}
                           className="max-h-[50px] w-[50px]"
                           alt=""
                         />
                       </div>
-                      <div className="col-span-6">
+                      <div className="col-span-5">
                         <p className="text-ecl">{item.name}</p>
                       </div>
-                      <div className="col-span-2">
-                        {item.quantity} <small>available</small>
+                      <div className="col-span-2 text-center">
+                        {item.quantity}
                       </div>
-                      <div className="col-span-1 text-end">${item.price}</div>
+                      <div className="col-span-2 text-end">
+                        {formatPriceVND(item.price)}
+                      </div>
                     </label>
                   ))}
                 </div>

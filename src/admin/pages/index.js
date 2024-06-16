@@ -27,4 +27,5 @@ export { default as Register } from './signUp';
 export { default as SignupSuccess } from './signUp/SignupSuccess';
 // shop profile
 export { default as ProfileShop } from './setting';
-// 
+// orders
+export { default as ListOrders } from './orders/listOrder';

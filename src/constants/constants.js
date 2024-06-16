@@ -10,6 +10,21 @@ export const POST_CHECK_EMAIL_EXITS = "/check-email-exits"
 export const GET_CART = "carts"
 // favourite
 export const GET_FAVOURITE = "/favourites"
+// nations
+export const GET_NATIONS = "/nations"
+// provinces
+export const GET_PROVINCES = "/provinces"
+// districts
+export const GET_ALL_USER_ADDRESS_ORDER = "/address-user"
+// delivery
+export const GET_DELIVERY = "/delivery"
+// orders
+export const POST_ORDER = "/orders"
+// user
+export const GET_USER = "/user"
+// category
+export const GET_CATEGORY_CLIENT_SHOP = "/categories/shop"
+
 // -------------
 export const POST_LOGIN = "auth/login"
 export const POST_LOGIN_SOCIAL = "auth/login-social"
@@ -64,14 +79,23 @@ export const GET_CATEGORY_BY_SHOP = "/categories"
 export const GET_ALL_CATEGORY_WITH_PARENT_ID = "/categories/with-parent"
 // shops profile
 export const GET_SHOP_BY_ID_USER_BY_SHOP = "/shops"
-export const POST_ADD_SHOP = "shops/add-shop"
-export const POST_VERIFY_EMAIL_REGISTER_SHOP = "shops/verify-email-shop"
+export const POST_ADD_SHOP = "auth/add-shop"
+export const POST_VERIFY_EMAIL_REGISTER_SHOP = "auth/verify-email-shop"
+
+// order stats
+export const GET_ORDER_STATS = "orders/stats"
+export const GET_ORDER_ALL = "orders"
+// user follow
+export const GET_COUNT_USER_FOLLOWS = "follows/stats"
+// order
+export const PATCH_ORDER_STATUS = "orders/status"
 /**
  * GET product
  */
 export const GET_PRODUCTS = 'products';
 export const GET_PRODUCTS_BY_ID = 'products'; // products/id
 export const GET_PRODUCTS_TOP_SELLING = "products/daily-discover";
+export const GET_PRODUCTS_SHOP = "products/shop";
 export const GET_PRODUCTS_HOT_DEALS = "products/hot_deals";
 export const POST_PRODUCT_SEARCH = "products/search/"
 /**

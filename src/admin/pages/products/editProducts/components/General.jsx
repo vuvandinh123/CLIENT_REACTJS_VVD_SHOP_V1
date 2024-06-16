@@ -34,7 +34,7 @@ const General = (props) => {
                 <PriceFiled
                   name="price"
                   label={t("admin.newProduct.price")}
-                  location={"USD"}
+                  location={"VND"}
                   placeholder="99.99"
                   id="price"
                 ></PriceFiled>

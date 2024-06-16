@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getVariantFirebaseById } from "../../../../service/InventoryLogs";
 import { Link } from "react-router-dom";
+import { formatPriceVND } from "../../../../../utils";
 
 // icons
 
@@ -107,7 +108,9 @@ const ModalSelectVariant = (props) => {
                           </div>
                         </div>
                         <div className="col-span-2 flex items-center">
-                          <p className="">{item.price}</p>
+                          <p className="">
+                            {formatPriceVND(Number(item.price) || 0)}
+                          </p>
                         </div>
                         <div className="col-span-1 flex items-center">
                           <span>{item.stock}</span>
@@ -136,7 +139,9 @@ const ModalSelectVariant = (props) => {
                         ))}
                   </div>
                   {!loading && data.length === 0 && (
-                    <div className="text-center my-5">Không tìm thấy sản phẩm</div>
+                    <div className="text-center my-5">
+                      Không tìm thấy sản phẩm
+                    </div>
                   )}
                 </div>
                 <button

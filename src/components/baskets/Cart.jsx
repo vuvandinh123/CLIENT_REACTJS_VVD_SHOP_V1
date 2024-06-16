@@ -22,7 +22,7 @@ const Cart = ({ isOpen, setIsOpen }) => {
   return (
     <>
       <div>
-        <Offcanvas isOpen={isOpen} setIsOpen={setIsOpen} label="Cart">
+        <Offcanvas isOpen={isOpen} setIsOpen={setIsOpen} label="Giỏ hàng">
           <div className={data.length > 0 ? "" : "hidden"}>
             <div className="overflow-y-scroll max-h-[260px]">
               {data?.length > 0 &&

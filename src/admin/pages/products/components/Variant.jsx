@@ -33,7 +33,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
         option[option.length - 1].value.length - 1
       ] !== ""
     ) {
-      const res = generateDataVariant(option, priceStockMap);
+      const res = generateDataVariant(option, priceStockMap, values.price);
       setVariant(res);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,7 +103,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
         values.type === "single" ? "hidden" : ""
       }`}
     >
-      <h3 className="font-bold">Variant</h3>
+      <h3 className="font-bold">Biến thể</h3>
       <div className="mt-4">
         {option &&
           option?.map((item, index) => {
@@ -114,7 +114,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
                   className="mb-2 flex items-center gap-2 text-gray-500"
                 >
                   <CgLoadbarDoc></CgLoadbarDoc>
-                  Otion name
+                  Tên bộ chọn
                 </label>
                 <div className="flex items-center">
                   <input
@@ -149,7 +149,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
                     className="mb-2 flex items-center text-gray-500"
                   >
                     <SlOptionsVertical></SlOptionsVertical>
-                    Otion value
+                    Giá trị
                   </label>
                   {item?.value.map((item2, index2) => {
                     return (
@@ -179,7 +179,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
                     onClick={() => addValue(index)}
                     className="cursor-pointer text-blue-400 underline"
                   >
-                    Add value
+                    Thêm giá trị
                   </span>
                 </div>
               </div>
@@ -190,7 +190,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
           onClick={addOption}
           className="cursor-pointer text-blue-400 underline"
         >
-          Add options
+          Thêm bộ chọn
         </span>
       </div>
       {variant?.length > 0 && (
@@ -199,8 +199,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
             <thead>
               <tr>
                 <th className="text-left">Code</th>
-                <th>Price</th>
-                <th>Stock</th>
+                <th>Giá</th>
                 <th></th>
               </tr>
             </thead>
@@ -245,7 +244,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
                         <span></span>
                       )}
                     </td>
-                    <td className="text-center">
+                    {/* <td className="text-center">
                       {item.isActive ? (
                         <input
                           type="number"
@@ -270,7 +269,7 @@ const Variant = ({ option, variant, setOption, setVariant }) => {
                       ) : (
                         <span></span>
                       )}
-                    </td>
+                    </td> */}
                     <td className="flex items-center justify-center">
                       {item.isActive ? (
                         <CiTrash

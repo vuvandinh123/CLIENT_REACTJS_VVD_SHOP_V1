@@ -1,32 +1,41 @@
 import { useState } from "react";
-import CategoriesSiderbar from "./components/CategoriesSiderbar";
 import { useLocation, useParams } from "react-router-dom";
-import Filter from "./components/Filter";
 import { useApiCall, useFilter, useScrollTop } from "../../hooks";
-import Featured from "./components/Featured";
 import ModalMB from "./components/ModalMB";
 import LayoutProduct from "../../components/products/LayoutProduct";
-import { GET_PRODUCTS } from "../../constants/constants";
+import { extractNumberFromSlug } from "../../utils";
+import { getCategoryById, getCategoryFilter } from "../../service/Category";
+import { getProductByCategory } from "../../service/Product";
+import { getProvinceByProducts } from "../../service/Provinces";
+import SidebarFilter from "../../components/common/products/SidebarFilter";
 const Products = () => {
   useScrollTop();
   const searchParams = new URLSearchParams(window.location.search);
   const location2 = useLocation();
-
+  const [totalProduct, setTotalProduct] = useState(0);
   const limit = searchParams.get("limit");
   const sortBy = searchParams.get("sortBy");
+  const minPrice = searchParams.get("min");
+  const maxPrice = searchParams.get("max");
 
   const { slug } = useParams();
-
+  // lấy id danh mục
+  const id = extractNumberFromSlug(slug);
   const brand = searchParams.get("brand")?.split(",") || [];
   const [params, setParams] = useState({
     brand: brand,
     sortBy: sortBy || "featured",
-    price: { min: null, max: null },
+    price: { min: minPrice || null, max: maxPrice || null },
     limit: Number(limit) || 20,
+    stars: 1,
+    province: [],
   });
   // filter params
   useFilter(params);
-
+  const { data: province } = useApiCall(async () => {
+    const res = await getProvinceByProducts(1);
+    return res.data;
+  });
   const handleCheckboxChange = (value, isChecked, name) => {
     if (name == "brand") {
       setParams((item) => {
@@ -54,54 +63,79 @@ const Products = () => {
     });
   };
   // fetch data category
-  const categories = useApiCall(async () => {
-    return [];
-  }, []);
+  const { data: category } = useApiCall(
+    async () => {
+      const res = await getCategoryById(id);
+      return res.data;
+    },
+    [],
+    {}
+  );
+  const categories = useApiCall(
+    async () => {
+      const res = await getCategoryFilter(id);
+
+      return res.data;
+    },
+    [],
+    {}
+  );
   // fetch data brands
   const brands = useApiCall(async () => {
     return await [];
   }, []);
   // fetch data products
   const products = useApiCall(async () => {
-    return await []
-  }, [slug, location2.search]);
-  const listProduct = products.data?.data?.data || [];
-  const totalProduct = products.data?.data?.total || 0;
-
+    console.log(params.sortBy, "sortBy");
+    const res = await getProductByCategory(id, params);
+    setTotalProduct(res.options.count);
+    return res.data;
+  }, [
+    slug,
+    location2.search,
+    params.price,
+    params.stars,
+    params.sortBy,
+    params.province,
+  ]);
   return (
     <div className="bg-[#F1F5F6]">
       <div className="bg-[url(https://demo-uminex.myshopify.com/cdn/shop/files/bg_breadcrumbs_1920x.png?v=1684232545)] h-36 text-white flex justify-center items-center flex-col gap-y-3">
-        <h2 className="text-4xl font-semibold">Products</h2>
+        <h2 className="text-4xl font-semibold">{category.name}</h2>
         <div>
           <ul className="flex items-center gap-x-2">
             <li>
-              <a href="">Home</a>
+              <a href="">Trang chủ</a>
             </li>
             <li>/</li>
             <li>
-              <a href="">Products</a>
+              <a href="">{category.name}</a>
             </li>
           </ul>
         </div>
       </div>
       <div className="py-3 max-w-[1410px] px-5 mx-auto">
-        <ModalMB
-          handleCheckboxChange={handleCheckboxChange}
-          params={params}
-          brands={brands.data?.data?.data}
-          setParams={setParams}
-        />
+        <div className=" md:hidden">
+          <ModalMB
+            handleCheckboxChange={handleCheckboxChange}
+            params={params}
+            brands={brands.data?.data?.data}
+            setParams={setParams}
+          />
+        </div>
         <div className="flex gap-x-5">
-          <div className="basis-1/5 hidden lg:block min-h-[100vh] bg-white p-5">
+          {/* <div className="basis-1/5 hidden lg:block min-h-[100vh] bg-white p-5">
             <div className="border-b pb-5">
               <CategoriesSiderbar
-                data={categories.data?.data?.data}
+                catgoryId={id}
+                data={categories.data}
                 loading={categories.loading}
               />
             </div>
             <Filter
               handleCheckboxChange={handleCheckboxChange}
               filter={params}
+              province={province}
               price={params.price}
               params={params}
               brands={brands.data?.data?.data}
@@ -134,11 +168,17 @@ const Products = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
+          <SidebarFilter handleCheckboxChange={handleCheckboxChange} categories={categories} categoryId={id} province={province} params={params} brands={brands} setParams={setParams}></SidebarFilter>
           <div className="lg:basis-4/5">
-            <LayoutProduct loading={products.loading} data={listProduct} />
+            <LayoutProduct
+              filter={params}
+              setFilter={setParams}
+              loading={products.loading}
+              data={products.data}
+            />
             <div className="flex items-center justify-center mt-10">
-              {listProduct.length < totalProduct && (
+              {products.data.length < totalProduct && (
                 <button
                   onClick={handleLoadMore}
                   disabled={products.loading}
@@ -148,7 +188,7 @@ const Products = () => {
                     <span>Loading ...</span>
                   ) : (
                     <span>
-                      Load more ({totalProduct - listProduct.length}) products
+                      Xem thêm ({totalProduct - products.data.length}) sản phẩm
                     </span>
                   )}
                 </button>

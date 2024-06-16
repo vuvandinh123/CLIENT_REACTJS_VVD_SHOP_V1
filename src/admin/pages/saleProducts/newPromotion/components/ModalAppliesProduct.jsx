@@ -5,7 +5,7 @@ import { BsSearch } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
 import { useApiCall } from "../../../../../hooks";
 import { getAllProductOnPromotion } from "../../../../service/Promotion";
-import { formatPrice } from "../../../../../utils";
+import { formatPrice, formatPriceVND } from "../../../../../utils";
 
 const ModalAppliesProduct = ({
   isOpen,
@@ -117,7 +117,7 @@ const ModalAppliesProduct = ({
                         {item.quantity}
                       </div>
                       <div className="col-span-1 text-end">
-                        {formatPrice(item.price)}
+                        {formatPriceVND(item.price)}
                       </div>
                     </label>
                   ))}

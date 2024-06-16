@@ -6,26 +6,18 @@ import TopSellingProducts from "./components/TopSellingProducts";
 import News from "./components/News";
 import Contents from "./components/Contents";
 import { useApiCall, useScrollTop } from "../../hooks";
-import useFetchApi from "../../hooks/useFetchApi";
-import { GET_PRODUCTS_TOP_SELLING } from "../../constants/constants";
 import useTitle from "../../hooks/useTitle";
 import { getDailyProduct, getHotSaleProduct } from "../../service/Product";
 
 const HomePage = () => {
   useScrollTop();
-  useTitle("home || vuvan dinh");
+  useTitle("Trang chủ | VVD SHOP");
 
   const hotDeal = useApiCall(async () => {
     const res = await getHotSaleProduct();
     return res.data;
   }, []);
-
-  // const hotDeal = useFetchApi({ URL: GET_PRODUCTS_TOP_SELLING });
-  const topSelling = useFetchApi({ URL: GET_PRODUCTS_TOP_SELLING });
-  const featured = useApiCall(async () => {
-    const res = await getDailyProduct();
-    return res.data;
-  }, []);
+ 
   const recomended = [];
   const post = [];
   return (
@@ -39,7 +31,7 @@ const HomePage = () => {
           <Contents />
         </div>
         <Hotdeals data={hotDeal?.data} loading={hotDeal?.loading} />
-        <FeaturedProducts data={featured?.data} loading={featured?.loading} />
+        <FeaturedProducts  />
         <div className="lg:my-20 my-10 relative">
           <div className="relative ">
             <img
@@ -60,8 +52,7 @@ const HomePage = () => {
           </div>
         </div>
         <TopSellingProducts
-          data={topSelling.data?.data}
-          loading={topSelling.loading}
+         
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-10 ">
           <div className="w-full group overflow-hidden rounded-md relative">
@@ -72,13 +63,13 @@ const HomePage = () => {
                 alt=""
               />
               <div className="absolute top-10 left-10 z-20 text-white text-xl">
-                <p className="text-2xl font-semibold">Gamepad</p>
+                <p className="text-2xl font-semibold">Máy chơi game</p>
                 <p>
-                  <span className="text-yellow-400 font-bold">Sale 20%</span>{" "}
-                  Product
+                  <span className="text-yellow-400 font-bold">Giảm 20%</span>{" "}
+                  Sản phẩm
                 </p>
                 <p className="text-gray-300 text-[13px]">
-                  Free shipping 20km Radius
+                  Miễn phí ships
                 </p>
               </div>
             </a>
@@ -91,13 +82,12 @@ const HomePage = () => {
                 alt=""
               />
               <div className="absolute top-10 left-10 z-20 text-white text-xl">
-                <p className="text-2xl font-semibold">Gamepad</p>
+                <p className="text-2xl font-semibold">Máy ảnh </p>
                 <p>
-                  <span className="text-yellow-400 font-bold">Sale 20%</span>{" "}
-                  Product
+                  <span className="text-yellow-400 font-bold">Giảm giá 80%</span>{" "}
                 </p>
                 <p className="text-gray-300 text-[13px]">
-                  Free shipping 20km Radius
+                  Miễn phí ship toàn quốc
                 </p>
               </div>
             </a>
@@ -110,10 +100,9 @@ const HomePage = () => {
                 alt=""
               />
               <div className="absolute top-10 left-10 z-20 text-white text-xl">
-                <p className="text-2xl font-semibold">Gamepad</p>
+                <p className="text-2xl font-semibold">Máy tính bảng</p>
                 <p>
-                  <span className="text-yellow-400 font-bold">Sale 20%</span>{" "}
-                  Product
+                  <span className="text-yellow-400 font-bold">Giảm đến 1 triệu đồng</span>{" "}
                 </p>
                 <p className="text-gray-300 text-[13px]">
                   Free shipping 20km Radius
@@ -126,7 +115,6 @@ const HomePage = () => {
           data={recomended.data?.data?.data}
           loading={recomended.loading}
         />
-        <News data={post.data?.data?.data} loading={post.loading} />
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ export const createInventoryLog = async (data, params = {}, headers) => {
 }
 export const getVariantFirebaseById = async (id) => {
     try {
-        const response = await axiosInstanceShop.get(`/variant-id/${id}`)
+        const response = await axiosInstanceShop.get(`/inventory-logs/variant-id/${id}`)
         return response.data
     } catch (error) {
         console.log(error)

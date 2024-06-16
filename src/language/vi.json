@@ -148,6 +148,17 @@
                 "price": "Giá",
                 "stock": "Số lượng"
             }
+        },
+        "listOrder": {
+            "table": {
+                "id": "Mã đơn hàng",
+                "payment_method": "Thanh toán",
+                "status": "Trạng thái",
+                "created_at": "Thời gian đặt hàng",
+                "amount": "Tổng đơn hàng",
+                "total_amout": "Tổng đơn hàng + vận chuyển",
+                "discount": "Giảm giá"
+            }
         }
     }
 }

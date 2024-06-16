@@ -12,7 +12,7 @@ import Fav from "./Fav";
 import { setIsOpenSelectOptions } from "../../redux/slice/selectCartSlice";
 import { addToCart } from "../../service/Cart";
 import { useState } from "react";
-import { getCookieAuth } from "../../utils";
+import { formatPriceVND, getCookieAuth } from "../../utils";
 import toast from "react-hot-toast";
 const Product = ({ deals, data }) => {
   const dispatch = useDispatch();
@@ -45,22 +45,27 @@ const Product = ({ deals, data }) => {
   return (
     <>
       <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
-        <div className="mx-1 flex h-full flex-col justify-between  group rounded-md overflow-hidden relative  bg-white ">
+        <div className="mx-1 flex h-full flex-col  justify-between  group rounded-md overflow-hidden relative  bg-white ">
           <div className="px-5">
-            <div className="cursor-pointer relative min-h-[177px] flex items-center justify-center">
+            <div className="cursor-pointer relative min-h-[177px] pb-[75%]  flex items-center justify-center">
               {data?.thumbnail ? (
                 <>
                   <Link to={`/products/${data?.slug}-${data?.id}`}>
                     <ImageLoader
                       src={data.thumbnail}
-                      className={
-                        "lg:group-hover:hidden   lg:group-hover:scale-105 transition-all duration-300"
-                      }
+                      className={`${
+                        data?.imageUrls &&
+                        data?.imageUrls[1] &&
+                        "lg:group-hover:hidden"
+                      }   lg:group-hover:scale-105 absolute left-0 right-0 top-2 bottom-0 object-cover transition-all duration-300`}
                     />
-                    {data && data?.imageUrls && data?.imageUrls[0] && (
+                    {data?.imageUrls && data?.imageUrls[1] && (
                       <img
-                        className="!hidden    lg:group-hover:!block lg:group-hover:scale-105 transition-all duration-500"
-                        src={data?.imageUrls[0]}
+                        className="!hidden  absolute left-0 right-0 top-2 bottom-0  lg:group-hover:!block transition-all duration-500"
+                        onError={(e) => {
+                          e.target.src = data?.imageUrls[0];
+                        }}
+                        src={data?.imageUrls[1]}
                         alt=""
                       />
                     )}
@@ -78,7 +83,7 @@ const Product = ({ deals, data }) => {
               {data?.discount ? (
                 <span>-{data.discount?.toFixed(0)}%</span>
               ) : (
-                "new"
+                "Mới"
               )}
             </div>
             <div className="absolute  z-30 md:top-20 top-10 right-2 md:opacity-0 md:group-hover:top-5 md:group-hover:opacity-100 transition-all duration-500 ">
@@ -120,11 +125,11 @@ const Product = ({ deals, data }) => {
                     {Array(5)
                       .fill(0)
                       .map((item, index) => {
-                        if (index < data?.rating - 1) {
+                        if (index < Math.floor(data?.rating)) {
                           return (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              className="h-3 md:w-5 w-3 md:h-5"
+                              className="h-3 md:w-4 w-3 md:h-4"
                               viewBox="0 0 20 20"
                               fill="#ff8400b9"
                               key={index}
@@ -147,7 +152,9 @@ const Product = ({ deals, data }) => {
                         }
                       })}
                   </div>
-                  <span className="text-gray-400 text-[12px]">(1 review)</span>
+                  <span className="text-gray-800 text-[12px]">
+                    Đã bán {data.sold}
+                  </span>
                 </>
               ) : (
                 <Skeleton width="120px" height="10px" />
@@ -156,17 +163,17 @@ const Product = ({ deals, data }) => {
             <div className="flex items-center gap-3 mt-2">
               {data?.price ? (
                 <>
-                  <ChangePrice
+                  <span
                     className={`${
                       data.fix_price ? "text-red-500" : "text-[#2b38d1]"
                     } text-[1rem] font-bold`}
-                    price={data.price}
-                  />
+                  >
+                    {formatPriceVND(data.price)}
+                  </span>
                   {data?.fix_price && (
-                    <ChangePrice
-                      className="text-gray-400 line-through text-sm font-semibold "
-                      price={data.fix_price}
-                    />
+                    <span className="text-gray-400 line-through text-[12px] font-semibold ">
+                      {formatPriceVND(data.fix_price)}
+                    </span>
                   )}
                 </>
               ) : (
@@ -174,9 +181,6 @@ const Product = ({ deals, data }) => {
               )}
             </div>
             <div className={`${deals ? "block" : "hidden"}`}>
-              {/* <div>
-                <CountdowProductItem end_date={data?.end_date}></CountdowProductItem>
-              </div> */}
               <div
                 className={`h-2 mt-3 rounded-xl relative flex bg-[#00000016] `}
               >
@@ -197,14 +201,17 @@ const Product = ({ deals, data }) => {
                 sản phẩm
               </p>
             </div>
-            <div className={`${deals ? "hidden" : "block"} mt-6 h-2`}>
-              <div className="flex items-center text-[#1c8e24] text-[12px] ">
+            <div className={`${deals ? "hidden" : "block"} mt-5 h-2`}>
+              <div className="flex items-center justify-between text-[#1c8e24] ">
                 {" "}
-                <AiOutlineCheck className="me-2" /> Còn{" "}
-                <span className="text-black ms-2">
-                  {" "}
-                  {data?.quantity} Sản phẩm
-                </span>
+                <div className="flex items-center text-[10px] justify-between text-[#1c8e24]  ">
+                  <AiOutlineCheck className="me-2" /> Còn{" "}
+                  <span className="text-black ms-2">
+                    {" "}
+                    {data?.quantity} Sản phẩm
+                  </span>
+                </div>
+                <span className="text-black text-[10px]">{data?.province}</span>
               </div>
             </div>
             <button
@@ -217,9 +224,9 @@ const Product = ({ deals, data }) => {
               {isDisabled ? (
                 <div className="w-5 h-5 border-4 border-white rounded-full animate-spin border-t-transparent"></div>
               ) : data.type === "single" ? (
-                "Add To Cart"
+                "Thêm giỏ hàng"
               ) : (
-                "Select options"
+                "Chọn biến thể"
               )}
             </button>
           </div>

@@ -4,6 +4,11 @@ export const SEARCH = '/search';
 export const PAGE = '/page/:slug';
 export const CART = '/cart';
 export const BLOG = '/blog';
+export const USER = '/user';
+export const USER_PURCHASE = '/user/purchase';
+export const SHOP = '/shop/:shopId';
+
+
 export const BLOG_DETAIL = '/blog/:slug';
 export const PRODUCT_DETAILS = '/products/:slug';
 export const CATEGORIES = '/categories';
@@ -38,7 +43,7 @@ export const ADMIN_PRODUCTS_OUT_INVENTORY = '/admin/out-inventory';
 export const ADMIN_PRODUCTS_INVENTORY_CREATE = '/admin/inventory/create';
 export const ADMIN_PRODUCTS_INVENTORY_STOCK = '/admin/inventory/stocks';
 export const ADMIN_PROFILE_SHOP = '/admin/settings';
-
+// orders
 
 
 export const ADMIN_NEW_DISCOUNT = '/admin/discounts/create';

@@ -90,7 +90,7 @@ const FormLogin = ({ handleRememberme }) => {
             to={FORGOT_PASSWORD}
             className="text-indigo-400 hover:text-blue-500"
           >
-            Forgot your password?
+            Quên mật khẩu ?
           </Link>
         </div>
       </div>
@@ -99,17 +99,17 @@ const FormLogin = ({ handleRememberme }) => {
           type="submit"
           className="w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
         >
-          Sign in
+          Đăng nhập
         </button>
       </div>
-      <p className="flex flex-col items-center justify-center mt-10 text-center text-md text-gray-500">
-        <span>{`Don't have an account?`}</span>
+      <p className="flex  gap-2 items-center justify-center mt-10 text-center text-md text-gray-500">
+        <span>{`Bạn không có tài khoản ?`}</span>
         <Link
           to="/auth/singup"
           href="#"
           className="text-indigo-400 hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300"
         >
-          Sign up
+         Đăng ký ngay
         </Link>
       </p>
     </Form>

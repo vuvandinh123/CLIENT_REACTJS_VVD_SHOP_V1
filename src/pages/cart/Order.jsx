@@ -1,56 +1,26 @@
+/* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import shiping from "../../../public/shiping.svg";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { ChangePrice } from "../../components/common";
+import { formatPriceVND } from "../../utils";
 
 const Order = ({
   totalPrice,
   amount,
   handleClickCheckout,
   productDiscount,
+  checkout,
 }) => {
   const discount = 5000;
   const discountAmount = 3;
   const [coupon, setCoupon] = useState("");
   const [mes, setMes] = useState("");
-  const [dataCoupon, setDataCoupon] = useState(null);
-  const [shipping, setShipping] = useState([
-    {
-      id: 1,
-      name: "Giao hàng nhanh",
-      price: 123,
-    },
-    {
-      id: 2,
-      name: "Giao hàng tiêu chuẩn",
-      price: 98,
-    },
-  ]);
-  const [priceShipping, setPriceShipping] = useState(null);
-  const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    const fetch = async () => {
-      // const respone = await shippingApi.getAll();
-      // setShipping(respone.data);
-    };
-    fetch();
-  }, []);
   const hanldeSubmitCoupon = (e) => {
     e.preventDefault();
     try {
-      const fetch = async () => {
-        // const res = await couponApi.get(coupon);
-        // if (res.data) {
-        //   setDataCoupon(res.data);
-        //   toast.success("Add coupon success!");
-        //   setMes("");
-        // } else {
-        //   setMes("Incorrect discount code");
-        // }
-      };
+      const fetch = async () => {};
       if (coupon != "") {
         fetch();
       }
@@ -58,10 +28,12 @@ const Order = ({
       console.error("error:");
     }
   };
-
+  const total = checkout.reduce((acc, item) => {
+    return acc + item.order?.amount;
+  }, 0);
   return (
     <>
-      <div className="py-5 mt-3 px-5  ">
+      <div className="py-5 mt-3 px-5 sticky top-16 ">
         <div className=" relative">
           <div
             style={{
@@ -84,32 +56,15 @@ const Order = ({
           )}
           <span className="text-red-600"> Free Shipping!</span>{" "}
         </p>
-        <h4 className="uppercase font-bold mt-5  pb-2">Tổng giỏ hàng</h4>
-        <div>
-          <div className="flex justify-between border-y py-4">
-            <p className="text-base ">Đơn giá</p>
-            <ChangePrice className="font-bold  text-base" price={totalPrice} />
-          </div>
-          <div className="flex justify-between py-4">
-            <p className="text-base ">Giảm giá</p>
-            <ChangePrice
-              className="font-bold  text-base"
-              price={Object.values(productDiscount).reduce(
-                (acc, item) => acc + item.value,
-                0
-              )}
-            />
-          </div>
-        </div>
 
         <div className="border-b py-5">
           <p className="uppercase text-sm font-bold">
-            COUPON{" "}
-            <span className="ms-1 text-gray-600 lowercase font-thin">
-              (Options)
+            Mã giảm giá{" "}
+            <span className="ms-1 text-gray-600 capitalize font-thin">
+              (Tùy chọn)
             </span>
           </p>
-          <small>Coupon code will work on checkout page.</small>
+          <small>Mã mua hàng sẽ được áp dụng ở trang thanh toán.</small>
           <div className="mt-5">
             <form onSubmit={hanldeSubmitCoupon} action="" method="post">
               <input
@@ -133,44 +88,18 @@ const Order = ({
             </form>
           </div>
         </div>
-        <div className="border-b py-5">
-          <p className="uppercase font-bold">SHIPPING:</p>
-          <div className="mt-5">
-            {shipping.map((item) => (
-              <div key={item.id} className="mb-2">
-                <label
-                  htmlFor={item.name}
-                  className="border capitalize cursor-pointer rounded-md px-4 py-3 justify-between flex items-center gap-4"
-                >
-                  <div className="flex items-center gap-2">
-                    <input
-                      onChange={(e) => {
-                        if (totalPrice < discount) {
-                          setPriceShipping(e.target.value);
-                        }
-                      }}
-                      type="radio"
-                      value={item.price}
-                      name="shipping"
-                      id={item.name}
-                    />
-                    <span>{item.name}</span>
-                  </div>
-                  <span>${item.price}</span>
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
+
         <div className="border-b flex flex-col gap-3 py-5">
-          {dataCoupon && (
-            <p className="flex items-center gap-3">
+          <h4 className="uppercase font-bold mt-2  pb-2">Voucher đã áp dụng</h4>
+
+          {Object.values(productDiscount)?.map((item, index) => (
+            <p key={index} className="flex items-center gap-3">
               <svg
                 width="12"
                 aria-hidden="true"
                 focusable="false"
                 role="presentation"
-                className="icon icon-discount color-foreground-"
+                className="icon icon-discount text-red-500"
                 viewBox="0 0 12 12"
               >
                 <path
@@ -180,10 +109,10 @@ const Order = ({
                   fill="currentColor"
                 ></path>
               </svg>
-              {dataCoupon.description}
-              <span className="text-red-400">(-{dataCoupon.discount})% </span>
+              {item.name}
             </p>
-          )}
+          ))}
+
           {totalPrice >= discount && (
             <p className="flex items-center gap-3">
               <svg
@@ -191,7 +120,7 @@ const Order = ({
                 aria-hidden="true"
                 focusable="false"
                 role="presentation"
-                className="icon icon-discount color-foreground-"
+                className="icon icon-discount text-red-500 color-foreground-"
                 viewBox="0 0 12 12"
               >
                 <path
@@ -211,7 +140,7 @@ const Order = ({
                 aria-hidden="true"
                 focusable="false"
                 role="presentation"
-                className="icon icon-discount color-foreground-"
+                className="icon icon-discount text-red-500 color-foreground-"
                 viewBox="0 0 12 12"
               >
                 <path
@@ -221,38 +150,21 @@ const Order = ({
                   fill="currentColor"
                 ></path>
               </svg>
-              Buy 3 products 5% discount (- 103,71 )
+              Mua 3 sản phẩm giảm 5%
             </p>
           )}
         </div>
         <div className="border-b py-5">
-          {priceShipping != null && (
-            <div className="flex items-center my-2 justify-between">
-              <p className=" capitalize">Shipping :</p>
-              <h6 className="capitalize  text-[13px] ">
-                {priceShipping == 0 ? "Free" : "$(-" + priceShipping + ")"}
-              </h6>
-            </div>
-          )}
-          {dataCoupon != null && (
-            <div className="flex items-center my-2 justify-between">
-              <p className=" capitalize">Coupon :</p>
-              <h6 className="uppercase  text-[13px] text-red-400">
-                -${dataCoupon.discount}%
-              </h6>
-            </div>
-          )}
           <div className="flex items-center justify-between">
-            <p className="uppercase font-bold">Order totals :</p>
-            <ChangePrice
-              className="uppercase font-bold text-[20px] text-red-500"
-              price={total}
-            />
+            <p className="uppercase font-bold">Tổng đơn hàng :</p>
+            <span className="uppercase font-bold text-xl text-red-500">
+              {formatPriceVND(total)}
+            </span>
           </div>
         </div>
         <div className="py-5">
           <p className="text-gray-500 text-[12px] my-3">
-            Taxes and shipping calculated at checkout
+            Thuế và phí vận chuyển được tính khi thanh toán
           </p>
           <div>
             <Link
@@ -262,7 +174,7 @@ const Order = ({
               }}
               className="px-10 py-3 block text-center font-bold bg-blue-500 text-white uppercase rounded-full w-full"
             >
-              CHECK OUT
+              THANH TOÁN
             </Link>
           </div>
         </div>

@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
-import { Button, Dropdown, Radio } from "keep-react";
+import { Button, Dropdown, Radio, toast } from "keep-react";
 import {
   addToDiscount,
   getAllDiscountCodeTypeAll,
@@ -23,7 +23,6 @@ const CartShop = ({
   ...props
 }) => {
   const [discount, setDiscount] = useState([]);
-
   useEffect(() => {
     const fetchAPi = async () => {
       try {
@@ -37,17 +36,21 @@ const CartShop = ({
     };
     fetchAPi();
   }, []);
-
+  const [code, setCode] = useState("");
   const handleSubmitAddVoucher = async (e) => {
     e.preventDefault();
     const { value } = e.target.discount;
-    if (value === "") return;
+
+    if (code === "") {
+      toast.warning("Vui lòng chọn hoặc nhập mã giảm giá");
+      return;
+    }
     const check = productDiscount.hasOwnProperty(data.id.toString());
     if (check) {
-      if (productDiscount[data.id.toString()].code === value) return;
+      if (productDiscount[data.id.toString()].code === code) return;
     }
     const res = await addToDiscount({
-      code: value,
+      code: code,
       shop_id: data.id,
     });
     setProductDiscount({
@@ -67,15 +70,17 @@ const CartShop = ({
             className="w-[30px] border h-[30px] shrink-0 rounded-full"
             alt=""
           />
-          <Link to={`/shops/${data.username}`}>{data.name}</Link>
+          <Link to={`/shop/${data.id}`}>{data.name}</Link>
         </div>
       </div>
       {data?.products?.map((item2) => {
         return (
           <CartItem
             cartId={data.cartId}
+            shopId={data.id}
             productDiscount={productDiscount}
             setTotal={setTotal}
+            setCode={setCode}
             productIds={productIds}
             setProductIds={setProductIds}
             key={item2.id}
@@ -134,11 +139,13 @@ const CartShop = ({
                             <Radio
                               variant="circle"
                               disabled={
-                                productIds.length > 0
+                                productIds[data.id]?.length > 0
                                   ? item.applies_to === "all"
                                     ? false
                                     : hasCommonElements(
-                                        productIds,
+                                        productIds[data.id]?.map(
+                                          (item) => item.id
+                                        ),
                                         item.productIds?.split(",")
                                       )
                                     ? false
@@ -147,6 +154,8 @@ const CartShop = ({
                               }
                               id={`discount-${item.id}`}
                               value={item.code}
+                              // checked={item.code === code}
+                              onChange={(e) => setCode(e.target.value)}
                               name="discount"
                             />
                             <div className="ml-2 flex justify-between items-center w-full ">
@@ -176,21 +185,21 @@ const CartShop = ({
                               </div>
                             </div>
                           </label>
-                          {productIds.length !== 0 &&
+                          {productIds[data.id]?.length > 0 &&
                             item.applies_to !== "all" &&
                             !hasCommonElements(
-                              productIds,
+                              productIds[data.id]?.map((item) => item.id),
                               item.productIds?.split(",")
                             ) && (
                               <p className="text-red-400 mt-2  flex items-center bg-yellow-50 px-3 py-1 border gap-2">
-                                <CiWarning color="red"></CiWarning> Sản phẩm đã
-                                chọn không đáp ứng điều kiện của voucher
+                                <CiWarning color="red"></CiWarning> 
+                                Sản phẩm đã chọn không đáp ứng điều kiện của voucher
                               </p>
                             )}
                         </li>
                       ))}
                   </ul>
-                  {productDiscount.hasOwnProperty(data.id.toString()) && (
+                  {!productIds[data.id]?.length && (
                     <p className="text-red-400 mt-2  flex items-center bg-yellow-50 px-3 py-1 border gap-2">
                       <CiWarning color="red"></CiWarning> Vui lòng chọn sản phẩm
                       để áp dụng voucher

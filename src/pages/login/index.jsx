@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import { useToken } from "../../hooks";
 import * as Yup from "yup";
@@ -9,6 +9,8 @@ import { useState } from "react";
 import FormLogin from "./components/FormLogin";
 import { setLocalStorage } from "../../helpers/utils";
 import LoginSocial from "./components/LoginSocial";
+import logo from "../../../public/logo2.png";
+
 const Login = () => {
   const navigate = useNavigate();
   const [remember, setRemember] = useState(false);
@@ -55,17 +57,14 @@ const Login = () => {
             <div className="absolute bg-gradient-to-b from-blue-900 to-gray-900 opacity-75 inset-0 z-0" />
             <div
               className="absolute triangle  min-h-screen right-0 w-16"
-              style={{}}
             />
-            <a
-              href="https://codepen.io/uidesignhub"
-              title="codepen aji"
-              className="flex absolute top-5 text-center text-gray-100 focus:outline-none"
+            <Link
+              to={"/"}
+              title=""
+              className="flex z-50 absolute top-5 text-center text-gray-100 focus:outline-none"
             >
-              <p className="text-xl ml-3">
-                VU DINH<strong> STORE</strong>
-              </p>{" "}
-            </a>
+              <img className="w-[200px]" src={logo} alt="" />
+            </Link>
             <img
               src="https://jasper-pimstorage-skullcandy.s3.us-west-1.amazonaws.com/bd2253a9671dac36a95faf821b52e78935050140be1718ce001f6aace45cf25c.png"
               className="h-96 absolute right-5 mr-5"
@@ -80,7 +79,9 @@ const Login = () => {
                   VVD SHOP là một website mua sắm trực tuyến với nhiều ưu đãi và
                   khuyễn mại hot hãy đăng nhập để có trải nhiệm tốt nhất và đồng
                   hành cùng chúng tôi.{" "}
-                  <p className="mt-3">Chúc các bạn có một ngày mua sắm vui vẻ !!!</p>
+                  <p className="mt-3">
+                    Chúc các bạn có một ngày mua sắm vui vẻ !!!
+                  </p>
                 </p>
               </div>
             </div>
@@ -104,9 +105,7 @@ const Login = () => {
                 <h2 className="mt-6 text-3xl font-bold text-gray-900">
                   VVD SHOP Xin Chào
                 </h2>
-                <p className="mt-2 text-sm text-gray-500">
-                  Vui lòng đăng nhập 
-                </p>
+                <p className="mt-2 text-sm text-gray-500">Vui lòng đăng nhập</p>
               </div>
               <LoginSocial />
               <div className="flex items-center justify-center space-x-2">
@@ -122,8 +121,8 @@ const Login = () => {
                   password: "",
                 }}
                 validationSchema={Yup.object({
-                  email: Yup.string().email().required("Email is required"),
-                  password: Yup.string().required("Password is required"),
+                  email: Yup.string().email().required("Email là bắt buộc"),
+                  password: Yup.string().required("Mật khẩu là bắt buộc"),
                 })}
                 onSubmit={(values) => handleSubmitLogin(values)}
               >

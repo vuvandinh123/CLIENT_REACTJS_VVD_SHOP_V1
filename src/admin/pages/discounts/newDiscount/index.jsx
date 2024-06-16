@@ -32,7 +32,7 @@ const NewDiscount = () => {
     const res = await createDiscount(values);
     if (res.status === 201) {
       toast("Discount created", { type: "success" });
-      navigate("/admin/discount");
+      navigate("/admin/discounts");
       setIsLoading(false);
     }
   };
@@ -65,7 +65,7 @@ const NewDiscount = () => {
               <div className=" mt-3 flex items-center justify-between gap-2">
                 <div>
                   <Link
-                    to={"/admin/products"}
+                    to={"/admin/discounts"}
                     className="flex ms-3 px-2 py-2 hover:text-gray-900 hover:underline text-gray-600 items-center gap-2  "
                   >
                     <FaAngleLeft></FaAngleLeft> Quay lai

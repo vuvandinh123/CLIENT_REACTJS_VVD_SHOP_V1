@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { formatPrice } from "../../../../../utils";
+import { formatPrice, formatPriceVND } from "../../../../../utils";
 import TableSkeletor from "./TableSkeletor";
 import { Link } from "react-router-dom";
 import { Checkbox } from "@mui/material";
@@ -95,7 +95,7 @@ const Table = (props) => {
                     data={item}
                   ></ModalAddInventory>
                 </td>
-                <td className="px-6 py-4">{formatPrice(item.price)}</td>
+                <td className="px-6 py-4">{formatPriceVND(item.price < 0 ? 0 : item.price)}</td>
                 <td className="px-6 py-4">{item.sold}</td>
                 <td className="px-6 py-4">{item.type}</td>
                 <td className="px-6 py-4">

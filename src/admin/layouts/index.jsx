@@ -1,14 +1,20 @@
 /* eslint-disable react/prop-types */
-import Cookies from "js-cookie";
 import Header from "../components/common/Header";
 import Sidebar from "../components/common/Sidebar";
 import Footer from "../components/common/Footer";
+import { checkRole } from "../../helpers/utils";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const LayoutAdmin = ({ children }) => {
-  const token = Cookies.get("accessToken") ?? null;
-  if (!token) return (window.location.href = "/admin/login");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!checkRole("SHOP")) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   return (
     <div className="bg-gray-50">
-      
       <div className="flex overflow-hidden  ">
         {/* header */}
         <Header></Header>

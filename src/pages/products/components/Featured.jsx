@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import { AppURL } from "../../../api/AppURL";
 import { Accordion } from "../../../components/common";
-import {formatPrice} from "../../../utils";
+import { formatPriceVND } from "../../../utils";
 
 const Featured = () => {
-  
-  const listProduct =  [];
+  const listProduct = [];
   return (
     <>
       <Accordion title="FEATURED PRODUCT">
@@ -17,13 +15,13 @@ const Featured = () => {
                   <Link to={`/products/${item.slug}`} className="block">
                     <img
                       className="absolute group-hover:opacity-0 transition-all duration-400:"
-                      src={AppURL.ImageUrl + item?.images[0]?.image_url}
+                      src={item?.images[0]?.image_url}
                       alt=""
                     />
                     {item?.images[1]?.image_url && (
                       <img
                         className="group-hover:scale-105"
-                        src={AppURL.ImageUrl + item?.images[1]?.image_url}
+                        src={item?.images[1]?.image_url}
                         alt=""
                       />
                     )}
@@ -32,11 +30,16 @@ const Featured = () => {
               </div>
               <div className="mt-1">
                 <h4 className="">
-                  <Link to={`/products/${item.slug}`} className="block text-[12px] hover:text-blue-500" >
+                  <Link
+                    to={`/products/${item.slug}`}
+                    className="block text-[12px] hover:text-blue-500"
+                  >
                     {item?.name}
                   </Link>{" "}
                 </h4>
-                <h5 className="font-bold mt-1 text-red-500">{formatPrice(item?.price)}</h5>
+                <h5 className="font-bold mt-1 text-red-500">
+                  {formatPriceVND(item?.price)}
+                </h5>
               </div>
             </div>
           </div>

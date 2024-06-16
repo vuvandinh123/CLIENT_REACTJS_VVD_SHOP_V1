@@ -17,3 +17,6 @@ export {default as VerifyEmail} from './verify';
 export {default as LoginWithGooglePage} from './login/LoginWithGooglePage';
 export {default as ForgotPassword} from './forgotpassword';
 export {default as ChangePassword} from './forgotpassword/ChangePassword';
+export {default as UserPage} from './user';
+export {default as UserOrderDetailPage} from './user/OrderDetail';
+export {default as ShopPage} from './shop';

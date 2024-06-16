@@ -1,10 +1,9 @@
 import { FaHouseChimneyUser } from "react-icons/fa6";
 import { MdDiscount, MdInventory } from "react-icons/md";
-import { HiMiniCube } from "react-icons/hi2";
 import { FaShippingFast } from "react-icons/fa";
 export const navSidebar = [
   {
-    title: "Dashboard",
+    title: "Bảng điều khiển",
     link: "/admin",
     icon: (
       <svg

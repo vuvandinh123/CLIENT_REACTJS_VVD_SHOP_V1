@@ -7,6 +7,7 @@ import { getCookieAuth, handlerError, setCookieAuth } from "../../../utils";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { checkRole } from "../../../helpers/utils";
 const Login = () => {
   const [data, setData] = useState({
     email: "",
@@ -14,19 +15,8 @@ const Login = () => {
   });
   const navigate = useNavigate();
   useEffect(() => {
-    try {
-      const { accessToken } = getCookieAuth();
-      if (accessToken) {
-        const decodedToken = jwtDecode(accessToken);
-        if (decodedToken.role !== "SHOP") {
-          toast.error("Bạn không có quyền đăng nhập");
-          return;
-        } else {
-          navigate("/admin");
-        }
-      }
-    } catch (error) {
-      toast.error("Bạn không có quyền đăng nhập");
+    if (checkRole("SHOP")) {
+      navigate("/admin");
     }
   }, []);
   // hook thay đổi ngôn ngữ

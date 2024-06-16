@@ -123,13 +123,8 @@ const Navigate = ({ isOpenMenu, setIsOpenMenu, menuRef }) => {
               })}
 
               <li className=" lg:py-0 py-5 border-b lg:border-b-0">
-                <a className=" hover:text-[#2b38d1] text-red-600" href="">
-                  By Uminex!
-                </a>
-              </li>
-              <li className=" lg:py-0 py-5 border-b lg:border-b-0">
-                <Link to={"/auth/login"} className=" hover:text-[#2b38d1] text-red-600" href="">
-                  Login
+                <Link to={"/admin"} className=" hover:text-[#2b38d1] text-red-600" href="">
+                  Đăng ký bán hàng
                 </Link>
               </li>
             </ul>
@@ -140,7 +135,7 @@ const Navigate = ({ isOpenMenu, setIsOpenMenu, menuRef }) => {
               href=""
             >
               <img src={imageSale} alt="" />
-              Sale $20 Off Your First Order.
+              Khuyến mãi 20% cho đơn hàng đầu tiên
             </a>
           </div>
         </div>

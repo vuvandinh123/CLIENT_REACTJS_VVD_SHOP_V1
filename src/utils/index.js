@@ -102,7 +102,7 @@ export async function handlerError(fn, fnError) {
 export function formatNumber(value) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
-export function generateDataVariant(inputData, priceStockMap) {
+export function generateDataVariant(inputData, priceStockMap, defaultPrice) {
     const attributes = [];
 
     function generateCombinations(data, currentCombination = []) {
@@ -112,7 +112,7 @@ export function generateDataVariant(inputData, priceStockMap) {
         const [currentAttribute, ...remainingAttributes] = data;
         if (!currentAttribute) {
             const code = currentCombination.join("-");
-            const price = (priceStockMap.get(code)?.price ?? 0);
+            const price = (priceStockMap.get(code)?.price ?? defaultPrice);
             const stock = (priceStockMap.get(code)?.stock ?? 0);
             const isActive = (priceStockMap.get(code)?.isActive ?? 1);
             attributes.push({ code, price, stock, isActive });

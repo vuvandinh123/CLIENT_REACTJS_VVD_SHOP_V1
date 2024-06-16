@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useRef } from "react";
 import { Accordion } from "../../../components/common";
 import PropTypes from "prop-types";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
+import { formatPriceVND } from "../../../utils";
 
 const Filter = (props) => {
-  const { filter, setFilter, price, setPrice, brands } = props;
+  const { filter, setFilter, price, setPrice, brands, province } = props;
   const minPriceRef = useRef(null);
   const maxPriceRef = useRef(null);
   const handleCheckboxChange = (event) => {
@@ -23,12 +25,23 @@ const Filter = (props) => {
       },
     });
   };
-
+  const handleChangeStart = (e) => {
+    setFilter({ ...filter, stars: e.target.value });
+  };
+  const handleChangeProvince = (e) => {
+    const value = e.target.value;
+    if (e.target.checked) {
+      setFilter({ ...filter, province: [...filter.province, value] });
+    } else {
+      const newProvince = filter.province.filter((item) => item != value);
+      setFilter({ ...filter, province: newProvince });
+    }
+  };
   return (
     <>
       <div className="border-b pb-5 mt-5">
         <div className="flex items-center justify-between">
-          <h3 className="font-bold uppercase ">Filter</h3>
+          <h3 className="font-bold uppercase ">Bộ lọc</h3>
 
           <button className="" title="Remove all">
             <BiTrash
@@ -57,7 +70,7 @@ const Filter = (props) => {
               return (
                 <div key={index}>
                   <span className="px-2 text-[13px] py-1 pr-0 my-1 bg-slate-100 inline-block ms-1  rounded-sm">
-                    Brand: {mach?.name}
+                    Thương hiệu: {mach?.name}
                     <span
                       onClick={() => {
                         document.querySelectorAll(".brand").forEach((it) => {
@@ -119,15 +132,15 @@ const Filter = (props) => {
         </div>
       </div>
       <div className="border-b pb-5 mt-5">
-        <Accordion title="PRICE">
+        <Accordion title="Giá">
           <div>
             <p className="text-gray-500 mt-3">
-              The highest price is{"  "}
-              <span className="text-black">$928.00</span>
+              Giá cao nhất là {"  "}
+              <span className="text-black">{formatPriceVND(99999999)}</span>
             </p>
             <div className="">
               <div className="flex items-center gap-3 mt-3 justify-around">
-                <span className="text-xl text-gray-500">$</span>
+                <span className="text-md text-gray-500">VND</span>
                 <input
                   ref={minPriceRef}
                   placeholder="Min"
@@ -148,7 +161,7 @@ const Filter = (props) => {
                 onClick={handleClickFilterPrice}
                 className="w-full py-2 border bg-[#3030ff] text-white rounded-md mt-3"
               >
-                Apply
+                Áp dụng
               </button>
             </div>
           </div>
@@ -185,10 +198,87 @@ const Filter = (props) => {
         </div>
       )}
       <div className="border-b pb-5 mt-5">
-        <Accordion title="AVAILABILITY">
-          <div className="mt-5">
+        <Accordion title="Đánh giá">
+          <div className="mt-5 overflow-auto">
             <form action="" method="post">
-              <label
+              {[1, 2, 3, 4, 5].map((item) => {
+                return (
+                  <label
+                    htmlFor={`star-${item}`}
+                    key={item}
+                    className="flex justify-between mb-2 cursor-pointer"
+                  >
+                    <div className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        onChange={handleChangeStart}
+                        name="start"
+                        value={6 - item}
+                        id={`star-${item}`}
+                        className="w-3  h-3"
+                      />
+                      <span className="text-gray-500 flex gap-2 items-center capitalize pt-[2px]">
+                        <div className="flex items-center gapx-3 text-yellow-400">
+                          {Array(5)
+                            .fill(0)
+                            .map((item2, index) => (
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5 "
+                                viewBox="0 0 20 20"
+                                fill={`${
+                                  5 - index >= item ? "#ffc107" : "#e4e5e9"
+                                }`}
+                                key={index}
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            ))}
+                        </div>
+                      </span>
+                      {
+                        <span className="text-gray-500">
+                          ({6 - item} ) {6 - item < 5 ? "Trở lên" : ""}
+                        </span>
+                      }
+                    </div>
+                  </label>
+                );
+              })}
+            </form>
+          </div>
+        </Accordion>
+      </div>
+      <div className="border-b pb-5 mt-5">
+        <Accordion title="Nơi bán">
+          <div className="mt-5 h-[500px] overflow-auto">
+            <form action="" method="post">
+              {province?.map((item) => {
+                return (
+                  <label
+                    key={item.id}
+                    htmlFor={item.name}
+                    className="flex justify-between mb-2 cursor-pointer"
+                  >
+                    <div className="flex gap-3 items-center">
+                      <input
+                        type="checkbox"
+                        // checked={filter.province.includes("" + item.id)}
+
+                        value={item.id}
+                        onChange={handleChangeProvince}
+                        name="province"
+                        className="brand"
+                        id={item.name}
+                      />
+                      <span className="text-gray-500 capitalize pt-[2px]">
+                        {item.name} <span>({item.total_product})</span>
+                      </span>
+                    </div>
+                  </label>
+                );
+              })}
+              {/* <label
                 htmlFor=""
                 className="flex justify-between mb-2 cursor-pointer"
               >
@@ -196,7 +286,7 @@ const Filter = (props) => {
                   <input type="checkbox" className="" id="" />
                   <span className="text-gray-500 pt-[2px]">Invalid (1)</span>
                 </div>
-              </label>
+              </label> */}
             </form>
           </div>
         </Accordion>

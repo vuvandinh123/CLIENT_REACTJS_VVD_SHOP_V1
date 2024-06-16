@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
 import { useApiCall } from "../../../../../hooks";
-import { getAllProductOnPromotion } from "../../../../service/Promotion";
-import { formatPrice } from "../../../../../utils";
+import { formatPrice, formatPriceVND } from "../../../../../utils";
 import proNotFound from "../../../../../assets/image/product-notfound.png";
 import { getAllProductAndVariant } from "../../../../service/Product";
 const ModalAppliesProduct = ({
@@ -116,30 +115,28 @@ const ModalAppliesProduct = ({
                         key={index}
                         className="grid cursor-pointer hover:bg-gray-100 rounded-md grid-cols-12 items-center justify-center border-b p-3 dark:border-navy-700"
                       >
-                        <div className="col-span-1">
-                          <input
-                            name="applies_to"
-                            type="checkbox"
-                            id={"applies_to" + item.id + index}
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setProductChecked(item);
-                              } else {
-                                removeProductChecked(item);
-                              }
-                            }}
-                            checked={listProductCheck.some((product) => {
-                              if (product.code) {
-                                return product.code === item.code;
-                              } else {
-                                return product.id === item.id;
-                              }
-                            })}
-                            value={item.id}
-                          />
-                        </div>
                         <div className="col-span-8">
                           <div className="flex items-center gap-3">
+                            <input
+                              name="applies_to"
+                              type="checkbox"
+                              id={"applies_to" + item.id + index}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setProductChecked(item);
+                                } else {
+                                  removeProductChecked(item);
+                                }
+                              }}
+                              checked={listProductCheck.some((product) => {
+                                if (product.code) {
+                                  return product.code === item.code;
+                                } else {
+                                  return product.id === item.id;
+                                }
+                              })}
+                              value={item.id}
+                            />
                             <div className="w-[50px] max-h-[50px] shrink-0">
                               <img
                                 src={item.thumbnail}
@@ -160,7 +157,7 @@ const ModalAppliesProduct = ({
                           {item.quantity}
                         </div>
                         <div className="col-span-1 text-end">
-                          {formatPrice(item.price)}
+                          {formatPriceVND(item.price)}
                         </div>
                       </label>
                     ))}

@@ -1,50 +1,56 @@
 import { AiOutlineCheck } from "react-icons/ai";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ChangePrice from "../common/ChangePrice";
-import {  setIsOpenCart } from "../../redux/slice/cartSlice";
+import { setIsOpenCart } from "../../redux/slice/cartSlice";
 import { AppURL } from "../../api/AppURL";
 import { toast } from "react-toastify";
+import { addToCart } from "../../service/Cart";
+import { setIsOpenSelectOptions } from "../../redux/slice/selectCartSlice";
+import { getCookieAuth } from "../../utils";
+import { useState } from "react";
 
 const Product2 = ({ data }) => {
-  const newCart = {
-    name: data.name,
-    price: data.price,
-    id: data.id,
-    image: data?.images[0]?.image_url,
-    image2: data?.images[1]?.image_url,
-    slug: data.slug,
-  };
   const dispatch = useDispatch();
-  const handleClickToCart = () => {
-    const newCart = {
-      name: data.name,
-      price: data.price,
-      id: data.id,
-      image: data?.images[0]?.image_url,
-      slug: data.slug,
-    };
-    // dispatch(byToCart(newCart));
-    if (window.screen.width > 768) {
-      dispatch(setIsOpenCart(true));
-    } else {
-      toast.success("Thêm vào giỏ hàng thành công");
+  const navigate = useNavigate();
+  const [isDisabled, setIsDisabled] = useState(false);
+  const handleClickToCart = async () => {
+    const { userId } = getCookieAuth();
+    if (!userId) {
+      toast.error("Vui lòng đăng nhập để tiếp tục");
+      navigate("/auth/login");
+      return;
     }
+    setIsDisabled(true);
+    if (data.type === "single") {
+      const newCart = { productId: data.id };
+      await addToCart(newCart);
+
+      // dispatch(byToCart(newCart));
+      if (window.screen.width > 768) {
+        dispatch(setIsOpenCart(true));
+      } else {
+        toast.success("Thêm vào giỏ hàng thành công");
+      }
+    } else {
+      dispatch(setIsOpenSelectOptions({ isOpen: true, id: data.id }));
+    }
+    setIsDisabled(false);
   };
   return (
     <div className="flex bg-white justify-between p-5">
       <div className="flex gap-5">
         <div className="group">
-          <Link to={`/products/${newCart.slug}`}>
+          <Link to={`/products/${data.slug}-${data.id}`}>
             <img
               className="w-[200px] group-hover:opacity-0 absolute transition-all duration-400"
-              src={AppURL.ImageUrl + newCart.image}
+              src={data.thumbnail}
               alt=""
             />
             <img
               className="w-[200px] group-hover:scale-105"
-              src={AppURL.ImageUrl + newCart.image2}
+              src={data.thumbnail}
               alt=""
             />
           </Link>
@@ -52,8 +58,8 @@ const Product2 = ({ data }) => {
 
         <div className="mt-5">
           <h3 className="text-[#212529] font-semibold mb-2 md:text-lg">
-            <Link to={`/products/${newCart.slug}`} className="block">
-              {newCart.name}
+            <Link to={`/products/${data.slug}-${data.id}`} className="block">
+              {data.name}
             </Link>
           </h3>
           <div className="flex items-center gap-3">
@@ -87,7 +93,7 @@ const Product2 = ({ data }) => {
         </p>
         <ChangePrice
           className="font-bold text-xl text-blue-600 mt-3"
-          price={newCart?.price}
+          price={data?.price}
         />
         <button
           onClick={handleClickToCart}

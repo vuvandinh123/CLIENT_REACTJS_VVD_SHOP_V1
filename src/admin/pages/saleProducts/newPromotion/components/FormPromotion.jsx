@@ -38,7 +38,7 @@ const FormPromotion = (props) => {
         <div className="col-span-1">
           <PriceFiled
             label="Giảm"
-            location={values.type_price === "fixed_amount" ? "USD" : "%"}
+            location={values.type_price === "fixed_amount" ? "VND" : "%"}
             name="price_sale"
             placeholder="99.99"
           ></PriceFiled>

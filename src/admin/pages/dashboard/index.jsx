@@ -1,94 +1,65 @@
+import useApiCall from "../../../hooks/useApiCall";
+import { formatPriceVND } from "../../../utils";
+import Loader from "../../components/common/Loader";
 import PageHeader from "../../components/common/PageHeader";
+import { getOrderStats } from "../../service/Order";
+import { getCountFollows } from "../../service/UserFollow";
+import Card from "./components/Card";
 
 const Dashboard = () => {
+  const { data, loading } = useApiCall(async () => {
+    const res = await getOrderStats();
+    const res2 = await getCountFollows();
+    return {
+      ...res.data,
+      countFollow: res2.data.count,
+    };
+  }, []);
   return (
     <div>
-      {/* This is an example component */}
-      <PageHeader title="Dashboard"></PageHeader>
+      {loading && <Loader></Loader>}
+      <PageHeader title="Bảng điều khiển"></PageHeader>
       <main>
         <div>
           <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                    2,340
-                  </span>
-                  <h3 className="text-base font-normal text-gray-500">
-                    New products this week
-                  </h3>
-                </div>
-                <div className="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                  14.6%
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                    5,355
-                  </span>
-                  <h3 className="text-base font-normal text-gray-500">
-                    Visitors this week
-                  </h3>
-                </div>
-                <div className="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                  32.9%
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                    385
-                  </span>
-                  <h3 className="text-base font-normal text-gray-500">
-                    User signups this week
-                  </h3>
-                </div>
-                <div className="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
-                  -2.7%
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
+            <Card
+              label={"Tổng số đơn hàng"}
+              description={"Số đơn hàng được đặt trong ngày"}
+              value={data.total_orders}
+              percent={12}
+            ></Card>
+            <Card
+              label={"Số người theo dõi mới"}
+              description={
+                "Số lượng người dùng đã theo dõi cửa hàng trong ngày"
+              }
+              value={data.countFollow}
+              percent={12}
+            ></Card>
+            <Card
+              label={"Doanh thu trong ngày"}
+              description={"Doanh thu khi đơn hàng đã được thanh toán"}
+              value={data.total_success}
+              percent={12}
+            ></Card>
+            <Card
+              label={"Doanh thu đơn hàng"}
+              description={"Tổng doanh thu đơn hàng trong ngày"}
+              value={formatPriceVND(Number(data.total_pending))}
+              percent={12}
+            ></Card>
+            <Card
+              label={"Số đơn hàng mới cần duyệt"}
+              description={"Số đơn hàng chờ được xác nhận "}
+              value={data.new_orders_pending}
+              percent={12}
+            ></Card>
+            <Card
+              label={"Số đơn hàng thành công "}
+              description={"Tổng số đơn hàng đã được giao đến khách hàng"}
+              value={data.successful_orders}
+              percent={12}
+            ></Card>
           </div>
           <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
             <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">

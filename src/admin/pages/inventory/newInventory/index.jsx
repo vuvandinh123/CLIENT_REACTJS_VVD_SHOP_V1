@@ -8,10 +8,8 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 import PageHeader from "../../../components/common/PageHeader";
 import { initNewPromotion } from "../../../data/initValueFormik";
-import SubmitButton from "../../products/components/SubmitButton";
 import AppliesTo from "./components/AppliesTo";
 import toast from "react-hot-toast";
-import { createPromotion } from "../../../service/Promotion";
 import { createInventoryLog } from "../../../service/InventoryLogs";
 import { RiDraftLine } from "react-icons/ri";
 
@@ -21,19 +19,6 @@ const NewInventory = () => {
   const [listProductCheck, setListProductCheck] = useState([]);
   const [note, setNote] = useState("");
   const navigate = useNavigate();
-  //   {
-  //     "product_id": 141,
-  //     "import_price": "1234",
-  //     "quantity": "32",
-  //     "variant": {
-  //         "name": "san pham demo",
-  //         "code": "12gb-blue",
-  //         "id": 141,
-  //         "price": "32",
-  //         "stock": 111,
-  //         "thumbnail": "https://res.cloudinary.com/dnvr7lidh/image/upload/v1716660973/products/1716660971010-452735443.jpg"
-  //     }
-  // }
   const handleSubmit = async (values) => {
     // formath giá
     const list = listProductCheck.map((item) => ({

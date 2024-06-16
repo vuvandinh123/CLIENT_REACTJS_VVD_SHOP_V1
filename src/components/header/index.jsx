@@ -10,11 +10,11 @@ import Search from "./search/Search";
 import User from "./user";
 import Navigate from "./navigate";
 import { Link } from "react-router-dom";
-import ChangePrice from "../common/ChangePrice";
 import { setIsOpenCart } from "../../redux/slice/cartSlice";
 import { setIsOpenFav } from "../../redux/slice/favouriteSlice";
-import logo from "../../assets/logo.png";
+import logo from "../../../public/logo.svg";
 import Favourite from "../baskets/Favourite";
+import { formatPriceVND } from "../../utils";
 const Header = () => {
   const barsRef = useRef(null);
   const menuRef = useRef(null);
@@ -28,7 +28,6 @@ const Header = () => {
     menuRef,
     barsRef
   );
-  console.log(qtyFav, "qtyfav");
   const handleClickShowMenu = () => {
     setIsOpenMenu(!isOpenMenu);
   };
@@ -51,13 +50,9 @@ const Header = () => {
           >
             <i className="fa-solid fa-bars text-[25px]"></i>
           </div>
-          <div className="w-[180px] shrink-0 text-2xl md:text-3xl  gap-1">
+          <div className="w-[200px] shrink-0 gap-1">
             <Link to={"/"}>
-              {/* <span className="font-bold ">VVD</span>{" "}
-              <span className="text-[#4369ff] font-bold  border-b-blue-600 border-b-2 ">
-                Shop
-              </span> */}
-              <img src={logo} alt="" />
+              <img className="w-full h-full " src={logo} alt="" />
             </Link>
           </div>
           <Search />
@@ -88,12 +83,13 @@ const Header = () => {
                 </div>
                 <div className="hidden lg:block">
                   <p className="text-[#3c3d3e] w-[100px] tracking-widest font-semibold text-[11px]">
-                    Your Cart <HiOutlineTag className="inline" />
+                    Giỏ hàng <HiOutlineTag className="inline" />
                   </p>
-                  <ChangePrice
-                    price={total}
-                    className="text-[#212529] font-bold text-[14px]"
-                  />
+                  {
+                    <span className="text-[#212529] font-bold text-[14px]">
+                      {formatPriceVND(total)}
+                    </span>
+                  }
                 </div>
               </a>
             </div>

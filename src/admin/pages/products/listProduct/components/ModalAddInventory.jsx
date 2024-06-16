@@ -5,7 +5,7 @@ import { inventorySchema } from "../../../../data/schema";
 import PriceFiled from "../../../../components/fields/PriceFiled";
 import NumberFiled from "../../../../components/fields/NumberFiled";
 import { useEffect, useRef, useState } from "react";
-import { formatPrice, removeCommas } from "../../../../../utils";
+import { formatPrice, formatPriceVND, removeCommas } from "../../../../../utils";
 import { createInventoryLog } from "../../../../service/InventoryLogs";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -171,7 +171,7 @@ const ModalAddInventory = (props) => {
                         ) : null}
                         <div className="flex gap-5 items-center mt-3">
                           <p>
-                            Giá: {formatPrice(variant?.price || data?.price)}
+                            Giá: {formatPriceVND(variant?.price || data?.price)}
                           </p>
                           <p>Số lượng: {variant?.stock || data?.quantity}</p>
                           <p>Đã bán: {data?.sold}</p>
@@ -195,7 +195,7 @@ const ModalAddInventory = (props) => {
                         name="import_price"
                         label="Giá nhập"
                         placeholder="Giá nhap"
-                        location={"USD"}
+                        location={"VND"}
                       ></PriceFiled>
                     </div>
                     <div className="sm:col-span-2">

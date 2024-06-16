@@ -1,14 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
 import Auth from "../../service/Auth";
 import { setCookieAuth } from "../../utils";
+import toast from "react-hot-toast";
 const Singup = () => {
   const handleSubmitSingup = async (values) => {
+    if (values.password !== values.passwordConfirm) {
+      toast.error("Mật khẩu không khớp");
+      return;
+    }
     const res = await Auth.SingUp(values);
+
     if (res.status === 200) {
-      // console.log(res);
       setCookieAuth({
         userId: res.data.user.id,
         accessToken: res.data.token.accessToken,
@@ -22,14 +26,13 @@ const Singup = () => {
   };
   return (
     <div>
-      <ToastContainer />
       <div className="bg-white relative h-screen ">
         <div className="mx-10 my-5 absolute">
           <Link
-            to="/"
+            to="/auth/login"
             className=" py-3 px-5 hover:text-red-600 rounded-lg text-black"
           >
-            <span className="">{"<<<"}</span> Back to home page
+            <span className="">{"<<<"}</span> Quay lại
           </Link>
         </div>
         <div
@@ -50,8 +53,8 @@ const Singup = () => {
                 className="flex flex-col items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl
       relative z-10"
               >
-                <p className="w-full text-4xl font-medium text-center leading-snug font-serif">
-                  Sign up for an account
+                <p className="w-full uppercase text-3xl font-medium text-center leading-snug font-serif">
+                  Đăng ký tài khoản
                 </p>
                 <Formik
                   initialValues={{
@@ -59,12 +62,16 @@ const Singup = () => {
                     password: "",
                     firstName: "",
                     lastName: "",
+                    passwordConfirm: "",
                   }}
                   validationSchema={Yup.object({
-                    email: Yup.string().email().required("Email is required"),
-                    password: Yup.string().required("Password is required"),
-                    firstName: Yup.string().required("First name is required"),
-                    lastName: Yup.string().required("Last name is required"),
+                    email: Yup.string().email().required("Email bắt buộc nhập"),
+                    password: Yup.string().required("Mật khẩu bắt buộc nhập"),
+                    passwordConfirm: Yup.string().required(
+                      "Xác nhận mật khẩu bắt buộc nhập"
+                    ),
+                    firstName: Yup.string().required("Họ đệm bắt buộc nhập"),
+                    lastName: Yup.string().required("Tên bắt buộc nhập"),
                   })}
                   onSubmit={(values) => handleSubmitSingup(values)}
                 >
@@ -77,10 +84,10 @@ const Singup = () => {
                               className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-1 mr-0 mb-0 ml-2 font-medium text-gray-600
             absolute"
                             >
-                              Frist Name
+                              Họ đệm
                             </p>
                             <Field
-                              placeholder="John"
+                              placeholder="Vũ Văn"
                               type="text"
                               name="firstName"
                               className="border placeholder-gray-400 focus:outline-none
@@ -96,11 +103,11 @@ const Singup = () => {
                               className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-1 mr-0 mb-0 ml-2 font-medium text-gray-600
             absolute"
                             >
-                              Last Name
+                              Tên
                             </p>
                             <Field
                               name="lastName"
-                              placeholder="John"
+                              placeholder="Định"
                               type="text"
                               className="border placeholder-gray-400 focus:outline-none
             focus:border-black w-full py-3 pr-4  pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
@@ -127,12 +134,12 @@ const Singup = () => {
                             <ErrorMessage name="email" />
                           </p>
                         </div>
-                        <div className="relative">
+                        <div className="relative mb-2">
                           <p
                             className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
             absolute"
                           >
-                            Password
+                            Mật khẩu
                           </p>
                           <Field
                             name="password"
@@ -146,16 +153,35 @@ const Singup = () => {
                             <ErrorMessage name="password" />
                           </p>
                         </div>
+                        <div className="relative mb-2">
+                          <p
+                            className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
+            absolute"
+                          >
+                            Xác nhận mật khẩu
+                          </p>
+                          <Field
+                            name="passwordConfirm"
+                            placeholder="Nhập lại mật khẩu"
+                            type="password"
+                            className="border placeholder-gray-400 focus:outline-none
+            focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
+            border-gray-300 rounded-md"
+                          />
+                          <p className="text-[12px] h-5 mt-2 ms-2 text-red-600">
+                            <ErrorMessage name="passwordConfirm" />
+                          </p>
+                        </div>
                         <div>
                           <hr />
                           <p className="my-3 mt-5">
                             {" "}
-                            Do you already have an account{" "}
+                            Bạn đã có tài khoản{" "}
                             <Link
                               className="text-indigo-500 underline"
-                              to={"/login"}
+                              to={"/auth/login"}
                             >
-                              Login
+                              Đăng nhập
                             </Link>
                           </p>
                         </div>
@@ -164,7 +190,7 @@ const Singup = () => {
                             className="w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-indigo-500
             rounded-lg transition duration-200 hover:bg-indigo-600 ease"
                           >
-                            Continue
+                            Tiếp tục
                           </button>
                         </div>
                       </div>

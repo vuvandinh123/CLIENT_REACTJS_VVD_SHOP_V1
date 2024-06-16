@@ -52,7 +52,6 @@ const NewCategory = () => {
     [refresh],
     []
   );
-  console.log(cate);
   const fnSaveCreate = async (data) => {
     const res = await createCategoryByShop(data);
     if (res.status === 201) {

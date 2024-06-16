@@ -5,13 +5,23 @@ import NotImage from "../../../../assets/imageNotFound.png";
 import { Link } from "react-router-dom";
 import { isObjectEmptyOrNull } from "../../../../helpers/utils";
 import toast from "react-hot-toast";
+import { uploadImages } from "../../../service/Upload";
+import { useState } from "react";
 const CreateShopForm = ({ setTab, data, handleSubmit, setData }) => {
-  const handleClickSubmit = () => {
+  const [image, setImage] = useState(null);
+  const handleClickSubmit = async () => {
     // validate
-    if (isObjectEmptyOrNull(data, ["shop_website","shop_description"])) {
-      toast.error("Vui lòng điền đầy đủ thông tin");
+    if (!image) {
+      toast.error("Vui lòng thêm ảnh đại diện cho cửa hàng");
       return;
     }
+    // if (isObjectEmptyOrNull(data, ["shop_website", "shop_description"])) {
+    //   toast.error("Vui lòng điền đầy đủ thông tin");
+    //   return;
+    // }
+    const files = await uploadImages([image]);
+    setData({ ...data, shop_logo: files.data[0].url });
+
     if (data.shop_phone.length < 9 || data.shop_phone.length > 10) {
       toast.error("Số điện thoại không đúng!");
     }
@@ -41,17 +51,13 @@ const CreateShopForm = ({ setTab, data, handleSubmit, setData }) => {
                   onError={(e) => {
                     e.target.src = NotImage;
                   }}
-                  //   src={
-                  //     typeof image === "string"
-                  //       ? image
-                  //       : image && URL.createObjectURL(image)
-                  //   }
+                  src={image ? URL.createObjectURL(image) : NotImage}
                   alt=""
                 />
                 <input
                   type="file"
                   className="hidden"
-                  //   onChange={(e) => setImage(e.target.files[0])}
+                  onChange={(e) => setImage(e.target.files[0])}
                 />
               </label>
               <label htmlFor="" className="block mt-5 text-center">

@@ -20,11 +20,11 @@ import {
 // hook
 import { useApiCall, useMultipleSelect } from "../../../../hooks";
 // utils
-import { formatPrice } from "../../../../utils";
+import { formatPrice, formatPriceVND } from "../../../../utils";
 import { LuClipboardEdit } from "react-icons/lu";
 import { MdOutlineDelete } from "react-icons/md";
 
-const HeaderTable = ["name", "code", "type", "value", "status", "uses_count"];
+const HeaderTable = ["listDiscount.table.name", "listDiscount.table.code", "listDiscount.table.type", "listDiscount.table.value", "listDiscount.table.status", "listDiscount.table.uses_count"];
 const ListDiscount = () => {
   const { t } = useTranslation();
   const [refresh, setRefresh] = useState(false);
@@ -222,7 +222,7 @@ const ListDiscount = () => {
             <td className="px-6 py-4">{item.type}</td>
             <td className="px-6 py-4">
               -{item.type_price === "fixed_amount"
-                ? formatPrice(item.value)
+                ? formatPriceVND(item.value)
                 : item.value}{" "}
               {item.type_price !== "fixed_amount" ? "%" : ""}
             </td>

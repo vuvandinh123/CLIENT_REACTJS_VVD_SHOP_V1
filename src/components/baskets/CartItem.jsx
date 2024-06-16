@@ -3,6 +3,7 @@ import { ChangePrice, ImageLoader } from "../common";
 import { Link } from "react-router-dom";
 import plus from "../../../public/plus.svg";
 import minus from "../../../public/minus.svg";
+import { formatPriceVND } from "../../utils";
 const CartItem = ({
   data,
   handleClickDeleteCartItem,
@@ -31,17 +32,17 @@ const CartItem = ({
           ) : null}
 
           <div className="flex items-center gap-2">
-            <ChangePrice
+            <span
               className={`${
                 data.fix_price ? "text-red-500" : "text-[#2b38d1]"
               } text-[1rem] font-bold my-2`}
-              price={data.price}
-            />
+            >
+              {formatPriceVND(data.price)}
+            </span>
             {data?.fix_price && (
-              <ChangePrice
-                className="text-gray-400 line-through text-sm font-semibold my-2"
-                price={data.fix_price}
-              />
+              <span className="text-gray-400 line-through text-sm font-semibold my-2">
+                {formatPriceVND(data.fix_price)}
+              </span>
             )}
           </div>
 

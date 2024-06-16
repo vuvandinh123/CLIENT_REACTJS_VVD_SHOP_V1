@@ -13,9 +13,9 @@ const Footer = () => {
           </div>
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-[12px] font-semibold uppercase">
-              Fast Delivery
+              Chuyển phát nhanh
             </h3>
-            <p className="text-[11px] mt-1">Across West & East India</p>
+            <p className="text-[11px] mt-1">Việt Nam & Mỹ</p>
           </div>
         </div>
         <div className="flex flex-col gap-3 justify-center items-center p-5">
@@ -24,9 +24,9 @@ const Footer = () => {
           </div>
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-[12px] font-semibold uppercase">
-              SAFE PAYMENT
+              Thanh toán an toàn
             </h3>
-            <p className="text-[11px] mt-1">100% Secure Payment</p>
+            <p className="text-[11px] mt-1">100% Bảo mật thanh toán</p>
           </div>
         </div>
         <div className="flex flex-col gap-3 justify-center items-center p-5">
@@ -35,9 +35,11 @@ const Footer = () => {
           </div>
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-[12px] font-semibold uppercase">
-              ONLINE DISCOUNT
+              Gảm giá trực tuyến
             </h3>
-            <p className="text-[11px] mt-1">Add Multi-buy Discount</p>
+            <p className="text-[11px] mt-1">
+              Có nhiều mã giảm giá khi mua hàng
+            </p>
           </div>
         </div>
         <div className="flex flex-col gap-3 justify-center items-center p-5">
@@ -45,8 +47,10 @@ const Footer = () => {
             <img src={helpSvg} alt="" />
           </div>
           <div className="flex flex-col justify-center items-center">
-            <h3 className="text-[12px] font-semibold uppercase">HELP CENTER</h3>
-            <p className="text-[11px] mt-1">Dedicated 24/7 Support</p>
+            <h3 className="text-[12px] font-semibold uppercase">
+              TRUNG TÂM TRỢ GIÚP
+            </h3>
+            <p className="text-[11px] mt-1">Hỗ trợ 24/7 </p>
           </div>
         </div>
         <div className="flex flex-col gap-3 justify-center items-center p-5">
@@ -55,9 +59,9 @@ const Footer = () => {
           </div>
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-[12px] font-semibold uppercase">
-              CURATED ITEMS
+              Sản phẩm tuyệt vời
             </h3>
-            <p className="text-[11px] mt-1">From Handpicked Sellers</p>
+            <p className="text-[11px] mt-1">Từ nhiều nhãn hàng nổi tiếng</p>
           </div>
         </div>
       </div>
@@ -65,27 +69,43 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row gap-10">
           <div className="lg:basis-2/6">
             <aside className="text-center md:text-start">
-              <h4 className="font-semibold mb-7 mt-5">ABOUT THE STORE</h4>
-              <p className="text-gray-500 my-2">Got Question? Call us 24/7</p>
-              <p className="text-2xl text-[#3636ff]">+222-1800-262</p>
+              <h4 className="font-semibold mb-7 mt-5 uppercase">Địa chỉ </h4>
               <p className="text-gray-500 my-2">
-                268 St, South New York/NY 98944, United States
+                Bạn có câu hỏi? Gọi chúng tôi hỗ trợ 24/7
               </p>
-              <p className="text-gray-500 my-2">Customersupport@example.com</p>
-              <p className="text-gray-500">Aloshopify@alothemes.com</p>
+              <p className="text-2xl text-[#3636ff]">+84 333 583 800</p>
+              <p className="text-gray-500 my-2">
+                Hẻm 33 đường số 8 Linh Xuân Thủ Đức
+              </p>
+              <p className="text-gray-500 my-2">vuvandinh203@gmail.com</p>
+              <p className="text-gray-500">vuvandinh@vvdshop.com</p>
             </aside>
           </div>
           <div className="lg:basis-2/6">
             <div className="flex justify-between md:justify-start gap-32">
               <div>
-                <h4 className="font-bold mt-5 mb-5">INFOMATION</h4>
+                <h4 className="font-bold mt-5 mb-5">THÔNG TIN</h4>
                 <ul className="leading-9">
                   <li>
                     <a
                       className="text-gray-500 hover:underline hover:text-[#001aff]"
                       href=""
                     >
-                      Blog Us
+                      Về chúng tôi
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="text-gray-500 hover:underline hover:text-[#001aff]"
+                      href=""
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      className="text-gray-500 hover:underline hover:text-[#001aff]"
+                      href=""
+                    >
+                      Thông tin vận chuyển
                     </a>
                   </li>
                   <li>
@@ -93,23 +113,7 @@ const Footer = () => {
                       className="text-gray-500 hover:underline hover:text-[#001aff]"
                       href=""
                     >
-                      About Us
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-500 hover:underline hover:text-[#001aff]"
-                      href=""
-                    >
-                      Delivery Information
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-500 hover:underline hover:text-[#001aff]"
-                      href=""
-                    >
-                      Privacy Policy
+                      Phương thức thanh toán
                     </a>
                   </li>
                   <li>
@@ -117,20 +121,20 @@ const Footer = () => {
                       className="text-gray-500 hover:underline hover:text-[#132aff]"
                       href=""
                     >
-                      FeedBack
+                      Gửi hỗ trợ
                     </a>
                   </li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold mt-5 mb-5">QUICK LINKS</h4>
+                <h4 className="font-bold mt-5 mb-5 uppercase">Liên hệ</h4>
                 <ul className="leading-9">
                   <li>
                     <a
                       className="text-gray-500 hover:underline hover:text-[#001aff]"
                       href=""
                     >
-                      Store Location
+                      Địa chỉ
                     </a>
                   </li>
                   <li>
@@ -138,7 +142,7 @@ const Footer = () => {
                       className="text-gray-500 hover:underline hover:text-[#001aff]"
                       href=""
                     >
-                      Orders Tracking
+                      Đơn hàng
                     </a>
                   </li>
                   <li>
@@ -154,10 +158,10 @@ const Footer = () => {
             </div>
           </div>
           <div className="lg:basis-2/6 text-center  md:text-start">
-            <h4 className="font-bold mt-5 mb-5 ">NEWSLETTER SIGNUP</h4>
+            <h4 className="font-bold mt-5 mb-5 ">ĐĂNG KÝ NHẬN THÔNG BÁO</h4>
             <p className="leading-7  text-gray-500">
-              Join 20.000+ subscribers and get a new discount coupon on every
-              Saturday. Updates information on Sales and Offers.
+              Với 20.000 khách hàng đã đăng ký với VVD SHOP hãy đăng ký nhanh để
+              được những giảm giá tuyệt vời từ chúng tôi
             </p>
             <form
               action=""
@@ -167,16 +171,16 @@ const Footer = () => {
               <input
                 type="text"
                 className="px-5 w-full py-3 rounded-full border focus:outline-none focus:border-[#001aff]"
-                placeholder="Your email address..."
+                placeholder="Địa chỉ email của bạn..."
                 name=""
                 id=""
               />
-              <button className="px-10 py-3 rounded-full bg-[#001aff] text-white">
-                Subscribe
+              <button className="px-10 py-3 shrink-0 uppercase rounded-full bg-[#001aff] text-white">
+                Đăng ký
               </button>
             </form>
             <p className="text-gray-500 my-5 text-center md:text-start">
-              Subscribe for Uminex and get 20% off your first purchase.
+              Đăng ký VVSDHOP bạn sẽ được voucher giảm giá 20%
             </p>
           </div>
         </div>
@@ -186,13 +190,16 @@ const Footer = () => {
         <p className="text-center md:text-start">
           Copyright ©{" "}
           <a href="#" className="text-[#001aff]">
-            Uminex
+            VVD SHOP
           </a>{" "}
-          all rights reserved. Powered by
-          <a className="text-[#001aff]" href=""> Alothemes.</a>
+          Đã đăng ký Bản quyền. Được cung cấp bởi
+          <a className="text-[#001aff]" href="https://facebook.com/vuvandinhh">
+            {" "}
+            VŨ ĐỊNH.
+          </a>
         </p>
         <div className="flex flex-wrap md:flex-nowrap items-center text-center md:text-start gap-3">
-          <p className="w-full  mt-2">Payment Method:</p>
+          <p className="w-full  mt-2">Phương thức thanh toán:</p>
           <img
             className="h-10 w-full"
             src="https://demo-uminex.myshopify.com/cdn/shop/files/payment_acfdf180-1e05-48f1-97a2-adca8e5565e8.png?v=1679910794&width=2000"

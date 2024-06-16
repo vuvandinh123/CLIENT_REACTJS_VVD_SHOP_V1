@@ -18,4 +18,12 @@ export function getExchangeRatesUSDtoVND(price) {
     console.error('Error fetching exchange rates:', error);
   }
 }
+export function getExchangeRatesVNDtoUSD(price) {
+  try {
+    const data = price / 25543;
+    return data
+  } catch (error) {
+    console.error('Error fetching exchange rates:', error);
+  }
+}
 

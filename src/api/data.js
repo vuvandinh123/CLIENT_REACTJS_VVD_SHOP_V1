@@ -123,47 +123,47 @@ export const colors = [
 export const menus = [
     {
         id: 1,
-        name: "Home",
+        name: "Trang chủ",
         link: "/",
         parent_id: 0,
     },
     {
         id: 2,
-        name: "Shop",
-        link: "/categories/all",
+        name: "Danh mục",
+        link: "/categories",
         parent_id: 0,
     },
     {
         id: 3,
-        name: "Blog",
+        name: "Bài viết",
         link: "/blog",
         parent_id: 0,
 
     },
     {
         id: 4,
-        name: "About Us",
+        name: "Hỗ trợ",
         link: "/about",
         parent_id: 0,
     },
-    {
-        id: 5,
-        name: "products 1",
-        link: "/about",
-        parent_id: 2,
-    },
-    {
-        id: 6,
-        name: "products2 ",
-        link: "/about",
-        parent_id: 2,
-    },
-    {
-        id: 7,
-        name: "products5 ",
-        link: "/about",
-        parent_id: 2,
-    }
+    // {
+    //     id: 5,
+    //     name: "products 1",
+    //     link: "/about",
+    //     parent_id: 2,
+    // },
+    // {
+    //     id: 6,
+    //     name: "products2 ",
+    //     link: "/about",
+    //     parent_id: 2,
+    // },
+    // {
+    //     id: 7,
+    //     name: "products5 ",
+    //     link: "/about",
+    //     parent_id: 2,
+    // }
 ]
 export const news = [
     {
@@ -275,17 +275,18 @@ export const products = [
 ]
 export const conversionPrice = [
     {
+        "id": 2,
+        "from": "vi-VN",
+        "name": "Việt Nam (VND ₫)",
+        "currency": "VND",
+        "rate": 24000
+    },
+    {
         "id": 1,
         "from": "en-US",
         "name": "United States(USD $)",
         "currency": "USD",
         "rate": 0.00004129
     },
-    {
-        "id": 2,
-        "from": "vi-VN",
-        "name": "Việt Nam (VND ₫)",
-        "currency": "VND",
-        "rate": 24000
-    }
+
 ]

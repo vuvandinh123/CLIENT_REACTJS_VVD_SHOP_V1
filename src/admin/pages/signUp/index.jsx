@@ -21,8 +21,8 @@ const SignUp = () => {
   });
   const [address, setAddress] = useState({
     shop_address: "",
-    shop_province: "",
-    shop_country: "Việt Nam",
+    shop_province_id: "",
+    shop_nation_id: "1",
   });
   const [shop, setShop] = useState({
     shop_name: "",
@@ -30,6 +30,7 @@ const SignUp = () => {
     shop_description: "",
     shop_username: "",
     shop_website: "",
+    shop_logo: "",
   });
   const handleSubmit = async () => {
     const newData = {

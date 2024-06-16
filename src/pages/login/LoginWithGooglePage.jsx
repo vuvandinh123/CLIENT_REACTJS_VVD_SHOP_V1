@@ -9,7 +9,6 @@ const LoginWithGooglePage = () => {
   const getToken = async () => {
     const url = new URLSearchParams(window.location.hash.substring(1));
     const token = url.get("access_token");
-    console.log(token, "token");
     return token;
   };
   const { setToken } = useToken();
@@ -18,7 +17,7 @@ const LoginWithGooglePage = () => {
     getToken().then(async (token) => {
       if (!token) {
         window.location.href = "/auth/login";
-        toast.error("Login google failed !");
+        toast.error("Đăng nhập google thất bại!");
       }
       const response = await Auth.getUserInfoGoogle(token);
       const newData = {
@@ -30,10 +29,9 @@ const LoginWithGooglePage = () => {
         type_login: "google",
       };
       const fetchLoginWithGoogle = await Auth.LoginSocial(newData);
-      console.log(fetchLoginWithGoogle, "fetchLoginWithGoogle");
       setLocalStorage("remember_me", true);
       setToken({ data: fetchLoginWithGoogle.data, remember: true });
-      toast.success("Login successfully");
+      toast.success("Đăng nhập thành công");
       navigate("/");
     });
   };

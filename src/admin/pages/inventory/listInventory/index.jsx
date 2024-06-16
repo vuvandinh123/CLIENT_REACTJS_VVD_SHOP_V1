@@ -12,7 +12,6 @@ import NavStatus from "./components/NavStatus";
 import {
   changeStatusProduct,
   deleteProduct,
-  getAllProduct,
 } from "../../../service/Product";
 
 // hook
@@ -20,7 +19,6 @@ import { useApiCall, useMultipleSelect } from "../../../../hooks";
 import toast from "react-hot-toast";
 import { getAllInventoryLog } from "../../../service/InventoryLogs";
 import moment from "moment/moment";
-import ModalShow from "./components/ModalShow";
 
 const ListInventory = () => {
   const { t } = useTranslation();

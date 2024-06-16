@@ -126,14 +126,15 @@ const DiscountCode = () => {
                   name="value"
                   value={values.value}
                   onChange={(e) => {
-                    const formattedValue = formatNumber(e.target.value);
-                    setFieldValue("value", formattedValue);
+                    setFieldValue("value", e.target.value);
                   }}
                   onBeforeInput={handleBeforeInput}
                   onBlur={(e) => {
                     if (e.target.value !== "") {
-                      const num = removeCommas(values.value);
-                      if (values.type_price === "percent" && num > 100) {
+                      if (
+                        values.type_price === "percent" &&
+                        Number(e.target.value) > 100
+                      ) {
                         toast.error("Discount must be less than 100");
                         setFieldValue("value", 100);
                       }
@@ -142,7 +143,7 @@ const DiscountCode = () => {
                   className="w-full    rounded-md border px-2 py-3 outline-none focus:border-blue-500"
                 />
                 <span className="absolute right-0 top-1/2 px-2 py-2">
-                  {values.type_price === "fixed" ? "$" : "%"}
+                  {values.type_price === "fixed_amount" ? "VND" : "%"}
                 </span>
               </div>
             </div>

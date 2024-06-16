@@ -7,24 +7,31 @@ import SelectField2 from "../../../components/fields/SelectField2";
 import { Link } from "react-router-dom";
 import { isObjectEmptyOrNull } from "../../../../helpers/utils";
 import toast from "react-hot-toast";
+import { getAllProvinces } from "../../../../service/Provinces";
+import { getAllNations } from "../../../../service/Nation";
+import { uploadImages } from "../../../service/Upload";
 
 const AddressForm = ({ setTab, data, setData }) => {
-  const [provider, setProvider] = useState([]);
-  useApiCall(async () => {
-    const res = await getProvider();
-    setProvider(Object.values(res));
-    return;
-  });
-  const handleClickSubmit = () => {
+  const [idNation, setIdNation] = useState("1");
+  const { data: nations } = useApiCall(async () => {
+    const res = await getAllNations();
+    return res.data;
+  }, []);
+  const { data: provider } = useApiCall(async () => {
+    const res = await getAllProvinces(idNation);
+    console.log(res);
+    return res.data;
+  }, [idNation]);
+  const handleClickSubmit =async () => {
+   
     // validate
-    console.log(data);
     if (isObjectEmptyOrNull(data)) {
       toast.error("Vui điền đầy đủ thông tin");
       return;
     }
-
     setTab("create");
   };
+  console.log(idNation);
   return (
     <div className="bg-white p-5 rounded-lg">
       <div className="mb-5">
@@ -38,15 +45,28 @@ const AddressForm = ({ setTab, data, setData }) => {
         <div className="md:flex-1 mt-2 mb:mt-0 md:px-3">
           <div className="md:flex mb-4">
             <div className="md:flex-1 md:pr-3">
-              <SelectField2
-                name="shop_country"
-                className={"py-4 px-3"}
-                label={"Quốc gia"}
+              <label
+                htmlFor=""
+                className="block mb-2 font-semibold text-gray-600"
               >
-                <option selected value="việt nam">
-                  Việt Nam
-                </option>
-              </SelectField2>
+                Quốc gia
+              </label>
+              <select
+                onChange={(e) => {
+                  setData({ ...data, shop_nation_id: e.target.value });
+                  setIdNation(e.target.value);
+                }}
+                defaultValue={data.shop_nation}
+                className="w-full rounded-md  border  bg-white px-3 py-4 outline-blue-400 "
+                name="shop_nation"
+                id=""
+              >
+                {nations.map((item) => (
+                  <option value={item.id} key={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="md:flex-1 md:pl-3">
               <label
@@ -57,7 +77,7 @@ const AddressForm = ({ setTab, data, setData }) => {
               </label>
               <select
                 onChange={(e) =>
-                  setData({ ...data, shop_province: e.target.value })
+                  setData({ ...data, shop_province_id: e.target.value })
                 }
                 defaultValue={data.shop_province}
                 value={data.shop_province}
@@ -65,9 +85,10 @@ const AddressForm = ({ setTab, data, setData }) => {
                 name="shop_province"
                 id=""
               >
+                <option value="">Chọn tỉnh / Thành phố</option>
                 {provider.map((item) => (
-                  <option value={item.name} key={item.code}>
-                    ({item.code}) {item.name}
+                  <option value={item.id} key={item.id}>
+                    {item.name}
                   </option>
                 ))}
               </select>

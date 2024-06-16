@@ -12,29 +12,16 @@ const Product3 = ({ data }) => {
       <div className="p-1">
         <div className="flex bg-white">
           <div className="relative group p-1">
-            <div className="group/image w-[150px] md:w-[180px]">
+            <div className="pt-5 w-[150px] md:w-[180px]">
               <Link
                 to={`/products/${data.slug}-${data.id}`}
                 className="block relative min-h-[160px]"
               >
                 <ImageLoader
-                  src={data?.imageUrls[0]}
-                  className={`group-hover/image:opacity-0 transition-all duration-400 object-contain`}
+                  src={data?.thumbnail}
+                  className={` duration-400 object-contain`}
                   alt={"image"}
                 />
-                {data?.imageUrls[1] ? (
-                  <img
-                    className=" group-hover/image:!opacity-100 opacity-0 transition-all duration-400 absolute top-0 left-0"
-                    src={data?.imageUrls[1]}
-                    alt=""
-                  />
-                ) : (
-                  <img
-                    className=" group-hover/image:!opacity-100 opacity-0 transition-all duration-400 absolute top-0 left-0"
-                    src={data?.imageUrls[0]}
-                    alt=""
-                  />
-                )}
               </Link>
             </div>
 

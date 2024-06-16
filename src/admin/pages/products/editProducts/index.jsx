@@ -20,7 +20,6 @@ import Loader from "../../../components/common/Loader";
 import { useApiCall } from "../../../../hooks";
 // service
 import {
-  getAllCategory,
   getAllCategoryAdminSelect,
 } from "../../../service/Category";
 import { getAllBrandByCategory } from "../../../service/Brand";

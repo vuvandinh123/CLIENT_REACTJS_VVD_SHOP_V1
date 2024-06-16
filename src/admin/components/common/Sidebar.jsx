@@ -49,8 +49,8 @@ const Sidebar = () => {
               ))}
             </ul>
             <div className="space-y-2 pt-2">
-              <a
-                href="https://github.com/vuvandinh123"
+              <Link
+                to={"https://github.com/vuvandinh123"}
                 target="_blank"
                 className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
               >
@@ -67,7 +67,7 @@ const Sidebar = () => {
                   />
                 </svg>
                 <span className="ml-3">Hỗ trợ</span>
-              </a>
+              </Link>
               <Link
                 href="#"
                 to={"/admin/settings"}

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { formatPrice, formathDate } from "../../../../../utils";
+import { formatPrice, formatPriceVND, formathDate } from "../../../../../utils";
 import TableSkeletor from "./TableSkeletor";
 import { Link } from "react-router-dom";
 import { Checkbox } from "@mui/material";
@@ -69,7 +69,7 @@ const Table = (props) => {
                   </div>
                 </th>
                 <td className="px-6 py-4">x{item.quantity}</td>
-                <td className="px-6 py-4">{formatPrice(item.total || 0)}</td>
+                <td className="px-6 py-4">{formatPriceVND(item.total || 0)}</td>
                 <td className="px-6 py-4">{item.note}</td>
                 <td className="px-6 py-4">{formathDate(item.created_at)}</td>
                 <td className="px-6 py-4">

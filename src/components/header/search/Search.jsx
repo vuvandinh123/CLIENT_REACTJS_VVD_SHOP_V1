@@ -2,19 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApiCall, useDropdown } from "../../../hooks";
 import lodash, { debounce } from "lodash";
-import {
-  GET_CATEGORIES,
-  POST_PRODUCT_SEARCH,
-} from "../../../constants/constants";
 import { AppURL } from "../../../api/AppURL";
 import { ImageLoader } from "../../common";
 import Skeleton from "react-loading-skeleton";
+import { getSearchProducts } from "../../../service/Product";
+import { formatPriceVND } from "../../../utils";
+import { getAllCategoryShow } from "../../../service/Category";
 
 const Search = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [noData, setNoData] = useState(false);
-  const [idCategory, setIdCategory] = useState("all");
+  const [idCategory, setIdCategory] = useState("ALL");
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
   const searchRef = useRef(null);
@@ -23,10 +22,11 @@ const Search = () => {
 
   // GET categories
   const category = useApiCall(async () => {
-    return [];
+    const res = await getAllCategoryShow();
+    return res.data;
   }, []);
   // categories is optional
-  const categorySearch = category?.data?.data?.data || [];
+  const categorySearch = category?.data || [];
   const { dropdow: activeSearch, setDropdow: setActiveSearch } = useDropdown(
     false,
     dropdowRef,
@@ -35,33 +35,30 @@ const Search = () => {
   useEffect(() => {
     setLoading(true);
     const fetchDataSearch = debounce(async () => {
-      const data = {
+      const params = {
         search: search,
+        categoryId: idCategory,
       };
-      // const response = await postRequestSite(
-      //   POST_PRODUCT_SEARCH + idCategory,
-      //   data
-      // );
-      const response = [];
-      setSearchData(response?.data?.data);
+      const response = await getSearchProducts(params);
+      setSearchData(response?.data);
       setLoading(false);
-      setNoData(response?.data?.data?.length === 0);
+      setNoData(response?.data?.length === 0);
     }, 800);
     fetchDataSearch();
     return () => {};
   }, [search, idCategory]);
   const handleSubmitSearch = (e) => {
     e.preventDefault();
+    console.log(search);
     if (search === "") return;
     setActiveSearch(false);
     if (searchRef.current) {
       searchRef.current.blur();
     }
-    if (idCategory == "all") {
+    if (idCategory == "ALL") {
       navigate("/search?q=" + search);
     } else {
-      let cat = categorySearch.find((item) => item.slug === idCategory);
-      navigate("/search?cat=" + cat.slug + "&q=" + search);
+      navigate("/search?cat=" + idCategory + "&q=" + search);
     }
   };
   const handleFocusSearch = () => {
@@ -87,7 +84,7 @@ const Search = () => {
                 onChange={(e) => setIdCategory(e.target.value)}
               >
                 <option className="text-[#212529]" value="all">
-                  All categories
+                  Tất cả danh mục
                 </option>
                 {categorySearch &&
                   categorySearch.length > 0 &&
@@ -95,7 +92,7 @@ const Search = () => {
                     <option
                       key={item.id}
                       className="text-[#212529]"
-                      value={item.slug}
+                      value={item.id}
                     >
                       {item.name}
                     </option>
@@ -105,19 +102,19 @@ const Search = () => {
                 type="text"
                 onChange={hanldeChangeSearch}
                 onFocus={handleFocusSearch}
-                // onBlur={()=>{
-                //   setTimeout(() => {
-                //     setActiveSearch(false);
-                //   },300)
-                // }}
+                onBlur={() => {
+                  setTimeout(() => {
+                    setActiveSearch(false);
+                  }, 300);
+                }}
                 ref={searchRef}
                 defaultValue={search}
-                placeholder="Search for products..."
+                placeholder="Tìm kiếm sản phẩm..."
                 className="px-3 text-[14px] py-2 rounded-xl w-full  outline-0"
               />
             </div>
-            <button className="bg-[#2b38d1] text-white hover:bg-[#2b39d1bd] px-10 py-[13px] rounded-e-md">
-              Search
+            <button className="bg-[#2b38d1] uppercase font-bold text-white hover:bg-[#2b39d1bd] px-10 py-[13px] rounded-e-md">
+              Tìm
             </button>
           </div>
         </form>
@@ -132,14 +129,15 @@ const Search = () => {
                 !noData &&
                 !loading &&
                 searchData?.map((item, index) => (
-                  <div key={index} className="flex border-b p-3 gap-2">
-                    <div className="relative">
-                      <Link to={`/products/${item.slug}`}>
+                  <div
+                    key={index}
+                    className="flex items-center border-b p-3 gap-2"
+                  >
+                    <div className="relative shrink-0 w-[60px]">
+                      <Link className="" to={`/products/${item.slug}`}>
                         <ImageLoader
-                          className={"w-[60px] h-[60px]"}
-                          src={`${AppURL.ImageUrl}${
-                            item.images ? item?.images[0]?.image_url : ""
-                          }`}
+                          className={"w-[60px]"}
+                          src={item.thumbnail}
                         />
                       </Link>
                     </div>
@@ -147,13 +145,13 @@ const Search = () => {
                       <h4 className="text-[15px]">
                         <Link
                           to={`/products/${item.slug}`}
-                          className="hover:text-[#2b38d1] transition-all"
+                          className="hover:text-[#2b38d1] text-ecl transition-all"
                         >
                           {item.name}
                         </Link>
                       </h4>
                       <h5 className="text-red-500 mt-2 font-bold">
-                        ${item.price}
+                        {formatPriceVND(item.price)}
                       </h5>
                     </div>
                   </div>
@@ -178,7 +176,7 @@ const Search = () => {
                   ))}
               {noData && (
                 <p className="text-gray-400 text-center text-[17px]">
-                  Not found
+                  Không tìm thấy sản phẩm
                 </p>
               )}
             </div>

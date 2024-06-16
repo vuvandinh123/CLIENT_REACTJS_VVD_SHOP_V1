@@ -1,3 +1,8 @@
+import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
+import { getCookieAuth, setCookieAuth } from "../utils";
+import { useNavigate } from "react-router-dom";
+
 export function calculateTimeDifference(targetTimeString) {
   const targetTime = new Date(targetTimeString);
   const currentTime = new Date();
@@ -65,4 +70,20 @@ export function isObjectEmptyOrNull(obj, keysToIgnore = []) {
   }
 
   return false;
+}
+export function checkRole(role) {
+  const { accessToken } = getCookieAuth();
+  try {
+    const decodedToken = jwtDecode(accessToken);
+    // Lấy thông tin từ token đó
+    const roleStr = decodedToken.role;
+    // Kiểm tra quyền
+    if (roleStr !== role) {
+      return 0;
+    }
+    return 1
+  } catch (error) {
+    return 0
+  }
+
 }

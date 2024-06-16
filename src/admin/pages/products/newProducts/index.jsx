@@ -16,7 +16,6 @@ import { useApiCall } from "../../../../hooks";
 // service
 import { getAllBrandByCategory } from "../../../service/Brand";
 import {
-  getAllCategory,
   getAllCategoryAdminSelect,
 } from "../../../service/Category";
 import { uploadImages } from "../../../service/Upload";
