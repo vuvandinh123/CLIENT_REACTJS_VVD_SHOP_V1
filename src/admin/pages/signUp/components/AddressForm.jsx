@@ -31,7 +31,6 @@ const AddressForm = ({ setTab, data, setData }) => {
     }
     setTab("create");
   };
-  console.log(idNation);
   return (
     <div className="bg-white p-5 rounded-lg">
       <div className="mb-5">

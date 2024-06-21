@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
-import { useChangeLang } from "../../../hooks";
+import { useApiCall, useChangeLang } from "../../../hooks";
 import UserHeader from "../user";
+import { getShopId } from "../../service/Shop";
+import { getCookieAuth } from "../../../utils";
 
 const Header = () => {
   // hook thay đổi ngôn ngữ
+  const { userId } = getCookieAuth();
   const [lang, changeLang] = useChangeLang();
+  const { data: user } = useApiCall(async () => {
+    const res = await getShopId(userId);
+    return res.data;
+    // return null;
+  },[userId]);
   return (
     <nav className="bg-white border-b border-gray-200 fixed z-30 w-full">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -56,7 +64,7 @@ const Header = () => {
             </Link>
             <form action="#" method="GET" className="hidden lg:block lg:pl-32">
               <label htmlFor="topbar-search" className="sr-only">
-                Search
+                Tìm kiếm
               </label>
               <div className="mt-1 relative lg:w-64">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -92,13 +100,13 @@ const Header = () => {
                 onChange={changeLang}
                 defaultValue={lang}
               >
-                <option value="en">English</option>
                 <option value="vi">Vietnames</option>
+                <option value="en">English</option>
               </select>
             </div>
             <div>
               {/* user */}
-              <UserHeader></UserHeader>
+              <UserHeader user={user}></UserHeader>
             </div>
           </div>
         </div>

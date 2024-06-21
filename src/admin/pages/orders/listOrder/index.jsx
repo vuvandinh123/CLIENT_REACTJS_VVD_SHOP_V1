@@ -157,25 +157,8 @@ const ListOrders = () => {
     handleMultiple,
     //   view
     linkCreate: "/admin/discounts/create",
-    title: t("admin.listDiscount.title"),
-    viewFilter: (
-      <>
-        <select
-          onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-          className="px-2 outline-blue-500 py-2 rounded-md bg-white border"
-          name=""
-          id=""
-        >
-          <option value="" disabled>
-            Trạng thái
-          </option>
-          <option value="all">Tất cả</option>
-          <option value="active">Hoạt động</option>
-          <option value="upcoming">Sắp tới</option>
-          <option value="expired">Hết hạn</option>
-        </select>
-      </>
-    ),
+    title: "Tất cả đơn hàng",
+  
     //   state
     isCheckBox: false,
     dataStatus,

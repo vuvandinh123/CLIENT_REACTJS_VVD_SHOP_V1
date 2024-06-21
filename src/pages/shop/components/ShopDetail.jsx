@@ -169,11 +169,11 @@ const ShopDetail = ({ shopId }) => {
                   <td>
                     <p className="py-3">
                       Sản phẩm đã bán:{" "}
-                      <span className="font-bold text-gray-800">123</span>
+                      <span className="font-bold text-gray-800">12</span>
                     </p>
                     <p className="py-3">
-                      Sản phẩm đang bán:{" "}
-                      <span className="font-bold text-gray-800">123</span>
+                      Thời gian hoạt động:{" "}
+                      <span className="font-bold text-gray-800">24/7</span>
                     </p>
                     <p className="py-3">
                       Tham gia:{" "}

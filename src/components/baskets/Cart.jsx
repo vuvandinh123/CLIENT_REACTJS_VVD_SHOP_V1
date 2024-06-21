@@ -175,15 +175,9 @@ const Cart = ({ isOpen, setIsOpen }) => {
               <div className="mt-5 h-[100vh]">
                 <Link
                   to={"/cart"}
-                  className="w-full block text-center  hover:bg-[#fff457] duration-300 hover:text-white transition-all bg-white border rounded-full py-3 font-bold mb-3"
+                  className="w-full block text-center  hover:bg-blue-500 duration-300 hover:text-white transition-all uppercase bg-white border rounded-full py-3 font-bold mb-3"
                 >
-                  VIEW CART
-                </Link>
-                <Link
-                  to={"/checkout"}
-                  className="w-full block text-center text-white transition-all duration-300 hover:bg-[#ff5e5e] border rounded-full font-semibold bg-[#2049ff] py-3"
-                >
-                  CHECK OUT
+                  XEM GIỎ HÀNG
                 </Link>
               </div>
             </div>
@@ -191,14 +185,14 @@ const Cart = ({ isOpen, setIsOpen }) => {
           <div className="flex justify-center">
             <div className="mt-10 flex flex-col items-center gap-3">
               <img src={cartempty} alt="" />
-              <p>Your cart is empty.</p>
+              <p>Giỏ hàng trống.</p>
               <div className="mt-10">
                 <Link
-                  to={"/categories/all"}
+                  to={"/"}
                   onClick={() => setIsOpen(false)}
-                  className="bg-[#2b38d1] text-white py-3 transition-all hover:bg-[#00094d] px-10 font-bold rounded-full "
+                  className="bg-[#2b38d1] text-white py-3 uppercase transition-all hover:bg-[#00094d] px-10 font-bold rounded-full "
                 >
-                  RETURN TO SHOP
+                  Quay lại
                 </Link>
               </div>
             </div>

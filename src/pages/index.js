@@ -20,3 +20,5 @@ export {default as ChangePassword} from './forgotpassword/ChangePassword';
 export {default as UserPage} from './user';
 export {default as UserOrderDetailPage} from './user/OrderDetail';
 export {default as ShopPage} from './shop';
+export {default as ChatPageUser} from './user/Chat';
+export {default as ChatPageUser2} from './user/Chat2';

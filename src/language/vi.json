@@ -159,6 +159,14 @@
                 "total_amout": "Tổng đơn hàng + vận chuyển",
                 "discount": "Giảm giá"
             }
+        },
+        "listUser": {
+            "table": {
+                "name": "Khách hàng",
+                "created_at": "Thời gian lúc",
+                "email": "Email",
+                "phone": "Điện thoại"
+            }
         }
     }
 }

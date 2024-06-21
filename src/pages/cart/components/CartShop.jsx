@@ -95,7 +95,9 @@ const CartShop = ({
             <div className="flex items-center gap-2">
               <span className="text-red-500 border border-dashed border-red-500 px-3 py-1">
                 Đã Giảm{" "}
-                {formatPriceVND(productDiscount[data.id.toString()].value)}{" "}
+                {productDiscount[data.id.toString()].type_price === "percent"
+                  ? `${productDiscount[data.id.toString()].value}%`
+                  : formatPriceVND(productDiscount[data.id.toString()].value)}
               </span>
             </div>
           )}
@@ -192,8 +194,9 @@ const CartShop = ({
                               item.productIds?.split(",")
                             ) && (
                               <p className="text-red-400 mt-2  flex items-center bg-yellow-50 px-3 py-1 border gap-2">
-                                <CiWarning color="red"></CiWarning> 
-                                Sản phẩm đã chọn không đáp ứng điều kiện của voucher
+                                <CiWarning color="red"></CiWarning>
+                                Sản phẩm đã chọn không đáp ứng điều kiện của
+                                voucher
                               </p>
                             )}
                         </li>

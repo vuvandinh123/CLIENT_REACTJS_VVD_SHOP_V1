@@ -27,22 +27,26 @@ const Login = () => {
   const handleSubmitLogin = (event) => {
     event.preventDefault();
     const fetchApi = async () => {
-      const response = await LoginAdmin(data);
-      const accessToken = response?.data?.token?.accessToken;
-      const refreshToken = response?.data?.token?.refreshToken;
-      if (response?.status === 200) {
-        const decodedToken = jwtDecode(accessToken);
-        if (decodedToken.role !== "SHOP") {
-          toast.error("Bạn không có quyền đăng nhập");
-          return;
+      try {
+        const response = await LoginAdmin(data);
+        const accessToken = response?.data?.token?.accessToken;
+        const refreshToken = response?.data?.token?.refreshToken;
+        if (response?.status === 200) {
+          const decodedToken = jwtDecode(accessToken);
+          if (decodedToken.role !== "SHOP") {
+            toast.error("Bạn không có quyền đăng nhập");
+            return;
+          }
+          setCookieAuth({
+            userId: decodedToken.id,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            remember: true,
+          });
+          window.location.href = "/admin";
         }
-        setCookieAuth({
-          userId: decodedToken.id,
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          remember: true,
-        });
-        window.location.href = "/admin";
+      } catch (error) {
+        toast.error("Tài khoản hoặc mật khẩu không đúng");
       }
     };
     handlerError(fetchApi);

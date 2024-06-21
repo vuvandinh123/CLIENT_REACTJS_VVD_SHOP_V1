@@ -109,7 +109,14 @@ const publicRoute = [
         exact: true,
         component: PAGE.ShopPage
     },
-
+    // {
+    //     path: "/user/chats",
+    //     component: PAGE.ChatPageUser
+    // },
+    {
+        path: "/user/chats",
+        component: PAGE.ChatPageUser2
+    },
 ]
 
 export { publicRoute }

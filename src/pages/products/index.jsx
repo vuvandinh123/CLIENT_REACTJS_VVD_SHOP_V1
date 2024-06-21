@@ -86,7 +86,6 @@ const Products = () => {
   }, []);
   // fetch data products
   const products = useApiCall(async () => {
-    console.log(params.sortBy, "sortBy");
     const res = await getProductByCategory(id, params);
     setTotalProduct(res.options.count);
     return res.data;
@@ -98,6 +97,7 @@ const Products = () => {
     params.sortBy,
     params.province,
   ]);
+  console.log(totalProduct, "totalProduct");
   return (
     <div className="bg-[#F1F5F6]">
       <div className="bg-[url(https://demo-uminex.myshopify.com/cdn/shop/files/bg_breadcrumbs_1920x.png?v=1684232545)] h-36 text-white flex justify-center items-center flex-col gap-y-3">

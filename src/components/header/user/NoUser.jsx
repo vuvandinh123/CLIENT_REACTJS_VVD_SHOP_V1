@@ -5,7 +5,7 @@ const NoUser = () => {
   return (
     <>
       <div className="hidden lg:block">
-        <Link to={"auth/login"} href="#" className="flex items-center gap-2 mr-10">
+        <Link to={"/auth/login"} href="#" className="flex items-center gap-2 mr-10">
           <img src={imageUser} alt="" />
           <div>
             <p className="text-[#3c3d3e] tracking-widest font-medium text-[11px]">

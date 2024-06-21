@@ -32,12 +32,14 @@ const SignUp = () => {
     shop_website: "",
     shop_logo: "",
   });
-  const handleSubmit = async () => {
+  const handleSubmit = async (logo) => {
     const newData = {
       ...about,
       ...address,
       ...shop,
+      shop_logo: logo,
     };
+    console.log(newData);
     const res = await createShop(newData);
     if (res.status === 201) {
       toast.success("Đăng ký thành công!");
@@ -148,7 +150,7 @@ const SignUp = () => {
               ...address,
               ...shop,
             }}
-            onSubmit={()=>{}}
+            onSubmit={() => {}}
           >
             <Form>
               {tab === "about" && (

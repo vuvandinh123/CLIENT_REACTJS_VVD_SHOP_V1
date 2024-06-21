@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { MdEmail, MdOutlineMailOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { getIsFollowShop, toggleFollowShop } from "../../../service/Shop";
+import moment from "moment";
 const Shop = ({ shop }) => {
   const [followe, setFollowe] = useState(false);
   useEffect(() => {
@@ -16,14 +17,14 @@ const Shop = ({ shop }) => {
         console.log(error, "hiii");
       }
     };
-    if(shop.id){
+    if (shop.id) {
       fetchAPi();
     }
   }, [shop.id]);
   const handleClickFollow = async () => {
     try {
       const res = await toggleFollowShop(shop.id);
-      if(res.data){
+      if (res.data) {
         setFollowe(!followe);
       }
       // setFollowe(!followe);
@@ -31,17 +32,21 @@ const Shop = ({ shop }) => {
       console.log(error, "hiii");
     }
   };
+  console.log(shop);
   return (
     <div className="mt-10">
       <div className="flex flex-row rounded-lg border border-gray-200/80 bg-white p-6">
         {/* Avaar Container */}
         <div className="relative">
           {/* User Avatar */}
-          <img
-            className="w-20 h-20 border rounded-md object-cover"
-            src={shop.logo}
-            alt="User"
-          />
+          <Link to={`/shop/${shop.user_id}`}>
+            <img
+              className="w-20 h-20 border rounded-md object-cover"
+              src={shop.logo}
+              alt="User"
+            />
+          </Link>
+
           {/* Online Status Dot */}
           <div
             className="absolute -right-3 bottom-5 h-5 w-5 sm:top-2 rounded-full border-4 border-white bg-green-400 sm:invisible md:visible"
@@ -53,7 +58,7 @@ const Shop = ({ shop }) => {
           {/* Username Container */}
           <div className="flex h-8 flex-row">
             {/* Username */}
-            <Link href="https://github.com/EgoistDeveloper/" target="_blank">
+            <Link to={`/shop/${shop.user_id}`}>
               <h2 className="text-lg font-semibold">{shop.name}</h2>
             </Link>
             {/* User Verified */}
@@ -102,7 +107,7 @@ const Shop = ({ shop }) => {
                 <path d="M12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5M12,2A7,7 0 0,1 19,9C19,14.25 12,22 12,22C12,22 5,14.25 5,9A7,7 0 0,1 12,2M12,4A5,5 0 0,0 7,9C7,10 7,12 12,18.71C17,12 17,10 17,9A5,5 0 0,0 12,4Z" />
               </svg>
               <div className="text-xs text-gray-400/80 hover:text-gray-400">
-                {shop.province + ", " + shop.country}
+                {shop.province_name}
               </div>
             </div>
             {/* Badge Email*/}
@@ -119,7 +124,7 @@ const Shop = ({ shop }) => {
             {/* Comments */}
             <div className="border rounded-md  px-3 py-1">
               <div className="flex gap-2">
-                Ratings:{" "}
+                Đánh giá:{" "}
                 <span className="text-blue-500 flex gap-2 items-center">
                   {" "}
                   {shop.rating} <FaStar color="#FFD700"></FaStar>
@@ -128,7 +133,7 @@ const Shop = ({ shop }) => {
             </div>
             <div className="border px-3 py-1">
               <div className="flex gap-2">
-                Products:{" "}
+                Sản phẩm:{" "}
                 <span className="text-blue-500 flex gap-2 items-center">
                   {" "}
                   {shop.total_product}
@@ -137,7 +142,7 @@ const Shop = ({ shop }) => {
             </div>
             <div className="border px-3 py-1">
               <div className="flex gap-2">
-                Response Time:{" "}
+               Thời gian hoạt động:{" "}
                 <span className="text-blue-500 flex gap-2 items-center">
                   {shop.response_time}
                 </span>
@@ -145,7 +150,7 @@ const Shop = ({ shop }) => {
             </div>
             <div className="border px-3 py-1">
               <div className="flex gap-2">
-                Follower:{" "}
+                Theo dõi:{" "}
                 <span className="text-blue-500 flex gap-2 items-center">
                   {shop.follower}
                 </span>
@@ -153,9 +158,9 @@ const Shop = ({ shop }) => {
             </div>
             <div className="border px-3 py-1">
               <div className="flex gap-2">
-                Join:{" "}
+                Tham gia:{" "}
                 <span className="text-blue-500 flex gap-2 items-center">
-                  {shop.created_at && formathDate(shop.created_at)}
+                  {shop.created_at && moment(shop.created_at).format("DD/MM/YYYY")}
                 </span>
               </div>
             </div>
@@ -182,7 +187,7 @@ const Shop = ({ shop }) => {
               >
                 <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
               </svg>
-              {followe ? "Un Follow" : "Follow"}
+              {followe ? "Bỏ theo dõi" : "Theo dõi"}
             </button>
             {/* More Actions Button */}
             <button

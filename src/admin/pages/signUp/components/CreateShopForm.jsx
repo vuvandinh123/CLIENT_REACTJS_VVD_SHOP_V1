@@ -7,28 +7,39 @@ import { isObjectEmptyOrNull } from "../../../../helpers/utils";
 import toast from "react-hot-toast";
 import { uploadImages } from "../../../service/Upload";
 import { useState } from "react";
+import Loader from "../../../components/common/Loader";
 const CreateShopForm = ({ setTab, data, handleSubmit, setData }) => {
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const handleClickSubmit = async () => {
     // validate
     if (!image) {
       toast.error("Vui lòng thêm ảnh đại diện cho cửa hàng");
       return;
     }
-    // if (isObjectEmptyOrNull(data, ["shop_website", "shop_description"])) {
-    //   toast.error("Vui lòng điền đầy đủ thông tin");
-    //   return;
-    // }
-    const files = await uploadImages([image]);
-    setData({ ...data, shop_logo: files.data[0].url });
-
     if (data.shop_phone.length < 9 || data.shop_phone.length > 10) {
       toast.error("Số điện thoại không đúng!");
+      return;
     }
-    handleSubmit();
+    if (
+      isObjectEmptyOrNull(data, [
+        "shop_website",
+        "shop_description",
+        "shop_logo",
+      ])
+    ) {
+      toast.error("Vui lòng điền đầy đủ thông tin");
+      return;
+    }
+    setLoading(true);
+    const files = await uploadImages([image]);
+    setData({ ...data, shop_logo: files.data[0].url });
+    setLoading(false);
+    handleSubmit(files.data[0].url);
   };
   return (
     <div className="bg-white p-5 rounded-lg">
+      {loading && <Loader></Loader>}
       <div className="mb-5">
         <div className="text-2xl font-bold text-center">VVD SHOP</div>
         <p className="text-gray-500 text-center font-light">
@@ -51,6 +62,7 @@ const CreateShopForm = ({ setTab, data, handleSubmit, setData }) => {
                   onError={(e) => {
                     e.target.src = NotImage;
                   }}
+                  className="w-full h-full object-cover"
                   src={image ? URL.createObjectURL(image) : NotImage}
                   alt=""
                 />

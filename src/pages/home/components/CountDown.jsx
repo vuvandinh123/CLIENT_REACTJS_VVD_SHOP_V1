@@ -1,7 +1,7 @@
 import { useCountDown } from "../../../hooks";
 
 const CountDown = () => {
-  const timeCountDown = new Date("2024-06-20T00:00:00").getTime();
+  const timeCountDown = new Date("2024-06-22T00:00:00").getTime();
   const { time } = useCountDown(timeCountDown);
   return (
     <div className="flex gap-3">

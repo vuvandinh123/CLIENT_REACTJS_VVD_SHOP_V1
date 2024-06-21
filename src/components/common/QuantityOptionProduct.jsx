@@ -16,7 +16,7 @@ const QuantityOptionProduct = ({ qty, quantity, setQuantity }) => {
   return (
     <div>
       <div className="">
-        <h5 className=" text-gray-400 mb-2">Quantity:</h5>
+        <h5 className=" text-gray-400 mb-2">Số lượng:</h5>
         <div className="-ms-2 flex items-center gap-5">
           <div className="flex items-center border">
             <button onClick={handleClickMinus} className="px-3 py-1">
@@ -33,7 +33,7 @@ const QuantityOptionProduct = ({ qty, quantity, setQuantity }) => {
           </div>
           <div>
             <p className="text-gray-400 text-[13px]">
-              {qty} pieces available
+              {qty} sản phẩm có sẵn
             </p>
           </div>
         </div>

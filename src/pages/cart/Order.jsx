@@ -133,7 +133,7 @@ const Order = ({
               Free shipping discount (-11)
             </p>
           )}
-          {amount >= discountAmount && (
+          {/* {amount >= discountAmount && (
             <p className="flex items-center gap-3">
               <svg
                 width="12"
@@ -152,7 +152,7 @@ const Order = ({
               </svg>
               Mua 3 sản phẩm giảm 5%
             </p>
-          )}
+          )} */}
         </div>
         <div className="border-b py-5">
           <div className="flex items-center justify-between">

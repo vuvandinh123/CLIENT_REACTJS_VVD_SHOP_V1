@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { formatPrice } from "../../../../utils";
+import { formatPrice, formatPriceVND } from "../../../../utils";
 import TableSkeletor from "./TableSkeletor";
 import { Link } from "react-router-dom";
 import { Checkbox } from "@mui/material";
@@ -64,7 +64,7 @@ const Table = (props) => {
               </td>
               <td className="px-6 py-4">{item.code}</td>
               <td className="px-6 py-4">
-                {item.price && formatPrice(Number(item.price))}
+                {item.price && formatPriceVND(Number(item.price))}
               </td>
               <td className="px-6 py-4">
                 <div className="flex justify-end gap-4">

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetProductById from "../../hooks/useGetProductById";
 import Variants from "../../pages/productDetail/components/Variants";
 import Skeleton from "react-loading-skeleton";
-import { formatPrice } from "../../utils";
+import { formatPrice, formatPriceVND } from "../../utils";
 import { setIsOpenSelectOptions } from "../../redux/slice/selectCartSlice";
 import toast from "react-hot-toast";
 import { setIsOpenCart } from "../../redux/slice/cartSlice";
@@ -71,7 +71,7 @@ const ModalSelectOptionCart = () => {
       <div className="fixed flex flex-col justify-between w-[700px] min-h-[550px] p-5 bg-white z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg">
         <div>
           <div className="flex justify-between items-center border-b pb-5">
-            <h3 className="uppercase font-bold text-lg">Options for you</h3>
+            <h3 className="uppercase font-bold text-lg">Chọn biến thể</h3>
             <span
               className="cursor-pointer"
               onClick={() =>
@@ -135,7 +135,7 @@ const ModalSelectOptionCart = () => {
                 {loading ? (
                   <Skeleton width={"80px"} height={"20px"}></Skeleton>
                 ) : (
-                  data.price && formatPrice(data?.price)
+                  data.price && formatPriceVND(data?.price)
                 )}
               </p>
               {loading ? (
@@ -182,7 +182,7 @@ const ModalSelectOptionCart = () => {
                 <div className="w-5 h-5 border-4 border-gray-200 rounded-full animate-spin border-t-transparent"></div>{" "}
               </span>
             ) : (
-              "Add to cart"
+              "Thêm vô giỏ hàng"
             )}
           </button>
         )}

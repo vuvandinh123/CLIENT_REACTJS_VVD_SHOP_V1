@@ -28,3 +28,10 @@ export const patchStatusOrder = async (data) => {
     const response = await axiosInstanceShop.patch(actionType.PATCH_ORDER_STATUS, data)
     return response.data
 }
+export const getNewOrderPending = async (params = {}) => {
+    verifyToken(axiosInstanceShop)
+    const response = await axiosInstanceShop.get("/orders/status/pending-new", {
+        params,
+    })
+    return response.data
+}

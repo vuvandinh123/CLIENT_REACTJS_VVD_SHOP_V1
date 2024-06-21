@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import useFav from "../../hooks/useFav";
 import { ChangePrice, ImageLoader, Offcanvas } from "../common";
+import { formatPriceVND } from "../../utils";
 
 const Favourite = ({ isOpen, setIsOpen }) => {
   const { data, handleClickRemoveFavourite } = useFav();
@@ -73,7 +74,7 @@ const Favourite = ({ isOpen, setIsOpen }) => {
                         </Link>
                       </h3>
                       <h4 className="text-[#2b38d1] font-bold mt-2 text-[16px]">
-                        <ChangePrice price={item.price} />
+                        {formatPriceVND(item.price)}
                       </h4>
                     </div>
                   </div>
@@ -92,9 +93,9 @@ const Favourite = ({ isOpen, setIsOpen }) => {
                 <Link
                   onClick={handleClickViewFav}
                   to={"/wishlist"}
-                  className="w-full flex items-center justify-center  bg-blue-500 duration-300 text-white transition-all border rounded-full py-3 font-bold mb-3"
+                  className="w-full flex items-center justify-center  bg-blue-500 duration-300 text-white transition-all uppercase border rounded-full py-3 font-bold mb-3"
                 >
-                  VIEW WISHLIST
+                  Xem tất cả
                 </Link>
               </div>
             </div>

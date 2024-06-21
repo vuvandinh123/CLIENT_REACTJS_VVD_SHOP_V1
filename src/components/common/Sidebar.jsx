@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useApiCall } from "../../hooks";
 import { getAllCategory } from "../../service/Category";
 import { buildMenuTree } from "../../helpers/utils";
+import { Link } from "react-router-dom";
 
 const menusSiderBar = [
   {
@@ -203,21 +204,20 @@ function Submenu({ subItem }) {
                   return (
                     <div key={item.id}>
                       <h3 className="text-[#212529] font-semibold mb-2">
-                        <a href="" className="block">
+                        <Link to={`/categories/${item.slug}-${item.id}`} href="" className="block">
                           {item.name}
-                        </a>
+                        </Link>
                       </h3>
                       <ul>
                         {item.children &&
                           item.children.map((item2) => {
                             return (
                               <li key={item2.id} className="w-40 ">
-                                <a
+                               <Link to={`/categories/${item.slug}-${item.id}`}
                                   className="text-[#515d66] block hover:pl-2 transition-all text-ellipsis truncate ... hover:text-[#2b38d1]"
-                                  href="#"
                                 >
                                   {item2.name}
-                                </a>
+                                </Link>
                               </li>
                             );
                           })}
@@ -266,9 +266,9 @@ const Sidebar = () => {
               <div key={item.id} className="relative group">
                 <div className="flex w-full justify-between border-b-[1px] hover:text-[#2b38d1] items-center">
                   <li className="py-1  px-2  truncate ...">
-                    <a href="" className="block">
+                    <Link to={`/categories/${item.slug}-${item.id}`} href="" className="block">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                   {item.children && (
                     <i className="fa-solid fa-chevron-right text-[9px]"></i>

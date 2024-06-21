@@ -13,7 +13,6 @@ const StockInventory = () => {
   const [filter, setFilter] = useState("week");
   const { data, loading } = useApiCall(async () => {
     const response = await getInventoryStats({ compareWith: filter });
-    console.log(response);
     return response.data;
   }, [filter,refresh]);
 

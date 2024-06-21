@@ -184,9 +184,16 @@ const ModalShow = ({ id, isOpen, setIsOpen, setRefresh }) => {
                           <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-5 ">
                             <dt className="text-lg font-bold ">Tổng cộng</dt>
                             <dd className="text-lg font-bold ">
-                              {formatPriceVND(
+                              {
+                                data.type_price === "percent" ? (
+                                  <span>{formatPriceVND(Number(data?.amount * (1-(data?.value/100))) || 0)}</span>
+                                )
+                                :
+                                  <span>{formatPriceVND(Number(data?.amount - data?.value) || 0)}</span>
+                              }
+                              {/* {formatPriceVND(
                                 Number(data?.amount - data?.value) || 0
-                              )}
+                              )} */}
                             </dd>
                           </dl>
                         </div>

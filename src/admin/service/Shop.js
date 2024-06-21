@@ -17,3 +17,8 @@ export const verifyEmailRegisterShop = async (data) => {
     const response = await axiosInstanceShop.post(actionType.POST_VERIFY_EMAIL_REGISTER_SHOP, data)
     return response.data
 }
+export const getShopId = async (id) => {
+    verifyToken(axiosInstanceShop)
+    const res = await axiosInstanceShop.get(`/shops/find/${id}`)
+    return res.data
+}

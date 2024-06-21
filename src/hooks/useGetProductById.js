@@ -32,6 +32,6 @@ export default function useGetProductById(id) {
             // return null;
         }
 
-    }, [], [])
+    }, [id], [])
     return { data, src, setSrc, setData, shop ,loading};
 }

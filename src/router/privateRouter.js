@@ -115,6 +115,16 @@ export const privateRouter = [
         layout: LayoutAdmin,
         component: PAGE.ListOrders
     },
+    {
+        path: "/admin/users",
+        layout: LayoutAdmin,
+        component: PAGE.ListUserFollow
+    },
+    {
+        path: "/admin/chats",
+        layout: LayoutAdmin,
+        component: PAGE.ChatsAdmin
+    },
     // {
     //     path: ROUTES.ADMIN_CATEGORIES,
     //     exact: true,

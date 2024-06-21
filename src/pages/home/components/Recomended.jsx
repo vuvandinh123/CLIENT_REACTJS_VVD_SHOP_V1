@@ -9,8 +9,10 @@ import Product3 from "../../../components/products/Product3";
 const Recomended = () => {
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     slidesToShow: 3,
+    autoplay: true,
+    autoplaySpeed: 5000,
     slidesToScroll: 1,
     rows: 2, // Số hàng
     responsive: [
@@ -42,7 +44,9 @@ const Recomended = () => {
     <div className="my-10">
       <div className=" bg-white rounded-md p-4 flex justify-between flex-wrap gap-y-4 items-center">
         <div className="flex items-center">
-          <h5 className="uppercase font-bold text-[16px] text-red-500">Gợi ý hôm nay</h5>
+          <h5 className="uppercase font-bold text-[16px] text-red-500">
+            Gợi ý hôm nay
+          </h5>
         </div>
         <div>
           <div className="text-sm leading-4 flex items-center justify-between">

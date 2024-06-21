@@ -160,7 +160,7 @@ export const navSidebar = [
       },
       {
         title: "Hỗ trợ",
-        link: "/admin/users/helps",
+        link: "/admin/chats",
       },
     ],
   },

@@ -12,12 +12,14 @@ import Shop from "./components/Shop";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import { getDiscountByProductId } from "../../service/Discount";
 import { Loader } from "../../components/common";
+import { useApiCall } from "../../hooks";
+import { getCommentByProductId } from "../../service/Comment";
 const ProductDetail = () => {
   const { slug } = useParams();
   const id = extractNumberFromSlug(slug);
   const imageRef = useRef(null);
   const [discount, setDiscount] = useState(0);
-  const { data,loading, shop, src, setSrc, setData } = useGetProductById(id);
+  const { data, loading, shop, src, setSrc, setData } = useGetProductById(id);
   useEffect(() => {
     window.scrollTo(0, 200);
   }, [slug]);
@@ -36,7 +38,8 @@ const ProductDetail = () => {
       };
       fetchAPi();
     }
-  }, [data.id, shop.id]);
+  }, [id, shop.id]);
+ 
   const handleClickImage = (e) => {
     const src = e.target.src;
     setSrc(src);
@@ -72,7 +75,7 @@ const ProductDetail = () => {
             ></BoxContent>
           </div>
           <Shop shop={shop}></Shop>
-          <Detail />
+          <Detail data={data} />
           <DetailMb />
         </div>
         {/* <Recomended productId={data?.category_id} /> */}

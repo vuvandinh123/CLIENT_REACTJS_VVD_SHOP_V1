@@ -9,3 +9,8 @@ export const getCountFollows = async (params = {}) => {
     })
     return response.data
 }
+export const getChatsUserShop = async (data) => {
+    verifyToken(axiosInstanceShop)
+    const res = await axiosInstanceShop.post(`/users/chats`, data)
+    return res.data
+}

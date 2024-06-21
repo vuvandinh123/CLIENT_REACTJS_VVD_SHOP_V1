@@ -1,3 +1,4 @@
+import verifyToken from "../api/AuthVerify"
 import { axiosInstance } from "../api/axiosInstanceConfig"
 import { actionType } from "../constants"
 
@@ -11,6 +12,11 @@ const getIsFollowShop = async (id) => {
 }
 const toggleFollowShop = async (id) => {
     const res = await axiosInstance.patch(`${actionType.PATCH_TOGGLE_FOLLOW_SHOP}/${id}`)
+    return res.data
+}
+export const getShopChatsByIds = async (data) => {
+    verifyToken(axiosInstance)
+    const res = await axiosInstance.post(`/shops/chats`, data)
     return res.data
 }
 export { getShopById, getIsFollowShop, toggleFollowShop }

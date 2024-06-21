@@ -1,4 +1,4 @@
-import { formatPrice } from "../../utils";
+import { formatPrice, formatPriceVND } from "../../utils";
 import { AiOutlineCheck, AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
 import Title from "../common/Title";
@@ -12,10 +12,10 @@ const Product3 = ({ data }) => {
       <div className="p-1">
         <div className="flex bg-white">
           <div className="relative group p-1">
-            <div className="pt-5 w-[150px] md:w-[180px]">
+            <div className="pt-2 w-[150px] overflow-hidden md:w-[180px]">
               <Link
                 to={`/products/${data.slug}-${data.id}`}
-                className="block relative min-h-[160px]"
+                className="block relative h-[160px]"
               >
                 <ImageLoader
                   src={data?.thumbnail}
@@ -45,7 +45,10 @@ const Product3 = ({ data }) => {
           </div>
           <div className="py-5 px-2 flex flex-col">
             <h3 className="h-10">
-              <Link to={`/products/${data.slug}`} className="font-[500px] text_ecl-2">
+              <Link
+                to={`/products/${data.slug}`}
+                className="font-[500px] text_ecl-2"
+              >
                 {data.name}
               </Link>
             </h3>
@@ -65,20 +68,21 @@ const Product3 = ({ data }) => {
                     </svg>
                   ))}
               </div>
-              <span className="text-gray-400 text-[12px]">(1 review)</span>
+              <span className="text-gray-400 text-[12px]">({data?.review || 0} review)</span>
             </div>
             <h4 className="text-[#3741ff] font-bold text-xl ">
-              {formatPrice(data?.price)}
+              {formatPriceVND(data?.price)}
             </h4>
-            <div className={`mt-2`}>
+            <div className={`mt-2 flex justify-between items-center`}>
               <div className="flex items-center text-[#1c8e24] text-[13px] ">
                 {" "}
-                <AiOutlineCheck className="me-2" /> In stock{" "}
+                <AiOutlineCheck className="me-2" /> Còn{" "}
                 <span className="text-black ms-2">
                   {" "}
-                  <span className="font-bold">{data.quantity}</span> Products
+                  <span className="font-bold">{data.quantity}</span> Sản phẩm
                 </span>
               </div>
+              <div className="text-gray-800 text-[13px]">{data.province}</div>
             </div>
           </div>
         </div>

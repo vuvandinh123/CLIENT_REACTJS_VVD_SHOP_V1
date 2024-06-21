@@ -73,7 +73,7 @@ const CartItem = ({
           </h5>
           <div className="flex gap-2 items-center mt-2">
             <span className="font-bold hidden md:block text-[14px] tracking-wider text-red-500 mt-3 ">
-              {formatPriceVND(data.fix_price ?? data.price)}
+              {formatPriceVND(data.fix_price ?? Number(data.price))}
             </span>
           </div>
         </div>

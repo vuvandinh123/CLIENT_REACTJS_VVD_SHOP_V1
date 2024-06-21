@@ -29,3 +29,6 @@ export { default as SignupSuccess } from './signUp/SignupSuccess';
 export { default as ProfileShop } from './setting';
 // orders
 export { default as ListOrders } from './orders/listOrder';
+// userrs
+export { default as ListUserFollow } from './user/listUser';
+export { default as ChatsAdmin } from './user/chats';

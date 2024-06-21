@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Skeleton from "react-loading-skeleton";
-import { arraysMatch, formatPrice, setUrlSearchParam } from "../../../utils";
+import {
+  arraysMatch,
+  formatPriceVND,
+  getCookieAuth,
+  setUrlSearchParam,
+} from "../../../utils";
 import { LiaRulerHorizontalSolid } from "react-icons/lia";
 import { BsShield } from "react-icons/bs";
 import { IoColorPaletteOutline } from "react-icons/io5";
@@ -16,14 +21,16 @@ import CountDown from "./CountDown";
 import Variants from "./Variants";
 import { useEffect, useState } from "react";
 import { DiscountCard } from "../../../components/common";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaMinus, FaPlus, FaStar } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { addToCart } from "../../../service/Cart";
 
 const BoxContent = ({ data, setData, discount }) => {
   const [variantSelect, setVariantSelect] = useState({});
+  const [qty, setQty] = useState(1);
   const [newData, setNewData] = useState({
     variant: "",
   });
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     if (Object.keys(variantSelect).length > 0) {
@@ -61,18 +68,47 @@ const BoxContent = ({ data, setData, discount }) => {
       });
     }
   }, [newData.variant]);
-  const handleClickToCart = () => {
-    const newCart = {
-      name: data.name,
-      price: data.price,
-      id: data.id,
-      variant: newData.variant,
-      shop_id: data.shop_id,
-      image: data?.imageUrls[0],
-      slug: data.slug,
-    };
-    // dispatch(byToCart(newCart));
-    navigate("/cart");
+  const handleClickCheckOut = () => {
+    let price = 0;
+    if (data.type_price === "percent") {
+      price = (1 - data.price_sale / 100) * data.price;
+    } else {
+      price = data.price - (data.price_sale || 0);
+    }
+    const checkout = [
+      {
+        order: {
+          amount: price * qty,
+          discount: null,
+          products: [{ ...data, amount: price * qty, quantity: qty }],
+          shopId: data.shop_id,
+        },
+      },
+    ];
+    sessionStorage.setItem("checkout", JSON.stringify(checkout));
+    navigate("/checkout");
+  };
+  const handleClickToCart = async () => {
+    const { userId } = getCookieAuth();
+    if (!userId) {
+      toast.error("Vui lòng đăng nhập để tiếp tục");
+      navigate("/auth/login");
+      return;
+    }
+    // setIsDisabled(true);
+    if (data.type === "single") {
+      const newCart = { productId: data.id, quantity: qty };
+      await addToCart(newCart);
+      navigate("/cart");
+    } else {
+      const newCart = {
+        productId: data.id,
+        quantity: qty,
+        code: newData.variant.code,
+      };
+      await addToCart(newCart);
+      navigate("/cart");
+    }
   };
   return (
     <div className="basis-1/2">
@@ -85,48 +121,50 @@ const BoxContent = ({ data, setData, discount }) => {
             {Array(5)
               .fill(0)
               .map((item, index) => (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill={data.rating >= index + 1 ? "currentColor" : "#e5e5e5"}
+                <FaStar
                   key={index}
+                  size={20}
+                  className={`${
+                    index + 1 <= data.reviewRating
+                      ? "text-yellow-400"
+                      : "text-gray-300"
+                  }`}
                 >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
+                  {" "}
+                </FaStar>
               ))}
           </div>
-          <span>{data.rating}</span>
+          <span>
+            {data?.reviewRating && Number(data?.reviewRating || 4)?.toFixed(1)}
+          </span>
           <span>/</span>
           <span className="text-[11px] md:text-[13px]">
-            {data?.reviewCount} Đánh giá
+            {data?.reviewCount || 0} Đánh giá
           </span>
         </div>
         <h3 className="text-red-500 flex gap-3 text-3xl mt-5 font-semibold">
-          <span>{data?.price_sale && formatPrice(data?.price_sale)}</span>
-          <span className="">
-            {!data?.price_sale ? (
-              data?.price && formatPrice(data?.price)
-            ) : (
-              <del className="text-gray-400 text-sm">
-                {data?.price && formatPrice(data?.price)}
-              </del>
-            )}
+          <span className="flex items-end gap-3">
+            <span className="text-red-500 ">
+              {data.type_price == "percent"
+                ? formatPriceVND(data?.price * (1 - data.price_sale / 100))
+                : formatPriceVND(data?.price - data.price_sale)}
+            </span>
+            <span className="text-gray-400 line-through text-sm">
+              {data?.price_sale && formatPriceVND(data?.price)}
+            </span>
           </span>
         </h3>
-
-        <div className="flex relative mt-5 gap-2">
-          <h4 className=" font-bold text-gray-600 shrink-0">Mã giảm giá:</h4>
-          <div className=" py-2 scroll-height-3 flex flex-wrap items-center gap-3 max-w-max">
-            {discount &&
-              discount.map((item, index) => (
-                <DiscountCard key={index} data={item}></DiscountCard>
-              ))}
+        {discount.length > 0 && (
+          <div className="flex relative mt-5 gap-2">
+            <h4 className=" font-bold text-gray-600 shrink-0">Mã giảm giá:</h4>
+            <div className=" py-2 scroll-height-3 flex flex-wrap items-center gap-3 max-w-max">
+              {discount &&
+                discount.map((item, index) => (
+                  <DiscountCard key={index} data={item}></DiscountCard>
+                ))}
+            </div>
           </div>
-
-          {/* <DiscountCard></DiscountCard> */}
-        </div>
-
+        )}
         {/* count down */}
         {data.end_date ? (
           <CountDown end_time={data.end_date}></CountDown>
@@ -135,7 +173,7 @@ const BoxContent = ({ data, setData, discount }) => {
 
         {/* variant */}
         {data.type != "single" ? (
-          <div className="flex gap-14">
+          <div className="flex items-center gap-14">
             <h5 className="mt-5 shrink-0 font-bold text-gray-600">Biến thể:</h5>
             {data.variant?.productVariants?.length > 0 ? (
               <Variants
@@ -152,15 +190,42 @@ const BoxContent = ({ data, setData, discount }) => {
           <h5 className="shrink-0 font-bold text-gray-600">Số lượng:</h5>
           <div className="-ms-2 flex items-center gap-5">
             <div className="flex items-center border">
-              <button className="px-5 py-2">
+              <button
+                onClick={() => {
+                  if (qty > 1) setQty(qty - 1);
+                }}
+                className="px-5 py-2"
+              >
                 <FaMinus></FaMinus>
               </button>
               <input
-                defaultValue={"1"}
+                defaultValue={qty}
+                onChange={(e) => {
+                  const numQty = Number(e.target.value);
+                  setQty(numQty);
+                }}
+                onBlur={() => {
+                  if (qty < 1) setQty(1);
+                  if (qty > data.quantity) {
+                    setQty(data.quantity);
+                    toast.error("Số lượng trong kho không đủ");
+                  }
+                }}
+                value={qty}
                 className="border text-lg  outline-none py-1 text-center w-20"
                 type="number"
               />
-              <button className="px-5 py-2">
+              <button
+                onClick={() => {
+                  const numQty = Number(qty);
+                  if (numQty < data.quantity) {
+                    setQty(numQty + 1);
+                  } else {
+                    toast.error("Số lượng trong kho không đủ");
+                  }
+                }}
+                className="px-5 py-2"
+              >
                 <FaPlus></FaPlus>
               </button>
             </div>
@@ -172,9 +237,9 @@ const BoxContent = ({ data, setData, discount }) => {
         {data.quantity < 100 ? (
           <div className="mt-5">
             <p>
-              Hurry Up! Only{" "}
+              Nhanh lên! Chỉ còn{" "}
               <span className="text-lg px-2 text-red-500">{data.quantity}</span>{" "}
-              Left in Stock!
+              sản phãm
             </p>
             <div
               className={`h-1 mt-2 relative before:content-[''] overflow-hidden bg-gray-200 rounded-full`}
@@ -194,40 +259,43 @@ const BoxContent = ({ data, setData, discount }) => {
             className="w-full overflow-hidden py-3 flex gap-2 group justify-center items-center rounded-full font-bold text-white bg-blue-500 uppercase"
           >
             <MdOutlineShoppingCart className="text-2xl -translate-y-11 group-hover:translate-y-[0] transition-all duration-300 bg-blue-500 " />{" "}
-            Add to Cart{" "}
+            Thêm giỏ hàng{" "}
           </button>
-          <button className="w-full group overflow-hidden flex items-center justify-center gap-2 mt-3 rounded-full font-bold text-white py-3 bg-red-500 uppercase">
+          <button
+            onClick={handleClickCheckOut}
+            className="w-full group overflow-hidden flex items-center justify-center gap-2 mt-3 rounded-full font-bold text-white py-3 bg-red-500 uppercase"
+          >
             <GiTakeMyMoney className="text-2xl -translate-y-11 group-hover:translate-y-[0] transition-all duration-300 " />{" "}
-            BUY IT NOW
+            Mua ngay
           </button>
         </div>
         <div className="flex flex-col md:flex-row  border-b py-3">
           <div className="flex cursor-pointer gap-2 p-3 items-center">
             <LiaRulerHorizontalSolid className="text-xl" />
-            Size chart
+            Kích thước
           </div>
           <div className="flex cursor-pointer gap-2 p-3 items-center">
             <BsShield className="text-xl" />
-            Shipping and Returns
+            Vận chuyển & trả hàng
           </div>
           <div className="flex cursor-pointer gap-2 p-3 items-center">
             <IoColorPaletteOutline className="text-xl" />
-            Shipping and Returns
+            Màu sắc
           </div>
           <div className="flex cursor-pointer gap-2 p-3 items-center">
             <HiOutlineMail className="text-xl" />
-            Contact us
+            Hỗ trợ
           </div>
         </div>
         <div className="flex border-b pb-5 justify-between items-center my-5 text-[12px]">
           <div className="flex gap-5 items-center">
-            <div className="flex items-center gap-2">
+            <div className="flex cursor-pointer items-center gap-2">
               <FiHeart />
-              <span className="uppercase">Add WISHLIST</span>
+              <span className="uppercase">Thêm vô yêu thích</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex cursor-pointer items-center gap-2">
               <FiLayers />
-              <span className="uppercase">Add compare</span>
+              <span className="uppercase">So sánh</span>
             </div>
           </div>
           <div className="flex items-center gap-2">

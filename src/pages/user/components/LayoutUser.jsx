@@ -73,8 +73,19 @@ const LayoutUser = ({ children }) => {
                 </NavLink>
               </Sidebar.Item>
               <Sidebar.Item>
-                <Chat size={24} />
-                Tin nhắn
+                <NavLink
+                  end
+                  className={({ isActive }) =>
+                    "flex gap-2 items-center transition-all cursor-pointer hover:text-blue-500" +
+                    (isActive
+                      ? " !font-bold text-blue-500 relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-[1px] ps-2 before:rounded-full before:h-full before:bg-blue-500"
+                      : "")
+                  }
+                  to={"/user/chats"}
+                >
+                  <Chat size={24} />
+                  Tin nhắn
+                </NavLink>
               </Sidebar.Item>
               <Sidebar.Item>
                 <Gear size={24} />

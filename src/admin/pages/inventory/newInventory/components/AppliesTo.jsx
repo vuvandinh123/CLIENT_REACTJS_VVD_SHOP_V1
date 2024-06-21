@@ -3,7 +3,7 @@ import { useState } from "react";
 import ModalAppliesProduct from "./ModalAppliesProduct";
 import { CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import { formatPrice } from "../../../../../utils";
+import { formatPrice, formatPriceVND } from "../../../../../utils";
 
 const AppliesTo = ({ listProductCheck, setListProductCheck }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,7 @@ const AppliesTo = ({ listProductCheck, setListProductCheck }) => {
             onClick={() => setIsOpen(true)}
             className="cursor-pointer rounded-md bg-blue-500 px-3 py-3 text-white hover:bg-gray-400 "
           >
-            Browse
+            Thêm
           </span>
         </div>
         <div className="mb-5">
@@ -74,7 +74,7 @@ const AppliesTo = ({ listProductCheck, setListProductCheck }) => {
                     <span className="block">
                       Giá bán:{" "}
                       <span className="font-bold">
-                        {formatPrice(Number(item.price))}
+                        {formatPriceVND(Number(item.price))}
                       </span>
                     </span>
                     <span>

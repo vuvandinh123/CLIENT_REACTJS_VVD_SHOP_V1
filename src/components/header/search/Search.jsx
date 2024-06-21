@@ -134,7 +134,7 @@ const Search = () => {
                     className="flex items-center border-b p-3 gap-2"
                   >
                     <div className="relative shrink-0 w-[60px]">
-                      <Link className="" to={`/products/${item.slug}`}>
+                      <Link className="" to={`/products/${item.slug}-${item.id}`}>
                         <ImageLoader
                           className={"w-[60px]"}
                           src={item.thumbnail}
@@ -144,7 +144,7 @@ const Search = () => {
                     <div className="mt-2">
                       <h4 className="text-[15px]">
                         <Link
-                          to={`/products/${item.slug}`}
+                          to={`/products/${item.slug}-${item.id}`}
                           className="hover:text-[#2b38d1] text-ecl transition-all"
                         >
                           {item.name}
