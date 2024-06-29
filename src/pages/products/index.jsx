@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useApiCall, useFilter, useScrollTop } from "../../hooks";
 import ModalMB from "./components/ModalMB";
 import LayoutProduct from "../../components/products/LayoutProduct";
-import { extractNumberFromSlug } from "../../utils";
+import { extractNumberFromSlug, formatPriceVND } from "../../utils";
 import { getCategoryById, getCategoryFilter } from "../../service/Category";
 import { getProductByCategory } from "../../service/Product";
 import { getProvinceByProducts } from "../../service/Provinces";
@@ -124,8 +124,8 @@ const Products = () => {
           />
         </div>
         <div className="flex gap-x-5">
-          {/* <div className="basis-1/5 hidden lg:block min-h-[100vh] bg-white p-5">
-            <div className="border-b pb-5">
+          <div className="basis-1/5 hidden lg:block min-h-[100vh] bg-white p-5">
+            {/* <div className="border-b pb-5">
               <CategoriesSiderbar
                 catgoryId={id}
                 data={categories.data}
@@ -143,7 +143,7 @@ const Products = () => {
             />
             <div className="border-b pb-5 mt-5">
               <Featured />
-            </div>
+            </div> */}
             <div className="border-b pb-5 mt-5 relative">
               <div>
                 <div>
@@ -161,14 +161,14 @@ const Products = () => {
                 <h6 className="text-2xl">LAP TOP</h6>
                 <h6 className="uppercase text-red-500 text-2xl">macboox m1</h6>
                 <p>
-                  Just from <span>$129.00</span>
+                  Just from <span>{formatPriceVND(190000)}</span>
                 </p>
                 <button className="w-full py-2 mt-5 font-bold  text-black border-[3px]  rounded-full">
                   SHOW NOW
                 </button>
               </div>
             </div>
-          </div> */}
+          </div>
           <SidebarFilter handleCheckboxChange={handleCheckboxChange} categories={categories} categoryId={id} province={province} params={params} brands={brands} setParams={setParams}></SidebarFilter>
           <div className="lg:basis-4/5">
             <LayoutProduct

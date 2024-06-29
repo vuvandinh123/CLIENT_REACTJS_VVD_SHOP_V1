@@ -10,10 +10,11 @@ import { useNavigate } from "react-router-dom";
 const OrderDetail = () => {
   useScrollTop();
   const [type, setType] = useState("ALL");
+  const [refesh, setRefresh] = useState(false);
   const { data, loading } = useApiCall(async () => {
     const res = await getOrderByUser({ type });
     return res.data;
-  }, [type]);
+  }, [type, refesh]);
   const navigate = useNavigate();
   const handleClickOrder = async (index) => {
     const item = data[index];
@@ -42,7 +43,7 @@ const OrderDetail = () => {
     navigate("/checkout");
   };
   return (
-    <LayoutUser>
+    <>
       {loading && <Loader></Loader>}
       <div className="bg-white pt-5 px-5 rounded-lg">
         <TabOrder type={type} setType={setType}></TabOrder>
@@ -51,6 +52,7 @@ const OrderDetail = () => {
         {data?.map((item, index) => (
           <CardOrder
             index={index}
+            setRefresh={setRefresh}
             handleClickOrder={handleClickOrder}
             key={index}
             data={item}
@@ -67,7 +69,7 @@ const OrderDetail = () => {
           </div>
         )}
       </div>
-    </LayoutUser>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import { addToCart } from "../../service/Cart";
 import { useState } from "react";
 import { formatPriceVND, getCookieAuth } from "../../utils";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 const Product = ({ deals, data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,8 +22,20 @@ const Product = ({ deals, data }) => {
   const handleClickToCart = async () => {
     const { userId } = getCookieAuth();
     if (!userId) {
-      toast.error("Vui lòng đăng nhập để tiếp tục");
-      navigate("/auth/login");
+      Swal.fire({
+        title: "Bạn cần đăng nhập",
+        text: "Bạn cần đăng nhập để thêm giỏ hàng",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đăng nhập",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/auth/login");
+        }
+      });
       return;
     }
     setIsDisabled(true);

@@ -1,10 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { navSidebar } from "../../data/NavSidebar";
 import { Link } from "react-router-dom";
-import { CiPaperplane } from "react-icons/ci";
-import { MdKeyboardArrowDown } from "react-icons/md";
 import MenuItem from "./MenuItem";
-import { IoSettings, IoSettingsOutline } from "react-icons/io5";
+import { IoSettings } from "react-icons/io5";
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
@@ -70,7 +69,7 @@ const Sidebar = () => {
               </Link>
               <Link
                 href="#"
-                to={"/admin/settings"}
+                to={"/seller/settings"}
                 className="text-base text-gray-600 hover:text-gray-800 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
               >
                 <IoSettings size={23}></IoSettings>

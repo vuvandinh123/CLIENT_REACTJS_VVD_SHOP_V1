@@ -63,7 +63,7 @@ const Filter = (props) => {
           </button>
         </div>
         <div className="flex items-center gap-1 mt-2 flex-wrap">
-          {filter.brand.length > 0 &&
+          {/* {filter.brand.length > 0 &&
             brands &&
             filter.brand.map((item, index) => {
               const mach = brands.find((item2) => item2.id == item);
@@ -90,8 +90,8 @@ const Filter = (props) => {
                   </span>
                 </div>
               );
-            })}
-          {filter.price.min && (
+            })} */}
+          {filter?.price?.min && (
             <div className="flex items-center ">
               <span className="px-4 text-[13px] py-1 my-1 bg-slate-100 inline-block ms-1  rounded-sm">
                 Min: {price.min}
@@ -110,7 +110,7 @@ const Filter = (props) => {
               </span>
             </div>
           )}
-          {filter.price.max && (
+          {filter?.price?.max && (
             <div className="flex items-center ">
               <span className="px-3 text-[13px] py-1 my-1 bg-slate-100 inline-block ms-1  rounded-sm">
                 Max: {filter.price.max}

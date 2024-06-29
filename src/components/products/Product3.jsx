@@ -1,4 +1,4 @@
-import { formatPrice, formatPriceVND } from "../../utils";
+import { formatPriceVND } from "../../utils";
 import { AiOutlineCheck, AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
 import Title from "../common/Title";
@@ -68,7 +68,9 @@ const Product3 = ({ data }) => {
                     </svg>
                   ))}
               </div>
-              <span className="text-gray-400 text-[12px]">({data?.review || 0} review)</span>
+              <span className="text-gray-400 text-[12px]">
+                ({data?.review || 0} review)
+              </span>
             </div>
             <h4 className="text-[#3741ff] font-bold text-xl ">
               {formatPriceVND(data?.price)}

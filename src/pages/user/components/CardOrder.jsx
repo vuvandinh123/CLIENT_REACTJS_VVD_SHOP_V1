@@ -5,8 +5,18 @@ import { CiShop } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { formatPriceVND } from "../../../utils";
 import { statusOrder } from "../data";
-
-const CardOrder = ({ data, handleClickOrder,index }) => {
+import { TfiCommentsSmiley } from "react-icons/tfi";
+import { useState } from "react";
+import ReviewModal from "./ReviewModal";
+const CardOrder = ({ data, handleClickOrder, index,setRefresh }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState(null);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
     <div className="bg-white p-5 rounded-lg mb-2">
       <div>
@@ -46,11 +56,29 @@ const CardOrder = ({ data, handleClickOrder,index }) => {
                   <Avatar shape="rounded" img={item.thumbnail} />
                 </div>
                 <div className="">
-                  <h3>{item.product_name}</h3>
+                  <h3>
+                    <Link to={`/products/${item.slug}-${item.product_id}`}>
+                      {item.product_name}
+                    </Link>
+                  </h3>
                   <p className="text-gray-500">
                     {item.code ? `sku: ${item.code}` : null}
                   </p>
                   <p className="text-gray-500">Số lượng: {item.quantity}</p>
+                  {data.status === "SUCCESS" && !item?.is_review ? (
+                    <div className="mt-2 ">
+                      <span
+                        onClick={() => {
+                          setIsOpen(true);
+                          setProduct(item);
+                        }}
+                        className="px-2 py-1  flex gap-2 items-center w-max cursor-pointer text-yellow-500 border rounded-lg"
+                      >
+                        <TfiCommentsSmiley></TfiCommentsSmiley> Đánh giá sản
+                        phẩm
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <div className="text-red-500">
@@ -72,7 +100,7 @@ const CardOrder = ({ data, handleClickOrder,index }) => {
           <div className="flex justify-end gap-2  items-center">
             <button
               className="px-5 py-1 uppercase bg-red-500 text-white rounded-sm"
-              onClick={()=>handleClickOrder(index)}
+              onClick={() => handleClickOrder(index)}
             >
               Mua lại
             </button>
@@ -91,6 +119,13 @@ const CardOrder = ({ data, handleClickOrder,index }) => {
           </div>
         </div>
       </div>
+      <ReviewModal
+        isOpen={isOpen}
+        setRefresh={setRefresh}
+        product={product}
+        closeModal={closeModal}
+        openModal={openModal}
+      ></ReviewModal>
     </div>
   );
 };

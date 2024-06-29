@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import Chats from "../../components/chats";
 import LayoutUser from "./components/LayoutUser";
 import { getCookieAuth, getUrlSearchParam } from "../../utils";
 import { Loader } from "../../components/common";
 import Chats2 from "../../components/chats2";
-import { useLocation } from "react-router-dom";
-import { getShopChatsByIds } from "../../service/Shop";
-import { getShopByUserId } from "../../admin/service/Shop";
 import { useAuth } from "../../hooks";
+import { getShopByUserId } from "../../seller/service/Shop";
 
 const Chat = () => {
   const [data, setData] = useState({
@@ -30,20 +27,17 @@ const Chat = () => {
     }
     setData({ storeId, userId });
     setLoading(false);
-  }, []);
+  }, [data.storeId]);
   if (loading) return <Loader />;
   return (
     <div>
-      <LayoutUser>
-        <Chats2
-          shop={shop}
-          storeId={data.storeId}
-          setData={setData}
-          user={user}
-          userId={data.userId}
-        ></Chats2>
-      </LayoutUser>
-      {/* component */}
+      <Chats2
+        shop={shop}
+        storeId={data.storeId}
+        setData={setData}
+        user={user}
+        userId={data.userId}
+      ></Chats2>
     </div>
   );
 };

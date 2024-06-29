@@ -45,6 +45,9 @@ export const categorySchema = Yup.object({
 
     name: Yup.string().required("Name is required"),
     description: Yup.string().required("Start date is required"),
-    parent_id: Yup.string().required("categories is required"),
-
+})
+export const brandSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+    description: Yup.string().required("Start date is required"),
+    category_id: Yup.string().required("Category is required"),
 })

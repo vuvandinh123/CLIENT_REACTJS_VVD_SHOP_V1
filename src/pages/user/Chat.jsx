@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Chats from "../../components/chats";
 import LayoutUser from "./components/LayoutUser";
-import { getCookieAuth, getUrlSearchParam } from "../../utils";
 import { Loader } from "../../components/common";
 
 const Chat = () => {
@@ -21,10 +20,7 @@ const Chat = () => {
 
   return (
     <div>
-      <LayoutUser>
-        <Chats storeId={data.storeId} userId={data.userId}></Chats>
-      </LayoutUser>
-      {/* component */}
+      <Chats storeId={data.storeId} userId={data.userId}></Chats>
     </div>
   );
 };

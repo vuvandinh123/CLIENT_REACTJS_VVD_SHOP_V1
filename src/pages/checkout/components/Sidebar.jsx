@@ -11,6 +11,7 @@ const Sidebar = ({ cost }) => {
   useEffect(() => {
     const checkoutStr = sessionStorage.getItem("checkout") || "[]";
     const checkoutJSON = JSON.parse(checkoutStr);
+    console.log(checkoutJSON);
     let qty = 0;
     checkoutJSON.forEach((item) => {
       if (item.order.products.length > 0) {
@@ -27,7 +28,7 @@ const Sidebar = ({ cost }) => {
     const calculateTotalDiscount = (acc, item) => {
       const { type_price, value } = item.order?.discount || {};
       if (type_price === "percent") {
-        return acc + (1 - value / 100) * item.order.amount;
+        return acc + (value / 100) * item.order.amount;
       }
       return acc + (value || 0);
     };

@@ -13,6 +13,9 @@ import i18n from "./language/LanguageSetting";
 import { I18nextProvider } from "react-i18next";
 import { getUrlSearchParam, setUrlSearchParam } from "./utils";
 import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+const queryClient = new QueryClient();
 function App() {
   const { isOpen } = useSelector((state) => state.selectCart);
   // kiểm tra thay đổi ngôn ngữ theo url hoặc localStorage
@@ -31,7 +34,10 @@ function App() {
   return (
     <>
       <I18nextProvider i18n={i18n}>
-        <RouteApp />
+        <QueryClientProvider client={queryClient}>
+          <RouteApp />
+          {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+        </QueryClientProvider>
       </I18nextProvider>
       {isOpen && <ModalSelectOptionCart></ModalSelectOptionCart>}
       <ToastContainer />

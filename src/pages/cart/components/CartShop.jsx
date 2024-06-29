@@ -53,6 +53,7 @@ const CartShop = ({
       code: code,
       shop_id: data.id,
     });
+    console.log(res);
     setProductDiscount({
       ...productDiscount,
       [data.id.toString()]: {

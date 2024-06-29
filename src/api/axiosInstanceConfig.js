@@ -8,10 +8,17 @@ const axiosInstance = axios.create({
   }
 });
 const axiosInstanceShop = axios.create({
+  baseURL: AppURL.BaseURLSHOP,
+  headers: {
+    accept: 'application/json',
+    "x-api-key": AppURL.API_KEY
+  }
+});
+const axiosInstanceAdmin = axios.create({
   baseURL: AppURL.BaseURLAdmin,
   headers: {
     accept: 'application/json',
     "x-api-key": AppURL.API_KEY
   }
 });
-export { axiosInstance, axiosInstanceShop }
+export { axiosInstance, axiosInstanceShop,axiosInstanceAdmin }

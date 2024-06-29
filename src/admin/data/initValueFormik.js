@@ -25,11 +25,15 @@ export const initNewCategory = {
     name: "",
     parent_id: "",
     description: "",
-    role: "SHOP",
+}
+export const initNewBrand = {
+    name: "",
+    category_id: "",
+    description: "",
 }
 export const initEditCategory = (data) => ({
     name: data?.name,
-    parent_id: data?.parent_id,
+    parent_id: data?.parent_id && data?.parent_id.toString(),
     description: data?.description,
     thumbnail: data?.thumbnail,
 })
@@ -96,7 +100,7 @@ export const initProfile = (data) => ({
     shop_username: data.shop_username,
     shop_phone: data.shop_phone,
     shop_website: data.shop_website,
-    shop_email:data.shop_email,
+    shop_email: data.shop_email,
     shop_description: data.shop_description,
     shop_country: data.shop_country,
     shop_province: data.shop_province,

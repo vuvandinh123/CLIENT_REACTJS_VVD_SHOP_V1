@@ -12,6 +12,7 @@ import { getCookieAuth } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setQtyFav } from "../../redux/slice/favouriteSlice";
+import Swal from "sweetalert2";
 const Fav = ({ data }) => {
   const [isFav, setIsFav] = useState(data.isFav);
   const navigate = useNavigate();
@@ -20,8 +21,20 @@ const Fav = ({ data }) => {
   const handleClickToFav = async () => {
     const { userId } = getCookieAuth();
     if (!userId) {
-      navigate("/auth/login");
-      toast.error("vui lòng đăng nhập để tiếp tục");
+      Swal.fire({
+        title: "Bạn cần đăng nhập",
+        text: "Bạn cần đăng nhập để thêm các sản phẩm yêu thích",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đăng nhập",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/auth/login");
+        }
+      });
       return;
     }
     const newFav = {
@@ -55,7 +68,7 @@ const Fav = ({ data }) => {
           <AiOutlineHeart className="text-lg" />
         )}
 
-        <Title title={isFav ? "Remove from wishlist" : "Add to wishlist"} />
+        <Title title={isFav ? "Xóa khỏi danh sách yêu thích" : "Yêu thích"} />
       </div>
     </>
   );

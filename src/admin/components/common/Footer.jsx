@@ -11,7 +11,7 @@ const Footer = () => {
                 href="#"
                 className="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6"
               >
-                Terms and conditions
+                Các điều khoản và điềm kiện
               </a>
             </li>
             <li>
@@ -19,23 +19,7 @@ const Footer = () => {
                 href="#"
                 className="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6"
               >
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6"
-              >
-                Licensing
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6"
-              >
-                Cookie Policy
+                Chính sách bảo mật
               </a>
             </li>
             <li>
@@ -43,7 +27,7 @@ const Footer = () => {
                 href="#"
                 className="text-sm font-normal text-gray-500 hover:underline"
               >
-                Contact
+                Hỗ trợ
               </a>
             </li>
           </ul>
@@ -118,10 +102,10 @@ const Footer = () => {
         </div>
         <p className="text-center text-sm text-gray-500 my-3">
           © 2024-2025{" "}
-          <a href="#" className="hover:underline" target="_blank">
-            Themesberg
+          <a href="#" className="hover:underline text-blue-500" target="_blank">
+            VVD SHOP
           </a>
-          . All rights reserved.
+          . Đăng kí bản quyền.
         </p>
       </footer>
     </>

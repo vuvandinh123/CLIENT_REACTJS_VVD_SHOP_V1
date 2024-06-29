@@ -11,3 +11,8 @@ export const getReviewStatistics = async (id) => {
     const response = await axiosInstance.get(`/comments/statistics/${id}`)
     return response.data
 }
+export const addComment = async (data) => {
+    verifyToken(axiosInstance)
+    const response = await axiosInstance.post("/comments", data)
+    return response.data
+}

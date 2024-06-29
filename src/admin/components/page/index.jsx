@@ -24,6 +24,7 @@ const LayoutListShop = ({
   addFilter,
   // bool
   isBtnCreated,
+  isCheckBox,
   //   state
   dataStatus,
   checkedStates,
@@ -32,7 +33,6 @@ const LayoutListShop = ({
   pagination,
   setPagination,
   filter,
-  isCheckBox,
   setFilter,
   refresh,
   setRefresh,

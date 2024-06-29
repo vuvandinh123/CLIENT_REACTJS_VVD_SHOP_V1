@@ -1,13 +1,15 @@
 import { FaStar } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { formathDate } from "../../../utils";
+import { Link, useNavigate } from "react-router-dom";
+import { formathDate, getCookieAuth } from "../../../utils";
 import PropTypes from "prop-types";
 import { MdEmail, MdOutlineMailOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { getIsFollowShop, toggleFollowShop } from "../../../service/Shop";
 import moment from "moment";
+import Swal from "sweetalert2";
 const Shop = ({ shop }) => {
   const [followe, setFollowe] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchAPi = async () => {
       try {
@@ -23,16 +25,32 @@ const Shop = ({ shop }) => {
   }, [shop.id]);
   const handleClickFollow = async () => {
     try {
+      const { userId } = getCookieAuth();
+      if (!userId) {
+        Swal.fire({
+          title: "Bạn cần đăng nhập",
+          text: "Bạn cần đăng nhập để theo dõi",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Không",
+          confirmButtonText: "Đăng nhập",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate(`/auth/login?redirect=${window.location.href}`);
+          }
+        });
+        return;
+      }
       const res = await toggleFollowShop(shop.id);
       if (res.data) {
         setFollowe(!followe);
       }
-      // setFollowe(!followe);
     } catch (error) {
-      console.log(error, "hiii");
+      // 
     }
   };
-  console.log(shop);
   return (
     <div className="mt-10">
       <div className="flex flex-row rounded-lg border border-gray-200/80 bg-white p-6">
@@ -46,7 +64,6 @@ const Shop = ({ shop }) => {
               alt="User"
             />
           </Link>
-
           {/* Online Status Dot */}
           <div
             className="absolute -right-3 bottom-5 h-5 w-5 sm:top-2 rounded-full border-4 border-white bg-green-400 sm:invisible md:visible"
@@ -142,7 +159,7 @@ const Shop = ({ shop }) => {
             </div>
             <div className="border px-3 py-1">
               <div className="flex gap-2">
-               Thời gian hoạt động:{" "}
+                Thời gian hoạt động:{" "}
                 <span className="text-blue-500 flex gap-2 items-center">
                   {shop.response_time}
                 </span>
@@ -160,7 +177,8 @@ const Shop = ({ shop }) => {
               <div className="flex gap-2">
                 Tham gia:{" "}
                 <span className="text-blue-500 flex gap-2 items-center">
-                  {shop.created_at && moment(shop.created_at).format("DD/MM/YYYY")}
+                  {shop.created_at &&
+                    moment(shop.created_at).format("DD/MM/YYYY")}
                 </span>
               </div>
             </div>

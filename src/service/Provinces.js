@@ -6,10 +6,10 @@ export const getAllProvinces = async (id) => {
     verifyToken(axiosInstance)
     const response = await axiosInstance.get(actionType.GET_PROVINCES + "/" + id)
     return response.data
-} 
+}
 
-export const getProvinceByProducts = async (id) => {
+export const getProvinceByProducts = async (id, params) => {
     verifyToken(axiosInstance)
-    const response = await axiosInstance.get(actionType.GET_PROVINCES + "/filter/" + id)
+    const response = await axiosInstance.get(actionType.GET_PROVINCES + "/filter/" + id, { params })
     return response.data
 } 

@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LayoutProduct from "../../components/products/LayoutProduct";
 import SidebarFilter from "../../components/common/products/SidebarFilter";
-import { getProductByCategory, getSearchProducts } from "../../service/Product";
-import { useApiCall, useFilter, useScrollTop } from "../../hooks";
+import { getSearchProducts } from "../../service/Product";
+import { useApiCall, useScrollTop } from "../../hooks";
 import { getAllCategoryShow } from "../../service/Category";
 import { getProvinceByProducts } from "../../service/Provinces";
 import { getUrlSearchParam } from "../../utils";
@@ -29,7 +29,7 @@ const Search = () => {
   const { data: province } = useApiCall(async () => {
     const res = await getProvinceByProducts(1);
     return res.data;
-  });
+  }, []);
   const handleCheckboxChange = (value, isChecked, name) => {
     if (name == "brand") {
       setParams((item) => {
@@ -69,7 +69,6 @@ const Search = () => {
   const brands = [];
   // fetch data products
   const { data, loading } = useApiCall(async () => {
-    
     const res = await getSearchProducts({
       ...params,
       search: q,
@@ -83,6 +82,7 @@ const Search = () => {
     params.price,
     params.stars,
     params.sortBy,
+    params.limit,
     q,
     params.province,
   ]);
@@ -90,18 +90,18 @@ const Search = () => {
     <div className="bg-[#F1F5F6] pb-10">
       <div className="bg-[url(https://demo-uminex.myshopify.com/cdn/shop/files/bg_breadcrumbs_1920x.png?v=1684232545)] h-36 text-white flex justify-center items-center flex-col gap-y-3">
         <h2 className="text-2xl font-semibold">
-          {totalProduct} RESULTS FOR {`"${q}"`}
+          {totalProduct} KẾT QUẢ CHO {`"${q}"`}
         </h2>
         <div>
           <ul className="flex items-center gap-x-2">
             <li>
               <Link to={"/"} href="">
-                Home
+                Trang chủ
               </Link>
             </li>
             <li>/</li>
             <li>
-              <a href="">Search</a>
+              <a href="">Tìm kiếm</a>
             </li>
           </ul>
         </div>
@@ -111,7 +111,7 @@ const Search = () => {
           <SidebarFilter
             handleCheckboxChange={handleCheckboxChange}
             categories={categories}
-            categoryId={2}
+            categoryId={catId || 2}
             province={province}
             params={params}
             brands={brands}
@@ -121,7 +121,7 @@ const Search = () => {
             <LayoutProduct
               loading={loading}
               params={params}
-              setParams={setParams}
+              setFilter={setParams}
               data={data}
             />
             <div className="flex items-center justify-center mt-10">
@@ -135,7 +135,7 @@ const Search = () => {
                     <span>Loading ...</span>
                   ) : (
                     <span>
-                      Load more ({totalProduct - data.length}) products
+                      Xem thêm ({totalProduct - data.length}) sản phẩm
                     </span>
                   )}
                 </button>

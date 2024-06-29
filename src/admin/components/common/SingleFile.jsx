@@ -18,6 +18,7 @@ const SingleFile = ({ image, setImage, setImageDelete }) => {
       <div className="mb-5">
         <FileUploader
           multiple={false}
+          className="w-full"
           handleChange={handleChange}
           name="file"
           types={fileTypes}
@@ -30,6 +31,7 @@ const SingleFile = ({ image, setImage, setImageDelete }) => {
               onError={(e) => {
                 e.target.src = imageNotFound;
               }}
+              className="w-full h-full object-cover"
               src={
                 typeof image === "string" ? image : URL.createObjectURL(image)
               }

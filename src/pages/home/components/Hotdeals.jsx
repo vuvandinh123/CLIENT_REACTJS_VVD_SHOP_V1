@@ -1,15 +1,27 @@
 import hotdeals from "../../../../public/svg/hotdel.svg";
-import { PlacehoderCard } from "../../../components/common";
+import {  PlacehoderCard } from "../../../components/common";
 import SlickCround from "../../../components/common/SlickCround";
 import CountDown from "./CountDown";
 import { settingSlick } from "../../../helpers";
 import PropTypes from "prop-types";
 import Product from "../../../components/products/Product";
+import { getHotSaleProduct } from "../../../service/Product";
+import { useQuery } from "@tanstack/react-query";
 
-const Hotdeals = ({ data, loading }) => {
+const Hotdeals = () => {
   const settings = settingSlick(6);
+  const { isPending, data } = useQuery({
+    queryKey: ["hotdeals"],
+    queryFn: async () => {
+      const data = await getHotSaleProduct();
+      return data.data;
+    },
+    staleTime: 60 * 1000,
+  });
+
   return (
     <div className="my-20">
+      
       <div className=" bg-white rounded-md p-4 flex justify-between flex-wrap gap-y-4 items-center">
         <div className="flex items-center">
           <img src={hotdeals} className="me-2" alt="" />
@@ -30,27 +42,18 @@ const Hotdeals = ({ data, loading }) => {
         </div>
       </div>
       <div className="flex flex-wrap lg:flex-nowrap mt-3 gap-2">
-        {/* <div className="lg:basis-1/3 w-full">
-          <a href="#" className="overflow-hidden block rounded-md">
-            <img
-              className="w-full min-h-[380px]   hover:scale-105 transition-all duration-300"
-              src="https://demo-uminex.myshopify.com/cdn/shop/files/img_1_3.png?v=1673017886&width=2000"
-              alt=""
-            />
-          </a>
-        </div> */}
         <div className=" w-full max-w-[100%] relative group/arrow">
-          {!loading && data.length && (
+          {!isPending && data?.length && (
             <SlickCround settings={settings}>
               {data?.map((item, index) => {
                 return <Product data={item} key={index} deals={true} />;
               })}
             </SlickCround>
           )}
-          {!loading && data.length === 0 && (
+          {!isPending && data.length === 0 && (
             <p className="text-gray-500 text-center py-5">Không có sản phẩm</p>
           )}
-          {loading && (
+          {isPending && (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-2">
               {[...Array(6)].map((item, index) => (
                 <PlacehoderCard key={index} />

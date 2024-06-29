@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { changeStatusProduct, deleteProduct } from '../admin/service/Product';
 
 const useMultipleSelect = ({ data, on, refresh, fnDeleteMultiple, fnChangeStatusMultiple }) => {
   const [checkedStates, setCheckedStates] = useState([]);

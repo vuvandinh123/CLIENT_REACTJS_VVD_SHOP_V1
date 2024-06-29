@@ -12,7 +12,7 @@ const Order = ({
   productDiscount,
   checkout,
 }) => {
-  const discount = 5000;
+  const discount = 1500000;
   const discountAmount = 3;
   const [coupon, setCoupon] = useState("");
   const [mes, setMes] = useState("");
@@ -23,6 +23,7 @@ const Order = ({
       const fetch = async () => {};
       if (coupon != "") {
         fetch();
+        setMes("Mã không tồn tại");
       }
     } catch (e) {
       console.error("error:");
@@ -38,9 +39,9 @@ const Order = ({
           <div
             style={{
               width:
-                (totalPrice / discount) * 100 >= 100
+                (total / discount) * 100 >= 100
                   ? "100%"
-                  : (totalPrice / discount) * 100 + "%",
+                  : (total / discount) * 100 + "%",
             }}
             className={`ship h-[6px]  rounded-md bg-red-500`}
           ></div>
@@ -52,9 +53,9 @@ const Order = ({
           {discount - totalPrice <= 0 ? (
             <>{`Congratulations! You've got`} </>
           ) : (
-            <>Tiêu ${(discount - totalPrice).toFixed(2)} để nhận được </>
+            <>Tiêu {formatPriceVND(discount - totalPrice)} để nhận được </>
           )}
-          <span className="text-red-600"> Free Shipping!</span>{" "}
+          <span className="text-red-600"> Miễn phí vận chuyển!</span>{" "}
         </p>
 
         <div className="border-b py-5">
@@ -76,14 +77,14 @@ const Order = ({
                 className={`rounded-full ${
                   mes != "" ? "!border-red-500" : ""
                 } focus:bg-white focus:border-blue-500 block w-full px-5 border outline-none mt-3 py-3 bg-[#F1F5F6]`}
-                placeholder="Coupon code"
+                placeholder="Mã giảm giá"
               />
               <span className="text-red-500 text-[12px] pl-3 inline-block mt-2">
                 {mes != "" && mes}
               </span>
               <button className="bg-red-500 w-full px-3 py-2 rounded-full text-white">
                 {" "}
-                Save
+                Lưu
               </button>
             </form>
           </div>
@@ -164,7 +165,7 @@ const Order = ({
         </div>
         <div className="py-5">
           <p className="text-gray-500 text-[12px] my-3">
-            Thuế và phí vận chuyển được tính khi thanh toán
+            Thuế khuyến mại và phí vận chuyển được tính khi thanh toán
           </p>
           <div>
             <Link

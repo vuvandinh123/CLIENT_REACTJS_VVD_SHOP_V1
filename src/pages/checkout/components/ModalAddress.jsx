@@ -12,7 +12,7 @@ import { createUserAddressOrder } from "../../../service/UserAddressOrder";
 import toast from "react-hot-toast";
 import { isObjectEmptyOrNull } from "../../../helpers/utils";
 
-export const ModalAddress = ({ isOpen, setIsOpen }) => {
+export const ModalAddress = ({ isOpen, setIsOpen, setIsRefresh }) => {
   const [nations, setNations] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,11 +28,11 @@ export const ModalAddress = ({ isOpen, setIsOpen }) => {
       setNations(res.data);
       setNation(res.data[0].id);
       fetchProvinces(res.data[0].id);
+
       setLoading(false);
     })();
   }, []);
   const handleChangeNation = async (e) => {
-    console.log(e.target.value);
     await fetchProvinces(e.target.value);
   };
 
@@ -45,6 +45,7 @@ export const ModalAddress = ({ isOpen, setIsOpen }) => {
     if (res.status === 201) {
       setIsOpen(false);
       toast.success("Thêm địa chỉ thành công");
+      setIsRefresh((prev) => !prev);
     }
   };
   if (loading) {
@@ -84,18 +85,15 @@ export const ModalAddress = ({ isOpen, setIsOpen }) => {
                     label="Tên"
                     placeholder="A"
                   ></InputField>
-                  <InputField
-                    label="Số điện thoại"
-                    name="phone"
-                    type="number"
-                    placeholder="123-456-789"
-                  ></InputField>
-                  <InputField
-                    label="Email"
-                    name="email"
-                    type="email"
-                    placeholder="example@.com"
-                  ></InputField>
+                  <div className="col-span-2">
+                    <InputField
+                      label="Số điện thoại"
+                      name="phone"
+                      type="number"
+                      placeholder="123-456-789"
+                    ></InputField>
+                  </div>
+
                   <label htmlFor="nations">
                     <span className="block mb-2">Quốc gia</span>
                     <select
@@ -131,7 +129,7 @@ export const ModalAddress = ({ isOpen, setIsOpen }) => {
                 </div>
               </Modal.Content>
               <Modal.Footer>
-                <div className="flex w-full gap-3 items-center justify-end">
+                <div className="flex mt-10 w-full gap-3 items-center justify-end">
                   <Button
                     onClick={() => setIsOpen(false)}
                     size="sm"

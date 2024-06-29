@@ -1,5 +1,5 @@
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { PlacehoderCard } from "../../../components/common";
+import { Loader, PlacehoderCard } from "../../../components/common";
 import PropTypes from "prop-types";
 import Product from "../../../components/products/Product";
 import { useApiCall } from "../../../hooks";
@@ -11,6 +11,7 @@ const FeaturedProducts = () => {
   }, []);
   return (
     <div>
+      {loading && <Loader />}
       <div className=" bg-white rounded-md p-4 flex justify-between flex-wrap gap-y-4 items-center">
         <div className="flex items-center">
           <h5 className="uppercase font-bold text-[16px]">Sản phẩm bán chạy</h5>

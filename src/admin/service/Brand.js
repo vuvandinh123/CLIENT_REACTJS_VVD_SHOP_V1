@@ -1,24 +1,65 @@
-import toast from "react-hot-toast"
-import { axiosInstanceShop } from "../../api/axiosInstanceConfig"
+import { axiosInstanceAdmin, axiosInstanceShop } from "../../api/axiosInstanceConfig"
 import { actionType } from "../../constants"
 import verifyToken from "../../api/AuthVerify"
 
 export const getAllBrandByCategory = async (id, params = {}, headers) => {
     verifyToken(axiosInstanceShop)
-    try {
-        const response = await axiosInstanceShop.get(actionType.GET_ALL_BRAND_BY_CATEGORY_BY_SHOP + id, {
-            params,
-            headers: {
-                ...headers,
-            }
-
-        })
-        return response.data
-    } catch (error) {
-        console.log(error)
-        if (error.response.status === 401) {
-            window.location.href = "/admin/login";
+    const response = await axiosInstanceShop.get(actionType.GET_ALL_BRAND_BY_CATEGORY_BY_SHOP + id, {
+        params,
+        headers: {
+            ...headers,
         }
-        toast.error("failed")
-    }
+
+    })
+    return response.data
+}
+export const getAllBrand = async (params = {}, headers) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.get("/brands", {
+        params,
+        headers: {
+            ...headers,
+        }
+    })
+    return response.data
+}
+export const changeStatusBrand = async (data, params = {}, headers) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.patch("/brands/change-status/", data, {
+        params,
+        headers: {
+            ...headers,
+        }
+    })
+    return response.data
+}
+export const getCountStatusBrand = async (params = {}, headers) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.get("/brands/count-status", {
+        params,
+        headers: {
+            ...headers,
+        }
+    })
+    return response.data
+}
+export const deleteBrand = async (data, params = {}, headers) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.patch("/brands/del/", data, {
+        params,
+        headers: {
+            ...headers,
+        }
+    })
+    return response.data
+}
+export const createBrand = async (data, params = {}, headers) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.post("/brands", data, {
+        params,
+        headers: {
+            ...headers,
+        }
+    })
+    return response.data
 }

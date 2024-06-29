@@ -56,11 +56,6 @@ const Cart = ({ isOpen, setIsOpen }) => {
                 </span>
               </div>
               <p className="mt-5">
-                {/* {5000 - totalPrice <= 0 ? (
-                  <>Congratulations! You've got </>
-                ) : (
-                  <>Spend ${(5000 - totalPrice).toFixed(2)} more and get</>
-                )} */}
                 <span className="text-red-600"> Free Shipping!</span>{" "}
               </p>
             </div>
@@ -160,18 +155,7 @@ const Cart = ({ isOpen, setIsOpen }) => {
               </ul>
             </div>
             <div className="bg-[#F1F5F6] p-4">
-              <div className="flex items-center justify-between gap-10">
-                <p className="font-bold">SUBTOTAL</p>
-                <div className="my-2 text-end">
-                  <p className="my-2 text-end">
-                    Buy 3 products 5% discount{" "}
-                    <span className="text-[#2b38d1]">(- $99.30)</span>
-                  </p>
-                  <p className="text-red-600 text-[18px] font-bold">
-                    {/* ${totalPrice.toFixed(2)} */}
-                  </p>
-                </div>
-              </div>
+              
               <div className="mt-5 h-[100vh]">
                 <Link
                   to={"/cart"}

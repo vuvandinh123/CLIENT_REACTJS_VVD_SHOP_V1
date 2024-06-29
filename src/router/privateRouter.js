@@ -1,137 +1,124 @@
 import * as ROUTES from '../constants/routes';
-import * as PAGE from '../admin/pages'
-import LayoutAdmin from '../admin/layouts';
+import * as PAGE from '../admin/pages/seller'
+// import LayoutSeller from '../seller/layouts';
+import Admin from '../admin';
 export const privateRouter = [
     {
-        path: ROUTES.ADMIN_DASHBOARD,
+        path: ROUTES.SELLER_DASHBOARD,
         exact: true,
-        layout: LayoutAdmin,
+        layout: Admin,
         component: PAGE.Dashboard
     },
     {
-        path: ROUTES.ADMIN_LOGIN,
+        path: ROUTES.SELLER_LOGIN,
         component: PAGE.Login
     },
     {
-        path: ROUTES.ADMIN_REGISTER,
+        path: ROUTES.SELLER_REGISTER,
         component: PAGE.Register
     },
     {
-        path: ROUTES.ADMIN_REGISTER_SUCCESS,
+        path: ROUTES.SELLER_REGISTER_SUCCESS,
         component: PAGE.SignupSuccess
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS,
+        layout: Admin,
         component: PAGE.ListProduct
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_CREATE,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_CREATE,
+        layout: Admin,
         component: PAGE.NewProduct
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_EDIT,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_EDIT,
+        layout: Admin,
         component: PAGE.EditProduct
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_VARIANTS,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_VARIANTS,
+        layout: Admin,
         component: PAGE.ListVariant
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_INVENTORY,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_INVENTORY,
+        layout: Admin,
         component: PAGE.ListInventory
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_INVENTORY_CREATE,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_INVENTORY_CREATE,
+        layout: Admin,
         component: PAGE.NewInventory
     },
     {
-        path: ROUTES.ADMIN_NEW_DISCOUNT,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_NEW_DISCOUNT,
+        layout: Admin,
         component: PAGE.NewDiscount
     },
     {
-        path: ROUTES.ADMIN_DISCOUNT,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_DISCOUNT,
+        layout: Admin,
         component: PAGE.ListDiscount
     },
     {
-        path: ROUTES.ADMIN_EDIT_DISCOUNT,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_EDIT_DISCOUNT,
+        layout: Admin,
         component: PAGE.EditDiscount
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_SALE,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_SALE,
+        layout: Admin,
         component: PAGE.SaleProduct
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_SALE_CREATE,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_SALE_CREATE,
+        layout: Admin,
         component: PAGE.NewSaleProduct
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_SALE_EDIT,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_SALE_EDIT,
+        layout: Admin,
         component: PAGE.EditSaleProduct
     },
+    
     {
-        path: ROUTES.ADMIN_CATEGORIES,
-        layout: LayoutAdmin,
-        component: PAGE.ListCategory
-    },
-    {
-        path: ROUTES.ADMIN_CATEGORIES_CREATE,
-        layout: LayoutAdmin,
-        component: PAGE.NewCategory
-    },
-    {
-        path: ROUTES.ADMIN_CATEGORIES_EDIT,
-        layout: LayoutAdmin,
-        component: PAGE.EditCategory
-    },
-    {
-        path: ROUTES.ADMIN_PRODUCTS_INVENTORY_STOCK,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_INVENTORY_STOCK,
+        layout: Admin,
         component: PAGE.StockInventory
     },
     {
-        path: ROUTES.ADMIN_PROFILE_SHOP,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PROFILE_SHOP,
+        layout: Admin,
         component: PAGE.ProfileShop
     },
     {
-        path: ROUTES.ADMIN_PRODUCTS_OUT_INVENTORY,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_PRODUCTS_OUT_INVENTORY,
+        layout: Admin,
         component: PAGE.ListOutInevnentory
     },
     {
-        path: ROUTES.ADMIN_ORDERS,
-        layout: LayoutAdmin,
+        path: ROUTES.SELLER_ORDERS,
+        layout: Admin,
         component: PAGE.ListOrders
     },
     {
-        path: "/admin/users",
-        layout: LayoutAdmin,
+        path: "/seller/users",
+        layout: Admin,
         component: PAGE.ListUserFollow
     },
     {
-        path: "/admin/chats",
-        layout: LayoutAdmin,
+        path: "/seller/chats",
+        layout: Admin,
         component: PAGE.ChatsAdmin
     },
+    {
+        path: "/seller/change-password-shop",
+        exact: true,
+        component: PAGE.ChangePasswordShop
+    },
     // {
-    //     path: ROUTES.ADMIN_CATEGORIES,
-    //     exact: true,
-    //     component: PAGE.ListCategory
-    // },
-    // {
-    //     path: ROUTES.ADMIN_CATEGORIES_CREATE,
+    //     path: ROUTES.SELLER_CATEGORIES_CREATE,
     //     exact: true,
     //     component: PAGE.NewCategory
     // },

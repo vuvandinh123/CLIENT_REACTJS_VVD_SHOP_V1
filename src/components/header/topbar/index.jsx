@@ -7,7 +7,7 @@ const Topbar = () => {
     <>
       <div className="topbar hidden lg:block py-3 max-w-[1410px] px-5 mx-auto text-sm">
         <div className="flex justify-between items-center">
-          <Link to={"/admin"} className="text-[#515d66] hover:text-blue-500 font-medium">
+          <Link to={"/seller"} className="text-[#515d66] hover:text-blue-500 font-medium">
             Đăng ký bán hàng cũng VVDSHOP để có những ưu đãi hấp dẫn
           </Link>
           <ul className="flex gap-x-8 text-[#212529]">

@@ -5,13 +5,18 @@ import { useApiCall } from "../../../hooks";
 import { getAllUserAddressOrder } from "../../../service/UserAddressOrder";
 import AddressItem from "./AddressItem";
 import { useField } from "formik";
+import { ModalEditAddress } from "./ModalEditAddress";
 
 const Address = ({ ...props }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [isRefresh, setIsRefresh] = useState(false);
+  const [data, setData] = useState(null);
   const { data: address } = useApiCall(async () => {
     const res = await getAllUserAddressOrder();
     return res.data;
-  }, [isOpen]);
+  }, [isRefresh]);
+
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-gray-900 ">
@@ -20,7 +25,14 @@ const Address = ({ ...props }) => {
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <p>Chọn địa chỉ nhận hàng</p>
         {address?.map((item, index) => (
-          <AddressItem key={index} data={item} name="address_id"></AddressItem>
+          <AddressItem
+            key={index}
+            data={item}
+            setIsOpenEdit={setIsOpenEdit}
+            setIsRefresh={setIsRefresh}
+            setData={setData}
+            name="address_id"
+          ></AddressItem>
         ))}
         <div className="w-full sm:col-span-2">
           <button
@@ -47,7 +59,17 @@ const Address = ({ ...props }) => {
             </svg>
             Thêm địa chỉ
           </button>
-          <ModalAddress isOpen={isOpen} setIsOpen={setIsOpen}></ModalAddress>
+          <ModalAddress
+            setIsRefresh={setIsRefresh}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          ></ModalAddress>
+          <ModalEditAddress
+            isOpen={isOpenEdit}
+            setIsRefresh={setIsRefresh}
+            data={data}
+            setIsOpen={setIsOpenEdit}
+          ></ModalEditAddress>
         </div>
       </div>
     </div>

@@ -15,9 +15,9 @@ const Table = (props) => {
   } = props;
   const { t } = useTranslation();
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm mt-5">
+    <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm mt-5">
       {/* table */}
-      <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
+      <table className="border-collapse w-full overflow-x-auto bg-white text-left text-sm text-gray-500">
         <thead className="bg-gray-50">
           <tr>
             {isCheckBox && (
@@ -29,7 +29,7 @@ const Table = (props) => {
             {HeaderTable.map((item, index) => (
               <th
                 scope="col"
-                className="px-6 uppercase font-bold py-4  text-gray-900"
+                className="px-6 shrink-0 text-nowrap uppercase font-bold py-4  text-gray-900"
                 key={index}
               >
                 {t(`admin.${item}`)}

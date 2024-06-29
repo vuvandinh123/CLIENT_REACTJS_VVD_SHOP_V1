@@ -10,6 +10,7 @@ import FormLogin from "./components/FormLogin";
 import { setLocalStorage } from "../../helpers/utils";
 import LoginSocial from "./components/LoginSocial";
 import logo from "../../../public/logo2.png";
+import { getUrlSearchParam } from "../../utils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,15 +25,15 @@ const Login = () => {
         navigate("/auth/verify-email");
         return;
       }
-      const url = sessionStorage.getItem("url");
+      const url = getUrlSearchParam("redirect");
       toast.success("Đăng nhập thành công");
       if (url) {
-        navigate(url);
+        window.location.href = url;
       } else {
         navigate("/");
       }
     } else {
-      toast.error("Login failed ! Wrong email or password");
+      toast.error("Đăng nhập thất bại ! Mật khẩu hoặc tài khoản không đúng");
     }
   };
 
@@ -55,9 +56,7 @@ const Login = () => {
             }}
           >
             <div className="absolute bg-gradient-to-b from-blue-900 to-gray-900 opacity-75 inset-0 z-0" />
-            <div
-              className="absolute triangle  min-h-screen right-0 w-16"
-            />
+            <div className="absolute triangle  min-h-screen right-0 w-16" />
             <Link
               to={"/"}
               title=""

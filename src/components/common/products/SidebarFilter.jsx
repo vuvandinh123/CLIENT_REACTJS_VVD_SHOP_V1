@@ -47,10 +47,10 @@ const SidebarFilter = ({
           <h6 className="text-2xl">LAP TOP</h6>
           <h6 className="uppercase text-red-500 text-2xl">macboox m1</h6>
           <p>
-            Just from <span>$129.00</span>
+            Just from <span>129.000 đ</span>
           </p>
           <button className="w-full py-2 mt-5 font-bold  text-black border-[3px]  rounded-full">
-            SHOW NOW
+            XEM NGAY
           </button>
         </div>
       </div>

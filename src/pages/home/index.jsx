@@ -3,26 +3,21 @@ import Hotdeals from "./components/Hotdeals";
 import Recomended from "./components/Recomended";
 import FeaturedProducts from "./components/FeaturedProducts";
 import TopSellingProducts from "./components/TopSellingProducts";
-import News from "./components/News";
 import Contents from "./components/Contents";
 import { useApiCall, useScrollTop } from "../../hooks";
 import useTitle from "../../hooks/useTitle";
-import { getDailyProduct, getHotSaleProduct } from "../../service/Product";
+import { getHotSaleProduct } from "../../service/Product";
+import { useQuery } from "@tanstack/react-query";
 
 const HomePage = () => {
   useScrollTop();
   useTitle("Trang chủ | VVD SHOP");
 
-  const hotDeal = useApiCall(async () => {
-    const res = await getHotSaleProduct();
-    return res.data;
-  }, []);
- 
   const recomended = [];
   const post = [];
   return (
     <div className="bg-[#F1F5F6]">
-      <Loader />
+      
       <div className="max-w-[1410px] relative px-5 py-5 mx-auto ">
         <div className="flex flex-wrap lg:flex-nowrap lg:flex-row mt-2 gap-5 w-[100%]">
           <div className=" shrink-0 w-[250px] hidden lg:block">
@@ -30,8 +25,8 @@ const HomePage = () => {
           </div>
           <Contents />
         </div>
-        <Hotdeals data={hotDeal?.data} loading={hotDeal?.loading} />
-        <FeaturedProducts  />
+        <Hotdeals />
+        <FeaturedProducts />
         <div className="lg:my-20 my-10 relative">
           <div className="relative ">
             <img
@@ -51,9 +46,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <TopSellingProducts
-         
-        />
+        <TopSellingProducts />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-10 ">
           <div className="w-full group overflow-hidden rounded-md relative">
             <a href="">
@@ -68,9 +61,7 @@ const HomePage = () => {
                   <span className="text-yellow-400 font-bold">Giảm 20%</span>{" "}
                   Sản phẩm
                 </p>
-                <p className="text-gray-300 text-[13px]">
-                  Miễn phí ships
-                </p>
+                <p className="text-gray-300 text-[13px]">Miễn phí ships</p>
               </div>
             </a>
           </div>
@@ -84,7 +75,9 @@ const HomePage = () => {
               <div className="absolute top-10 left-10 z-20 text-white text-xl">
                 <p className="text-2xl font-semibold">Máy ảnh </p>
                 <p>
-                  <span className="text-yellow-400 font-bold">Giảm giá 80%</span>{" "}
+                  <span className="text-yellow-400 font-bold">
+                    Giảm giá 80%
+                  </span>{" "}
                 </p>
                 <p className="text-gray-300 text-[13px]">
                   Miễn phí ship toàn quốc
@@ -102,7 +95,9 @@ const HomePage = () => {
               <div className="absolute top-10 left-10 z-20 text-white text-xl">
                 <p className="text-2xl font-semibold">Máy tính bảng</p>
                 <p>
-                  <span className="text-yellow-400 font-bold">Giảm đến 1 triệu đồng</span>{" "}
+                  <span className="text-yellow-400 font-bold">
+                    Giảm đến 1 triệu đồng
+                  </span>{" "}
                 </p>
                 <p className="text-gray-300 text-[13px]">
                   Free shipping 20km Radius

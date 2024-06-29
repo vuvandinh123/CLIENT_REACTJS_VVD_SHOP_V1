@@ -2,9 +2,9 @@
 import { useField } from "formik";
 import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-const TinyEditor = ({ name, ...props }) => {
-  const [field, meta, helpers] = useField(name);
-
+const TinyEditor = ({...props }) => {
+  const [field, meta, helpers] = useField(props);
+  console.log(field.value, "ddd");
   const editorRef = useRef(null);
   const handleEditorChange = (content, editor) => {
     helpers.setValue(content);
@@ -14,7 +14,7 @@ const TinyEditor = ({ name, ...props }) => {
     <Editor
       apiKey="pkujmrtdapk72uundfzjrz4n8oyk7317vzss52lu4wpm94pj"
       onEditorChange={handleEditorChange}
-      name="details"
+      name={name ?? "details"}
       {...field}
       init={{
         plugins:

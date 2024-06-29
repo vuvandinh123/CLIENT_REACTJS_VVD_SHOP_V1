@@ -1,5 +1,4 @@
-import toast from "react-hot-toast"
-import { axiosInstanceShop } from "../../api/axiosInstanceConfig"
+import { axiosInstanceAdmin, axiosInstanceShop } from "../../api/axiosInstanceConfig"
 import { actionType } from "../../constants"
 import verifyToken from "../../api/AuthVerify"
 
@@ -21,8 +20,8 @@ export const getCategoryIdByShop = async (id) => {
     return response.data
 }
 export const getCountStatusCategory = async (params) => {
-    verifyToken(axiosInstanceShop)
-    const response = await axiosInstanceShop.get(actionType.GET_ALL_CATEGORY_STATUS_COUNT_BY_SHOP, {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.get("categories/count-status", {
         params
     })
     return response.data
@@ -32,28 +31,46 @@ export const getAllCategoryAdminSelect = async () => {
     const response = await axiosInstanceShop.get(actionType.GET_ALL_CATEGORY_SELECT_ADMIN)
     return response.data
 }
-export const createCategoryByShop = async (data) => {
-    verifyToken(axiosInstanceShop)
-    const response = await axiosInstanceShop.post(actionType.POST_ADD_CATEGORY_BY_SHOP, data)
+export const createCategory = async (data) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.post("/categories", data)
     return response.data
 }
-export const updateCategoryByShop = async (id, data) => {
-    verifyToken(axiosInstanceShop)
-    const response = await axiosInstanceShop.put(actionType.PUT_UPDATE_CATEGORY_BY_SHOP + "/" + id, data)
+export const updateCategory = async (id, data) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.put("/categories/" + "/" + id, data)
     return response.data
 }
-export const changeStatusCategoryByShop = async (data) => {
-    verifyToken(axiosInstanceShop)
-    const response = await axiosInstanceShop.patch(actionType.PATCH_CHANGE_STATUS_CATEGORY_BY_SHOP, data)
+
+export const deleteCategory = async (data) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.patch("/categories/del", data)
     return response.data
 }
-export const deleteCategoryByShop = async (data) => {
-    verifyToken(axiosInstanceShop)
-    const response = await axiosInstanceShop.patch(actionType.DELETE_CATEGORY_BY_SHOP, data)
+export const changeStatusCategory = async (data) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.patch("/categories/change-status", data)
     return response.data
 }
 export const getAllCategoryWithParentId = async (id) => {
     verifyToken(axiosInstanceShop)
     const response = await axiosInstanceShop.get(actionType.GET_ALL_CATEGORY_WITH_PARENT_ID + "/" + id)
+    return response.data
+}
+export const getALlCategoryByAdmin = async (params) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.get("/categories", {
+        params
+    })
+    return response.data
+}
+export const getAllCategoryAdminSelectParent = async () => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.get("/categories/select-admin")
+    return response.data
+}
+export const getCategoryById = async (id) => {
+    verifyToken(axiosInstanceAdmin)
+    const response = await axiosInstanceAdmin.get("/categories/" + id)
     return response.data
 }

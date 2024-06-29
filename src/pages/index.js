@@ -22,3 +22,6 @@ export {default as UserOrderDetailPage} from './user/OrderDetail';
 export {default as ShopPage} from './shop';
 export {default as ChatPageUser} from './user/Chat';
 export {default as ChatPageUser2} from './user/Chat2';
+export {default as ChangePasswordUser} from './user/ChangePassword';
+
+export {default as LayoutUser2} from './user/Layout2';

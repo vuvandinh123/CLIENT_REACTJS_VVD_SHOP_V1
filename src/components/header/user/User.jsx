@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { CiLogout, CiShop } from "react-icons/ci";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { TfiShoppingCartFull } from "react-icons/tfi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDropdown } from "../../../hooks";
 import { useEffect, useRef, useState } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
@@ -11,25 +11,39 @@ import Auth from "../../../service/Auth";
 import toast from "react-hot-toast";
 import { removeCookieAuth } from "../../../utils";
 import { checkRole } from "../../../helpers/utils";
+import Swal from "sweetalert2";
 const LoginUser = ({ user }) => {
   const dropRef = useRef(null);
   const iconRef = useRef(null);
   const [isShop, setIsShop] = useState(false);
   const { dropdow, setDropdow } = useDropdown(false, dropRef, iconRef);
+  const navigate = useNavigate();
   useEffect(() => {
     if (checkRole("SHOP")) {
       setIsShop(true);
     }
   }, []);
   const handleClickLogout = async () => {
-    const logout = await Auth.Logout();
-    if (logout.data) {
-      removeCookieAuth();
-      window.location.reload();
-      toast.success("Logout successfully");
-    } else {
-      toast.success("Logout failed");
-    }
+    Swal.fire({
+      title: "Bạn có chắc muốn đăng xuat?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Hủy",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đăng xuất",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const logout = await Auth.Logout();
+        if (logout.data) {
+          removeCookieAuth();
+          navigate("/auth/login");
+          toast.success("Đăng xuất thành công");
+        } else {
+          toast.success("Đăng xuất thất bải");
+        }
+      }
+    });
   };
   return (
     <div className="hidden lg:block mx-4 relative">
@@ -115,7 +129,7 @@ const LoginUser = ({ user }) => {
             </Link>
             {isShop && (
               <Link
-                to={"/admin"}
+                to={"/seller"}
                 className="flex hover:text-black text-gray-600  items-center gap-2 py-1 text-base"
               >
                 <CiShop />

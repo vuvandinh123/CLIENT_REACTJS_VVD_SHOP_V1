@@ -21,7 +21,7 @@ const verifyToken = async (axiosInstance) => {
             const originalRequest = error.config;
             console.log(error, "error");
             if (error.response.status === 401 && !originalRequest._retry) {
-                console.log("refresh token");
+                
                 originalRequest._retry = true;
                 // get cookie 
                 const { userId, refreshToken } = getCookieAuth();
@@ -33,6 +33,9 @@ const verifyToken = async (axiosInstance) => {
                         refreshToken: response.data.token.refreshToken,
                         remember: true
                     })
+                    if(response?.status === 200) {
+                        console.log("refresh token success");
+                    }
                     originalRequest.headers.auth = `${response.data.token.accessToken}`;
                     return axios(originalRequest);
                 } catch (refreshError) {

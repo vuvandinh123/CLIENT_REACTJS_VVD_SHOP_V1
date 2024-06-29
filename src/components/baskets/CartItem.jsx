@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { ChangePrice, ImageLoader } from "../common";
+import { ImageLoader } from "../common";
 import { Link } from "react-router-dom";
 import plus from "../../../public/plus.svg";
 import minus from "../../../public/minus.svg";

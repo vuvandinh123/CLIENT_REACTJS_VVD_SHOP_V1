@@ -1,6 +1,8 @@
 import * as ROUTES from '../constants/routes';
 import NoLayout from '../layouts/NoLayout';
 import * as PAGE from '../pages'
+import * as PAGE_ADMIN from '../admin/pages/seller'
+import Admin from '../admin';
 const publicRoute = [
     {
         path: ROUTES.HOME,
@@ -95,15 +97,15 @@ const publicRoute = [
         component: PAGE.ChangePassword
     },
     {
-        path: ROUTES.USER,
+        path: ROUTES.USER + '/*',
         exact: true,
-        component: PAGE.UserPage
+        component: PAGE.LayoutUser2
     },
-    {
-        path: ROUTES.USER_PURCHASE,
-        exact: true,
-        component: PAGE.UserOrderDetailPage
-    },
+    // {
+    //     path: ROUTES.USER_PURCHASE,
+    //     exact: true,
+    //     component: PAGE.UserOrderDetailPage
+    // },
     {
         path: ROUTES.SHOP,
         exact: true,
@@ -111,12 +113,18 @@ const publicRoute = [
     },
     // {
     //     path: "/user/chats",
-    //     component: PAGE.ChatPageUser
+    //     component: PAGE.ChatPageUser2
     // },
     {
-        path: "/user/chats",
-        component: PAGE.ChatPageUser2
+        path: "/admin/login",
+        component: PAGE_ADMIN.Login,
+        layout: NoLayout,
     },
+    // {
+    //     path: "/user/change-password",
+    //     exact: true,
+    //     component: PAGE.ChangePasswordUser
+    // },
 ]
 
 export { publicRoute }

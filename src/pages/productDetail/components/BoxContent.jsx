@@ -396,26 +396,26 @@ const BoxContent = ({ data, setData, discount }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              Return within 30 days of purchase. Taxes are non-refundable.
+              Trả hàng sau 15 ngày 
             </p>
           </div>
         </div>
         <div>
           <div className="flex my-3 items-center">
             <label htmlFor="" className="min-w-[120px] text-gray-500">
-              Availability:
+              Trang thái:
             </label>
-            <span className="text-[#008a00]">In Stock</span>
+            <span className="text-[#008a00]">Còn hàng</span>
           </div>
           <div className="flex my-3 items-center">
             <label htmlFor="" className="min-w-[120px] text-gray-500">
-              Vendor:
+              Thương hiệu:
             </label>
             <span className="text-gray-500">{data.brand}</span>
           </div>
           <div className="flex my-3 items-center">
             <label htmlFor="" className="min-w-[120px] text-gray-500">
-              Categories:
+              Danh mục:
             </label>
             <span className="text-gray-500">{data.category}</span>
           </div>

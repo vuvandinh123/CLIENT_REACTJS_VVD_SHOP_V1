@@ -1,4 +1,4 @@
-import PropTypes  from "prop-types";
+import PropTypes from "prop-types";
 import Header from "../components/header";
 import { Footer, NavBottom } from "../components/common";
 const Layout = ({ children }) => {
@@ -6,6 +6,7 @@ const Layout = ({ children }) => {
     <div>
       <Header />
       {children}
+      
       <Footer />
       <NavBottom />
     </div>
@@ -13,7 +14,7 @@ const Layout = ({ children }) => {
 };
 Layout.defaultProps = {
   children: null,
-}
+};
 Layout.propTypes = {
   children: PropTypes.node,
 };

@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ref, onValue } from "firebase/database";
 import { database } from "../../../firebaseConfig";
-import { getShopChatsByIds } from "../../../service/Shop";
 import { setUrlSearchParam } from "../../../utils";
-import { getChatsUserShop } from "../../../admin/service/UserFollow";
+import { getChatsUserShop } from "../../../seller/service/UserFollow";
 
-const Siderbar = ({ storeId,setData }) => {
+const Siderbar = ({ storeId, setData }) => {
   const [stores, setStores] = useState([]);
   const getStores = async (ids) => {
     const res = await getChatsUserShop({ userIds: ids });
@@ -22,7 +21,7 @@ const Siderbar = ({ storeId,setData }) => {
   }, [storeId]);
   const handleClickChangeStore = (item) => {
     setUrlSearchParam("user", item.id);
-    setData((item2) => ({ ...item2, userId: item.id}));
+    setData((item2) => ({ ...item2, userId: item.id }));
   };
   return (
     <div className="w-2/4 bg-white border-r border-gray-300">
@@ -78,18 +77,23 @@ const Siderbar = ({ storeId,setData }) => {
           >
             <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
               <img
-                src={item.image === null ? "https://via.placeholder.com/150" : item.image}
+                src={
+                  item.image === null
+                    ? "https://via.placeholder.com/150"
+                    : item.image
+                }
                 onError={(e) => {
                   e.target.src = "https://via.placeholder.com/150";
                   e.target.onerror = null;
                 }}
-                
                 alt="User Avatar"
                 className="w-12 h-12 rounded-full"
               />
             </div>
             <div className="flex-1">
-              <h2 className="text-lg font-semibold">{item.lastName + " " + item.firstName}</h2>
+              <h2 className="text-lg font-semibold">
+                {item.lastName + " " + item.firstName}
+              </h2>
               <p className="text-gray-600">Phản hồi ngay!!</p>
             </div>
           </div>

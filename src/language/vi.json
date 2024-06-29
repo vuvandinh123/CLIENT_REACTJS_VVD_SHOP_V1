@@ -131,6 +131,15 @@
                 "product_count": "Số sản phẩm"
             }
         },
+        "listBrand": {
+            "title": "Tất cả thương hiệu",
+            "table": {
+                "name": "Tên thương hiệu",
+                "category": "Danh mục",
+                "status": "Trạng thái",
+                "created_at": "Cập nhật gần nhất"
+            }
+        },
         "productPromotion": {
             "title": "Khuyến mãi cho sản phẩm",
             "table": {
@@ -166,6 +175,56 @@
                 "created_at": "Thời gian lúc",
                 "email": "Email",
                 "phone": "Điện thoại"
+            }
+        },
+        "listShop": {
+            "title": "Quản lý cửa hàng",
+            "table": {
+                "name": "Tên cửa hàng",
+                "phone": "Điện thoại",
+                "CCCD": "Căn cước công dân",
+                "status": "Trạng thái",
+                "product_count": "Số sản phẩm"
+            }
+        },
+        "listOrderAdmin": {
+            "title": "Danh sách đơn hàng",
+            "table": {
+                "id": "Mã đơn hàng",
+                "payment_method": "Thanh toán",
+                "status": "Trạng thái",
+                "created_at": "Thời gian đặt hàng",
+                "amount": "Tổng đơn hàng",
+                "total_amout": "Tổng đơn hàng",
+                "cost": "Phí giao hàng",
+                "action": "Thao tác"
+            }
+        },
+        "listProductAdmin": {
+            "title": "Danh sách sản phẩm",
+            "table": {
+                "name": "Tên sản phẩm",
+                "stock": "Số lượng",
+                "price": "Giá",
+                "price_sale": "Giá bán",
+                "sold": "Đã bán",
+                "type": "Loại sản phẩm",
+                "action": "Thao tác",
+                "single": "Đơn giản",
+                "noData": "Không có dữ liệu"
+            }
+        },
+        "dashboard": {
+            "total_order": "Tổng số đơn hàng",
+            "total_follow": "Số người theo dõi mới"
+        },
+        "listUserAdmin": {
+            "table": {
+                "name": "Họ và tên ",
+                "email": "Email",
+                "count_order": "Đơn hàng",
+                "created_at": "Tham gia",
+                "action": "Thao tác"
             }
         }
     }

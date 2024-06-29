@@ -12,3 +12,8 @@ export const updateUser = async (data) => {
     const response = await axiosInstance.put(actionType.GET_USER, data)
     return response.data
 }
+export const changePasswordByUser = async (data) => {
+    verifyToken(axiosInstance)
+    const response = await axiosInstance.patch("/user/change-password", data)
+    return response.data
+}

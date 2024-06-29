@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Siderbar from "./components/Siderbar";
 import ChatInput from "./components/ChatInput";
 import { ref, onValue } from "firebase/database";
 import { database } from "../../firebaseConfig";
 import ChatMessage from "./components/ChatMessage";
 
-const Chats = ({ userId, storeId, setData ,user,shop}) => {
+const Chats = ({ userId, storeId, setData, user, shop }) => {
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const messagesRef = ref(database, `messages/${userId}_${storeId}`);
+    setLoading(true);
     onValue(messagesRef, (snapshot) => {
       const messagesData = snapshot.val();
       const loadedMessages = [];
@@ -17,22 +19,28 @@ const Chats = ({ userId, storeId, setData ,user,shop}) => {
         loadedMessages.push({ id: key, ...messagesData[key] });
       }
       setMessages(loadedMessages);
+      setLoading(false);
     });
   }, [userId, storeId]);
   return (
     <div>
       <div className="flex bg-white rounded-md h-screen overflow-hidden">
         {/* Sidebar */}
-        <Siderbar
-          storeId={storeId}
-          setData={setData}
-        ></Siderbar>
+        <Siderbar storeId={storeId} setData={setData}></Siderbar>
         {/* Main Chat Area */}
-        {userId && (
+        {!loading && userId && (
           <div className=" w-full overflow-hidden flex flex-col">
             {/* Chat Header */}
             <header className="bg-white border p-4 text-gray-700 flex items-center gap-3">
-              <img src={user?.image === null ? "https://via.placeholder.com/200" : user?.image} className="w-9 h-9 rounded-full" alt="" />
+              <img
+                src={
+                  user?.image === null
+                    ? "https://via.placeholder.com/200"
+                    : user?.image
+                }
+                className="w-9 h-9 rounded-full"
+                alt=""
+              />
               <h1 className="text-xl font-semibold">
                 {user?.lastName + " " + user?.firstName}
               </h1>
@@ -44,7 +52,6 @@ const Chats = ({ userId, storeId, setData ,user,shop}) => {
                 <ChatMessage
                   key={message.id}
                   message={message}
-                  
                   userId={userId}
                   user={user}
                   shop={shop}
