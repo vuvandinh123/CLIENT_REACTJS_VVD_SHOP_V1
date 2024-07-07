@@ -4,6 +4,7 @@ import ModalAppliesProduct from "./ModalAppliesProduct";
 import { Field, useFormikContext } from "formik";
 import { CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import { formatPriceVND } from "../../../../../utils";
 
 const AppliesTo = ({ productIds, setProductIds, products }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -88,7 +89,9 @@ const AppliesTo = ({ productIds, setProductIds, products }) => {
                 <div className="col-span-2 text-center">
                   {item.quantity} cái
                 </div>
-                <div className="col-span-1">${item.price}</div>
+                <div className="col-span-1">
+                  {formatPriceVND(item.price || 0)}
+                </div>
                 <div className="col-span-1 flex justify-end">
                   <span
                     onClick={() => removeProductChecked(item)}

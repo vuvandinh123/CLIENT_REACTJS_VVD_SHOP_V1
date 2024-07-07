@@ -19,4 +19,9 @@ export const getShopChatsByIds = async (data) => {
     const res = await axiosInstance.post(`/shops/chats`, data)
     return res.data
 }
+export const getShopByIdChat = async (id) => {
+    verifyToken(axiosInstance)
+    const res = await axiosInstance.get(`/shops/find-id/${id}`)
+    return res.data
+}
 export { getShopById, getIsFollowShop, toggleFollowShop }

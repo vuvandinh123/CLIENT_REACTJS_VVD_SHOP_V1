@@ -25,7 +25,6 @@ const Chats2 = ({ userId, storeId, setData, shop, user }) => {
       }, 500);
     });
   }, [userId, storeId]);
-  console.log(loading);
   return (
     <div>
       <div className="flex bg-white rounded-md h-screen overflow-hidden">

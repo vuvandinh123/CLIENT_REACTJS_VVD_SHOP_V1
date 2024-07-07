@@ -4,7 +4,7 @@ import { getCookieAuth, getUrlSearchParam } from "../../utils";
 import { Loader } from "../../components/common";
 import Chats2 from "../../components/chats2";
 import { useAuth } from "../../hooks";
-import { getShopByUserId } from "../../seller/service/Shop";
+import { getShopByIdChat } from "../../service/Shop";
 
 const Chat = () => {
   const [data, setData] = useState({
@@ -13,7 +13,7 @@ const Chat = () => {
   });
   const [shop, setShop] = useState({});
   const getShopById = async (id) => {
-    const res = await getShopByUserId(id);
+    const res = await getShopByIdChat(id);
     setShop(res.data);
   };
   const { user } = useAuth();
