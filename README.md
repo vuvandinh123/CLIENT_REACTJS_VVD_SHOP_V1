@@ -1,4 +1,4 @@
-
+[![Watch the video](https://img.youtube.com/vi/Un4umy_b1gU/0.jpg)](https://www.youtube.com/embed/Un4umy_b1gU?si=yqwH5-JMSQq-6aUp)
 # 📦 Website Thương mại điện tử  VVD Shop – Tài liệu kỹ thuật Frontend
 
 ## 1. 📖 Giới thiệu tổng quan
