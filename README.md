@@ -163,7 +163,7 @@ Dưới đây là phần bổ sung mục **Thông tin liên hệ** vào cuối t
 Mọi thắc mắc, góp ý hoặc yêu cầu hỗ trợ kỹ thuật về dự án xin vui lòng liên hệ:
 
 * 👤 **Tên:** Vũ Văn Định
-* 📧 **Email:** [vuvandinh203@gmail.com](mailto:vuvandinh203@gmail.com)
+* 📧 **Email:** [vuvandinh.work@gmail.com](mailto:vuvandinh.work@gmail.com)
 * 📱 **Số điện thoại (Zalo):** 0333583800
 * 🌐 **GitHub:** [https://github.com/vuvandinh123](https://github.com/vuvandinh123)
 * 💼 **Website:** [https://vuvandinh.id.vn](https://vuvandinh.id.vn)
