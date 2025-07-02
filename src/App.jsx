@@ -36,7 +36,7 @@ function App() {
       <I18nextProvider i18n={i18n}>
         <QueryClientProvider client={queryClient}>
           <RouteApp />
-          {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+           {/*<ReactQueryDevtools initialIsOpen={true} /> */}
         </QueryClientProvider>
       </I18nextProvider>
       {isOpen && <ModalSelectOptionCart></ModalSelectOptionCart>}

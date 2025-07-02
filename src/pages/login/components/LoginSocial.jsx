@@ -25,10 +25,10 @@ const LoginSocial = () => {
     if(fetchLoginWithFacebook && fetchLoginWithFacebook.status === 200){ 
       setLocalStorage("remember_me", true);
       setToken({ data: fetchLoginWithFacebook.data, remember: true });
-      toast.success("Login successfully");
+      toast.success("Đăng nhập thành công");
       navigate("/");
     } else {
-      toast.error("Login facebook failed !");
+      toast.error("Đăng nhập thất bại!");
     }
     
   };

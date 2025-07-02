@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApiCall, useDropdown } from "../../../hooks";
 import lodash, { debounce } from "lodash";
-import { AppURL } from "../../../api/AppURL";
 import { ImageLoader } from "../../common";
 import Skeleton from "react-loading-skeleton";
 import { getSearchProducts } from "../../../service/Product";
@@ -39,6 +38,7 @@ const Search = () => {
         search: search,
         categoryId: idCategory,
       };
+      if(!search) return;
       const response = await getSearchProducts(params);
       setSearchData(response?.data);
       setLoading(false);
@@ -49,7 +49,6 @@ const Search = () => {
   }, [search, idCategory]);
   const handleSubmitSearch = (e) => {
     e.preventDefault();
-    console.log(search);
     if (search === "") return;
     setActiveSearch(false);
     if (searchRef.current) {
@@ -83,7 +82,7 @@ const Search = () => {
                 id=""
                 onChange={(e) => setIdCategory(e.target.value)}
               >
-                <option className="text-[#212529]" value="all">
+                <option className="text-[#212529]" value="ALL">
                   Tất cả danh mục
                 </option>
                 {categorySearch &&

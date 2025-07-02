@@ -18,6 +18,7 @@
     "@tanstack/react-query-devtools": "^5.48.0",
     "@tinymce/tinymce-react": "^4.3.2",
     "axios": "^1.5.0",
+    "caniuse-lite": "^1.0.30001689",
     "cookies-js": "^1.2.3",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.11",
